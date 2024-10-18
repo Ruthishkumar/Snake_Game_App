@@ -212,12 +212,9 @@ class _GameScreenState extends State<GameScreen> {
           StorageService().setHighScore(score);
           bestScore = await StorageService().getHighScore();
         }
-        // StorageService().setJwtToken(highScore)
         timer.cancel();
         gameOverDialog();
       }
-      // checkDamaged();
-      // log('Snake Head ${snakeHead.toString()}');
     });
   }
 
@@ -236,7 +233,7 @@ class _GameScreenState extends State<GameScreen> {
             SizedBox(height: 8.h),
             Text('Best Score $bestScore',
                 style: AppStyles.instance.gamePopTextStyles(
-                    fontSize: 15.sp, fontWeight: FontWeight.w500)),
+                    fontSize: 15.sp, fontWeight: FontWeight.w700)),
             SizedBox(height: 8.h),
             Text('Your Score is $score',
                 style: AppStyles.instance.gamePopTextStyles(
