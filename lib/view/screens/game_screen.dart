@@ -4,9 +4,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:snake_game_app/styles/app_colors.dart';
-import 'package:snake_game_app/styles/app_styles.dart';
-import 'package:snake_game_app/styles/direction_enum.dart';
+import 'package:snake_game_app/utils/styles/app_colors.dart';
+import 'package:snake_game_app/utils/styles/app_styles.dart';
+import 'package:snake_game_app/utils/styles/direction_enum.dart';
 import 'package:snake_game_app/view/service/storage_service.dart';
 
 class GameScreen extends StatefulWidget {
@@ -101,6 +101,10 @@ class _GameScreenState extends State<GameScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // ElevatedButton(
+          //   onPressed: isRunning ? _pauseTimer : resumeTimer,
+          //   child: Text(isRunning ? 'Pause' : 'Resume'),
+          // ),
           // Text(
           //   'Score ${score}',
           //   style: TextStyle(color: Colors.white),
@@ -195,16 +199,26 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   int bestScore = 0;
+  Timer? timer;
+  int seconds = 0;
+  bool isRunning = false;
 
   /// start game method
   void startGame() {
+    if (timer != null) {
+      timer!.cancel();
+    }
     direction = Direction.right;
     makeBorderColor();
     generateFood();
     snakePosition = [45, 44, 43];
     snakeHead = snakePosition.first;
-    Timer.periodic(const Duration(milliseconds: 300), (timer) async {
+    timer = Timer.periodic(const Duration(milliseconds: 300), (timerOne) async {
       updateSnake();
+      setState(() {
+        seconds++;
+      });
+      isRunning = true;
       if (checkDamaged()) {
         bestScore = await StorageService().getHighScore();
         dev.log('Best Score $bestScore');
@@ -212,10 +226,21 @@ class _GameScreenState extends State<GameScreen> {
           StorageService().setHighScore(score);
           bestScore = await StorageService().getHighScore();
         }
-        timer.cancel();
+        timer?.cancel();
         gameOverDialog();
       }
     });
+  }
+
+  void _pauseTimer() {
+    if (timer != null) {
+      timer!.cancel();
+    }
+    isRunning = false;
+  }
+
+  void resumeTimer() {
+    startGame();
   }
 
   /// game over alert dialog widget method
