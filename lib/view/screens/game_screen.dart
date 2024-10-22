@@ -36,38 +36,16 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   @override
+  void dispose() {
+    timer?.cancel(); // Cancel the timer
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
       backgroundColor: AppColors.primaryTextColor,
-      appBar: AppBar(
-        toolbarHeight: 70,
-        backgroundColor: AppColors.appBackgroundColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(12.r)),
-        ),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(),
-            Text(
-              'Score : $score',
-              style: AppStyles.instance.whiteTextStyles(
-                  fontSize: 16.sp, fontWeight: FontWeight.w500),
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: Icon(
-                Icons.settings,
-                size: 25.r,
-                color: AppColors.appWhiteTextColor,
-              ),
-            )
-          ],
-        ),
-      ),
       body: Column(
         children: [gameView(), controlView()],
       ),
@@ -77,7 +55,7 @@ class _GameScreenState extends State<GameScreen> {
   /// game view
   Widget gameView() {
     return Container(
-      padding: EdgeInsets.fromLTRB(8.r, 12.r, 8.r, 0.r),
+      padding: EdgeInsets.fromLTRB(8.r, 40.r, 8.r, 0.r),
       child: GridView.builder(
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -101,6 +79,16 @@ class _GameScreenState extends State<GameScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Row(
+            children: [
+              Text(
+                'Score : $score',
+                style: AppStyles.instance.gameFontStyles(
+                    fontSize: 16.sp, fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+          SizedBox(height: 10.h),
           // ElevatedButton(
           //   onPressed: isRunning ? _pauseTimer : resumeTimer,
           //   child: Text(isRunning ? 'Pause' : 'Resume'),
@@ -163,7 +151,7 @@ class _GameScreenState extends State<GameScreen> {
   /// fill color
   Color fillColor(int index) {
     if (borderSideList.contains(index)) {
-      return const Color(0xffF2C94C);
+      return Colors.orange.withOpacity(0.7);
     } else {
       if (snakePosition.contains(index)) {
         if (snakeHead == index) {

@@ -2,6 +2,12 @@
   "configVersion": 2,
   "packages": [
     {
+      "name": "animated_toggle_switch",
+      "rootUri": "file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/animated_toggle_switch-0.8.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "archive",
       "rootUri": "file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.6.1",
       "packageUri": "lib/",
@@ -344,7 +350,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2024-10-22T09:26:05.913491Z",
+  "generated": "2024-10-22T15:41:24.445726Z",
   "generator": "pub",
   "generatorVersion": "3.5.3",
   "flutterRoot": "file:///C:/Users/intel/fvm/versions/3.24.3",
