@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/app_button.dart';
 import 'package:snake_game_app/view/screens/game_screen.dart';
-import 'package:snake_game_app/view/screens/settings_screen.dart';
+import 'package:snake_game_app/view/screens/game_settings_screen.dart';
 import 'package:snake_game_app/view/service/storage_service.dart';
 
 class GameOnboardingScreen extends StatefulWidget {
@@ -21,10 +21,18 @@ class _GameOnboardingScreenState extends State<GameOnboardingScreen> {
     super.initState();
   }
 
+  String audio = '';
+
   /// storage set data
   getStorageData() async {
+    audio = await StorageService().getAudio();
     await StorageService().setVibrations(true);
-    await StorageService().setAudio(true);
+    await StorageService().setControls(true);
+    if (audio == '') {
+      StorageService().setAudio('yes');
+    }
+
+    setState(() {});
   }
 
   @override
@@ -59,9 +67,19 @@ class _GameOnboardingScreenState extends State<GameOnboardingScreen> {
                 type: AppButtonType.secondary,
                 onTap: () {
                   Navigator.push(context,
-                      AnimationPageRoute(widget: const SettingsScreen()));
+                      AnimationPageRoute(widget: const GameSettingScreen()));
                 },
               ),
+              // AppButton(
+              //   iconData: Icons.settings,
+              //   label: 'Cleaar',
+              //   type: AppButtonType.secondary,
+              //   onTap: () async {
+              //     SharedPreferences prefs =
+              //         await SharedPreferences.getInstance();
+              //     await prefs.clear();
+              //   },
+              // ),
             ],
           ),
         ),

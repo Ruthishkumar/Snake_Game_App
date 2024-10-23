@@ -49,12 +49,14 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   bool vibrationIsActiveOrNot = false;
-  bool audioIsActiveOrNot = false;
+  String audioIsActiveOrNot = '';
+  bool controls = false;
 
   /// get storage service data
   getStorageData() async {
-    vibrationIsActiveOrNot = await StorageService().getVibration();
+    vibrationIsActiveOrNot = (await StorageService().getVibration());
     audioIsActiveOrNot = await StorageService().getAudio();
+    controls = await StorageService().getControls();
     setState(() {});
   }
 
@@ -64,7 +66,18 @@ class _GameScreenState extends State<GameScreen> {
         child: Scaffold(
       backgroundColor: AppColors.primaryTextColor,
       body: Column(
-        children: [gameView(), controlView()],
+        children: [
+          gameView(),
+          controls == true
+              ? controlView()
+              : Column(
+                  children: [
+                    SizedBox(height: 100.h),
+                    Image.asset('assets/images/swipe_gestures.png',
+                        height: 200.h),
+                  ],
+                )
+        ],
       ),
     ));
   }
@@ -343,14 +356,14 @@ class _GameScreenState extends State<GameScreen> {
       } else if (vibrationIsActiveOrNot == false) {
         dev.log('Vibration Not Active');
       }
-      if (audioIsActiveOrNot == true) {
+      if (audioIsActiveOrNot == 'yes') {
         player = AudioPlayer();
         player.setReleaseMode(ReleaseMode.stop);
         WidgetsBinding.instance.addPostFrameCallback((_) async {
           await player.setSource(AssetSource('audio/snake_food.mp3'));
           await player.resume();
         });
-      } else if (audioIsActiveOrNot == false) {}
+      } else if (audioIsActiveOrNot == 'no') {}
     } else {
       snakePosition.removeLast();
     }

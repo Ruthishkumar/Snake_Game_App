@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
+import 'package:snake_game_app/view/service/storage_service.dart';
 
 class AnimatedSegmentedButton extends StatefulWidget {
   final List<String> values;
@@ -15,6 +16,16 @@ class AnimatedSegmentedButton extends StatefulWidget {
 
 class _AnimatedSegmentedButtonState extends State<AnimatedSegmentedButton> {
   bool initialPosition = true;
+
+  @override
+  void initState() {
+    getSwipeInitialPositionData();
+    super.initState();
+  }
+
+  getSwipeInitialPositionData() async {
+    initialPosition = await StorageService().getControls();
+  }
 
   @override
   Widget build(BuildContext context) {

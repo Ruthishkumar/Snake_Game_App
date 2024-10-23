@@ -9,14 +9,14 @@ import 'package:snake_game_app/utils/styles/app_styles.dart';
 import 'package:snake_game_app/view/service/storage_service.dart';
 import 'package:snake_game_app/view/widgets/animated_segmented_button.dart';
 
-class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+class GameSettingScreen extends StatefulWidget {
+  const GameSettingScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  State<GameSettingScreen> createState() => _GameSettingScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _GameSettingScreenState extends State<GameSettingScreen> {
   @override
   void initState() {
     getStorageData();
@@ -27,12 +27,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   bool audioChanges = true;
 
+  String audio = '';
+
+  int controlsSegment = 0;
+
   /// get storage data method
   getStorageData() async {
     vibrationChanges = await StorageService().getVibration();
     log('Initial Vibration ${vibrationChanges}');
-    audioChanges = await StorageService().getAudio();
+    audio = await StorageService().getAudio();
+    if (audio == 'yes') {
+      audioChanges = true;
+    } else if (audio == 'no') {
+      audioChanges = false;
+    }
+
     log('Initial Audio ${audioChanges}');
+    // controlsSegment = await StorageService().getControls();
+    // log('Initial Controls ${controlsSegment}');
     setState(() {});
   }
 
@@ -112,7 +124,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             setState(() {
               audioChanges = value;
             });
-            StorageService().setAudio(audioChanges);
+
+            if (value == true) {
+              StorageService().setAudio('yes');
+            } else if (value == false) {
+              StorageService().setAudio('no');
+            }
+
             // if (vibrationChanges == true) {
             //
             // }
@@ -205,8 +223,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   int? controlIndex = 0;
-
-  int controlsSegment = 0;
 
   /// controls setting widget
   controlSettingsWidget() {
@@ -301,7 +317,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           onToggleCallback: (value) {
             setState(() {
               controlsSegment = value;
+              log('Control Segment ${controlsSegment}');
             });
+            if (controlsSegment == 0) {
+              StorageService().setControls(true);
+            } else if (controlsSegment == 1) {
+              StorageService().setControls(false);
+            }
           },
         ),
       ],
