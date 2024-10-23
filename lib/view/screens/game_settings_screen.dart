@@ -23,6 +23,8 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
     super.initState();
   }
 
+  String vibration = '';
+
   bool vibrationChanges = true;
 
   bool audioChanges = true;
@@ -33,13 +35,19 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
 
   /// get storage data method
   getStorageData() async {
-    vibrationChanges = await StorageService().getVibration();
+    vibration = await StorageService().getVibration();
     log('Initial Vibration ${vibrationChanges}');
     audio = await StorageService().getAudio();
     if (audio == 'yes') {
       audioChanges = true;
     } else if (audio == 'no') {
       audioChanges = false;
+    }
+
+    if (vibration == 'yes') {
+      vibrationChanges = true;
+    } else if (vibration == 'no') {
+      vibrationChanges = false;
     }
 
     log('Initial Audio ${audioChanges}');
@@ -191,7 +199,11 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
             setState(() {
               vibrationChanges = value;
             });
-            StorageService().setVibrations(vibrationChanges);
+            if (value == true) {
+              StorageService().setVibrations('yes');
+            } else if (value == false) {
+              StorageService().setVibrations('no');
+            }
             // if (vibrationChanges == true) {
             //
             // }

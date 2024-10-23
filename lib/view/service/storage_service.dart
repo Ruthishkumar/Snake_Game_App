@@ -21,16 +21,16 @@ class StorageService {
     return prefs.getInt('highScore') ?? 0;
   }
 
-  Future<void> setVibrations(bool? vibration) async {
+  Future<void> setVibrations(String? vibration) async {
     if (vibration != null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setBool('vibration', vibration);
+      prefs.setString('vibration', vibration);
     }
   }
 
-  Future<bool> getVibration() async {
+  Future<String> getVibration() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('vibration') ?? false;
+    return prefs.getString('vibration') ?? '';
   }
 
   Future<void> setAudio(String? audio) async {

@@ -48,13 +48,13 @@ class _GameScreenState extends State<GameScreen> {
     super.dispose();
   }
 
-  bool vibrationIsActiveOrNot = false;
+  String vibrationIsActiveOrNot = '';
   String audioIsActiveOrNot = '';
   bool controls = false;
 
   /// get storage service data
   getStorageData() async {
-    vibrationIsActiveOrNot = (await StorageService().getVibration());
+    vibrationIsActiveOrNot = await StorageService().getVibration();
     audioIsActiveOrNot = await StorageService().getAudio();
     controls = await StorageService().getControls();
     setState(() {});
@@ -68,15 +68,16 @@ class _GameScreenState extends State<GameScreen> {
       body: Column(
         children: [
           gameView(),
-          controls == true
-              ? controlView()
-              : Column(
-                  children: [
-                    SizedBox(height: 100.h),
-                    Image.asset('assets/images/swipe_gestures.png',
-                        height: 200.h),
-                  ],
-                )
+          controlView()
+          // controls == true
+          //     ? controlView()
+          //     : Column(
+          //         children: [
+          //           SizedBox(height: 100.h),
+          //           Image.asset('assets/images/swipe_gestures.png',
+          //               height: 200.h),
+          //         ],
+          //       )
         ],
       ),
     ));
@@ -247,10 +248,10 @@ class _GameScreenState extends State<GameScreen> {
           bestScore = await StorageService().getHighScore();
         }
         timer?.cancel();
-        if (vibrationIsActiveOrNot == true) {
+        if (vibrationIsActiveOrNot == 'yes') {
           Vibration.vibrate(duration: 600);
           dev.log('Vibration Active');
-        } else if (vibrationIsActiveOrNot == false) {
+        } else if (vibrationIsActiveOrNot == 'no') {
           dev.log('Vibration Not Active');
         }
         gameOverDialog();
@@ -350,10 +351,10 @@ class _GameScreenState extends State<GameScreen> {
     if (snakeHead == foodPosition) {
       score++;
       generateFood();
-      if (vibrationIsActiveOrNot == true) {
+      if (vibrationIsActiveOrNot == 'yes') {
         Vibration.vibrate(duration: 200);
         dev.log('Vibration Active');
-      } else if (vibrationIsActiveOrNot == false) {
+      } else if (vibrationIsActiveOrNot == 'no') {
         dev.log('Vibration Not Active');
       }
       if (audioIsActiveOrNot == 'yes') {

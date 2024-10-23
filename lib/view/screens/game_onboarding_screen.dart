@@ -22,14 +22,19 @@ class _GameOnboardingScreenState extends State<GameOnboardingScreen> {
   }
 
   String audio = '';
+  String vibration = '';
 
   /// storage set data
   getStorageData() async {
     audio = await StorageService().getAudio();
-    await StorageService().setVibrations(true);
+    vibration = await StorageService().getVibration();
     await StorageService().setControls(true);
     if (audio == '') {
       StorageService().setAudio('yes');
+    }
+
+    if (vibration == '') {
+      StorageService().setVibrations('yes');
     }
 
     setState(() {});
