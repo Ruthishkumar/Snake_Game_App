@@ -2,12 +2,14 @@ import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
 import 'package:snake_game_app/utils/styles/direction_enum.dart';
 import 'package:snake_game_app/view/service/storage_service.dart';
+import 'package:vibration/vibration.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -29,16 +31,31 @@ class _GameScreenState extends State<GameScreen> {
 
   int score = 0;
 
+  AudioPlayer player = AudioPlayer();
+
   @override
   void initState() {
     startGame();
+    getStorageData();
     super.initState();
   }
 
   @override
   void dispose() {
-    timer?.cancel(); // Cancel the timer
+    timer?.cancel();
+    player.dispose();
+
     super.dispose();
+  }
+
+  bool vibrationIsActiveOrNot = false;
+  bool audioIsActiveOrNot = false;
+
+  /// get storage service data
+  getStorageData() async {
+    vibrationIsActiveOrNot = await StorageService().getVibration();
+    audioIsActiveOrNot = await StorageService().getAudio();
+    setState(() {});
   }
 
   @override
@@ -205,6 +222,8 @@ class _GameScreenState extends State<GameScreen> {
       updateSnake();
       setState(() {
         seconds++;
+        // await player.setSource(AssetSource('audio/snake_food.mp3'));
+        // await player.resume();
       });
       isRunning = true;
       if (checkDamaged()) {
@@ -215,6 +234,12 @@ class _GameScreenState extends State<GameScreen> {
           bestScore = await StorageService().getHighScore();
         }
         timer?.cancel();
+        if (vibrationIsActiveOrNot == true) {
+          Vibration.vibrate(duration: 600);
+          dev.log('Vibration Active');
+        } else if (vibrationIsActiveOrNot == false) {
+          dev.log('Vibration Not Active');
+        }
         gameOverDialog();
       }
     });
@@ -290,7 +315,7 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   /// update snake method
-  void updateSnake() {
+  Future<void> updateSnake() async {
     setState(() {
       switch (direction) {
         case Direction.up:
@@ -312,6 +337,20 @@ class _GameScreenState extends State<GameScreen> {
     if (snakeHead == foodPosition) {
       score++;
       generateFood();
+      if (vibrationIsActiveOrNot == true) {
+        Vibration.vibrate(duration: 200);
+        dev.log('Vibration Active');
+      } else if (vibrationIsActiveOrNot == false) {
+        dev.log('Vibration Not Active');
+      }
+      if (audioIsActiveOrNot == true) {
+        player = AudioPlayer();
+        player.setReleaseMode(ReleaseMode.stop);
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          await player.setSource(AssetSource('audio/snake_food.mp3'));
+          await player.resume();
+        });
+      } else if (audioIsActiveOrNot == false) {}
     } else {
       snakePosition.removeLast();
     }

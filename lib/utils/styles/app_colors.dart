@@ -5,4 +5,5 @@ class AppColors {
   static const primaryTextColor = Color(0xff1E1E26);
   static const appWhiteTextColor = Color(0xffFFFFFF);
   static const appBackgroundColor = Color(0xff1A2980);
+  Color appGreenColor = Colors.green;
 }

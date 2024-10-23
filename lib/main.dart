@@ -15,10 +15,10 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 805),
       builder: (context, child) {
         return MaterialApp(
-          title: 'Flutter Demo',
+          title: 'Snake App',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primarySwatch: Colors.blue),
-          home: GameOnboardingScreen(),
+          home: const GameOnboardingScreen(),
         );
       },
     );

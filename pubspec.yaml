@@ -18,7 +18,12 @@ dependencies:
   shared_preferences: ^2.3.2
   lottie: ^3.1.3
   animated_toggle_switch: ^0.8.3
-  toggle_switch: ^2.3.0
+  segmented_button_slide: ^2.0.0
+  vibration: ^2.0.1
+  audioplayers: ^6.1.0
+
+
+
 
 
 
@@ -36,4 +41,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/lottie_images/
+    - assets/audio/
 

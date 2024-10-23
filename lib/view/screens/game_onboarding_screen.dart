@@ -5,6 +5,7 @@ import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/app_button.dart';
 import 'package:snake_game_app/view/screens/game_screen.dart';
 import 'package:snake_game_app/view/screens/settings_screen.dart';
+import 'package:snake_game_app/view/service/storage_service.dart';
 
 class GameOnboardingScreen extends StatefulWidget {
   const GameOnboardingScreen({super.key});
@@ -14,6 +15,18 @@ class GameOnboardingScreen extends StatefulWidget {
 }
 
 class _GameOnboardingScreenState extends State<GameOnboardingScreen> {
+  @override
+  void initState() {
+    getStorageData();
+    super.initState();
+  }
+
+  /// storage set data
+  getStorageData() async {
+    await StorageService().setVibrations(true);
+    await StorageService().setAudio(true);
+  }
+
   @override
   dispose() {
     super.dispose();
