@@ -382,22 +382,22 @@ class _GameScreenState extends State<GameScreen> {
         seconds++;
       });
       isRunning = true;
-      // if (checkDamaged()) {
-      //   bestScore = await StorageService().getHighScore();
-      //   dev.log('Best Score $bestScore');
-      //   if (bestScore == 0 || score > bestScore) {
-      //     StorageService().setHighScore(score);
-      //     bestScore = await StorageService().getHighScore();
-      //   }
-      //   timer?.cancel();
-      //   if (vibrationIsActiveOrNot == 'yes') {
-      //     Vibration.vibrate(duration: 600);
-      //     dev.log('Vibration Active');
-      //   } else if (vibrationIsActiveOrNot == 'no') {
-      //     dev.log('Vibration Not Active');
-      //   }
-      //   gameOverDialog();
-      // }
+      if (checkDamaged()) {
+        bestScore = await StorageService().getHighScore();
+        dev.log('Best Score $bestScore');
+        if (bestScore == 0 || score > bestScore) {
+          StorageService().setHighScore(score);
+          bestScore = await StorageService().getHighScore();
+        }
+        timer?.cancel();
+        if (vibrationIsActiveOrNot == 'yes') {
+          Vibration.vibrate(duration: 600);
+          dev.log('Vibration Active');
+        } else if (vibrationIsActiveOrNot == 'no') {
+          dev.log('Vibration Not Active');
+        }
+        gameOverDialog();
+      }
     });
   }
 

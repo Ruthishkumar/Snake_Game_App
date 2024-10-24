@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/app_button.dart';
 import 'package:snake_game_app/view/screens/game_screen.dart';
@@ -89,16 +88,16 @@ class _GameOnboardingScreenState extends State<GameOnboardingScreen> {
                 },
               ),
               SizedBox(height: 30.h),
-              AppButton(
-                iconData: Icons.settings,
-                label: 'Clear',
-                type: AppButtonType.secondary,
-                onTap: () async {
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  await prefs.clear();
-                },
-              ),
+              // AppButton(
+              //   iconData: Icons.settings,
+              //   label: 'Clear',
+              //   type: AppButtonType.secondary,
+              //   onTap: () async {
+              //     SharedPreferences prefs =
+              //         await SharedPreferences.getInstance();
+              //     await prefs.clear();
+              //   },
+              // ),
             ],
           ),
         ),
