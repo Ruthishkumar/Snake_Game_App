@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/app_button.dart';
 import 'package:snake_game_app/view/screens/game_screen.dart';
@@ -23,18 +24,30 @@ class _GameOnboardingScreenState extends State<GameOnboardingScreen> {
 
   String audio = '';
   String vibration = '';
+  String controls = '';
+  String difficulty = '';
 
   /// storage set data
   getStorageData() async {
     audio = await StorageService().getAudio();
     vibration = await StorageService().getVibration();
-    await StorageService().setControls(true);
+    controls = await StorageService().getControls();
+    difficulty = await StorageService().getDifficulty();
+
     if (audio == '') {
       StorageService().setAudio('yes');
     }
 
     if (vibration == '') {
       StorageService().setVibrations('yes');
+    }
+
+    if (controls == '') {
+      StorageService().setControls('JoyPad');
+    }
+
+    if (difficulty == '') {
+      StorageService().setDifficulty('easy');
     }
 
     setState(() {});
@@ -75,16 +88,17 @@ class _GameOnboardingScreenState extends State<GameOnboardingScreen> {
                       AnimationPageRoute(widget: const GameSettingScreen()));
                 },
               ),
-              // AppButton(
-              //   iconData: Icons.settings,
-              //   label: 'Cleaar',
-              //   type: AppButtonType.secondary,
-              //   onTap: () async {
-              //     SharedPreferences prefs =
-              //         await SharedPreferences.getInstance();
-              //     await prefs.clear();
-              //   },
-              // ),
+              SizedBox(height: 30.h),
+              AppButton(
+                iconData: Icons.settings,
+                label: 'Clear',
+                type: AppButtonType.secondary,
+                onTap: () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.clear();
+                },
+              ),
             ],
           ),
         ),

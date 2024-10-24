@@ -35,7 +35,6 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   void initState() {
-    startGame();
     getStorageData();
     super.initState();
   }
@@ -50,13 +49,18 @@ class _GameScreenState extends State<GameScreen> {
 
   String vibrationIsActiveOrNot = '';
   String audioIsActiveOrNot = '';
-  bool controls = false;
+  String controls = '';
+  String difficulty = '';
+  // bool controls = false;
 
   /// get storage service data
   getStorageData() async {
     vibrationIsActiveOrNot = await StorageService().getVibration();
     audioIsActiveOrNot = await StorageService().getAudio();
     controls = await StorageService().getControls();
+    difficulty = await StorageService().getDifficulty();
+    dev.log('Difficulty ${difficulty}');
+    startGame();
     setState(() {});
   }
 
@@ -68,16 +72,59 @@ class _GameScreenState extends State<GameScreen> {
       body: Column(
         children: [
           gameView(),
-          controlView()
-          // controls == true
-          //     ? controlView()
-          //     : Column(
-          //         children: [
-          //           SizedBox(height: 100.h),
-          //           Image.asset('assets/images/swipe_gestures.png',
-          //               height: 200.h),
-          //         ],
-          //       )
+
+          // GestureDetector(
+          //   onTap: () {
+          //     dev.log('Up On Pressed');
+          //   },
+          //   child: Container(
+          //     color: Colors.orange,
+          //     child: RotationTransition(
+          //       turns: new AlwaysStoppedAnimation(180 / 360),
+          //       child: CustomPaint(
+          //         size: Size(130, 70),
+          //         painter: TrianglePainter(),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     Stack(
+          //       alignment: Alignment.center,
+          //       children: [
+          //         RotationTransition(
+          //           turns: new AlwaysStoppedAnimation(90 / 360),
+          //           child: CustomPaint(
+          //             size: Size(120, 70),
+          //             painter: TrianglePainter(),
+          //           ),
+          //         ),
+          //         Icon(
+          //           Icons.arrow_back_ios,
+          //           color: Colors.white,
+          //         ),
+          //       ],
+          //     ),
+          //     RotationTransition(
+          //       turns: new AlwaysStoppedAnimation(270 / 360),
+          //       child: CustomPaint(
+          //         size: Size(120, 70),
+          //         painter: TrianglePainter(),
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          // RotationTransition(
+          //   turns: new AlwaysStoppedAnimation(360 / 360),
+          //   child: CustomPaint(
+          //     size: Size(130, 70), // Adjust size as needed
+          //     painter: TrianglePainter(),
+          //   ),
+          // ),
+          // controlView(),
+          controls == 'JoyPad' ? joyPadView() : swipeView()
         ],
       ),
     ));
@@ -103,20 +150,44 @@ class _GameScreenState extends State<GameScreen> {
     );
   }
 
-  /// control view
-  Widget controlView() {
+  /// joy Pad View
+  Widget joyPadView() {
     return Container(
       padding: EdgeInsets.fromLTRB(15.r, 12.r, 15.r, 0.r),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Score : $score',
                 style: AppStyles.instance.gameFontStyles(
                     fontSize: 16.sp, fontWeight: FontWeight.w500),
               ),
+              // Text(
+              //   "$gameDifficulties seconds",
+              //   style: TextStyle(fontSize: 24, color: Colors.white),
+              // ),
+              // GestureDetector(
+              //   onTap: () {
+              //     dev.log('On Tap');
+              //     resumeAlertDialog();
+              //   },
+              //   child: Container(
+              //     padding: EdgeInsets.all(10.r),
+              //     decoration: BoxDecoration(
+              //         border: Border.all(color: AppColors.appWhiteTextColor),
+              //         borderRadius: BorderRadius.all(Radius.circular(8.r)),
+              //         color: Colors.transparent),
+              //     child: Icon(
+              //       Icons.pause,
+              //       color: AppColors.appWhiteTextColor,
+              //       size: 20.sp,
+              //     ),
+              //   ),
+              // )
             ],
           ),
           SizedBox(height: 10.h),
@@ -135,7 +206,7 @@ class _GameScreenState extends State<GameScreen> {
               }
             },
             iconSize: 80.h,
-            icon: Icon(Icons.arrow_circle_up_rounded),
+            icon: const Icon(Icons.arrow_circle_up_rounded),
             color: Colors.white,
           ),
           Row(
@@ -151,7 +222,7 @@ class _GameScreenState extends State<GameScreen> {
                 icon: const Icon(Icons.arrow_circle_left_rounded),
                 color: Colors.white,
               ),
-              SizedBox(width: 100.w),
+              SizedBox(width: 50.w),
               IconButton(
                 onPressed: () {
                   if (direction != Direction.left) {
@@ -159,7 +230,7 @@ class _GameScreenState extends State<GameScreen> {
                   }
                 },
                 iconSize: 80.h,
-                icon: Icon(Icons.arrow_circle_right_rounded),
+                icon: const Icon(Icons.arrow_circle_right_rounded),
                 color: Colors.white,
               ),
             ],
@@ -176,6 +247,16 @@ class _GameScreenState extends State<GameScreen> {
           )
         ],
       ),
+    );
+  }
+
+  /// swipe view
+  Widget swipeView() {
+    return Column(
+      children: [
+        SizedBox(height: 100.h),
+        Image.asset('assets/images/swipe_gestures.png', height: 200.h),
+      ],
     );
   }
 
@@ -222,6 +303,8 @@ class _GameScreenState extends State<GameScreen> {
   int seconds = 0;
   bool isRunning = false;
 
+  int gameDifficulties = 0;
+
   /// start game method
   void startGame() {
     if (timer != null) {
@@ -231,13 +314,23 @@ class _GameScreenState extends State<GameScreen> {
     makeBorderColor();
     generateFood();
     snakePosition = [45, 44, 43];
+    if (difficulty == 'easy') {
+      gameDifficulties = 200;
+      dev.log('Easy');
+    } else if (difficulty == 'medium') {
+      gameDifficulties = 150;
+      dev.log('Medium');
+    } else if (difficulty == 'hard') {
+      gameDifficulties = 100;
+      dev.log('Hard');
+    }
+    gameDifficulties += 100;
     snakeHead = snakePosition.first;
-    timer = Timer.periodic(const Duration(milliseconds: 300), (timerOne) async {
+    timer = Timer.periodic(Duration(milliseconds: gameDifficulties),
+        (timerOne) async {
       updateSnake();
       setState(() {
         seconds++;
-        // await player.setSource(AssetSource('audio/snake_food.mp3'));
-        // await player.resume();
       });
       isRunning = true;
       if (checkDamaged()) {
@@ -256,6 +349,55 @@ class _GameScreenState extends State<GameScreen> {
         }
         gameOverDialog();
       }
+    });
+  }
+
+  /// update fast time
+  updateTimeSpeed() {
+    if (timer != null) {
+      timer!.cancel();
+    }
+    generateFood();
+    if (difficulty == 'easy') {
+      setState(() {
+        gameDifficulties -= 2;
+      });
+      dev.log('Easy');
+    } else if (difficulty == 'medium') {
+      setState(() {
+        gameDifficulties -= 4;
+      });
+      dev.log('Medium');
+    } else if (difficulty == 'hard') {
+      setState(() {
+        gameDifficulties -= 6;
+      });
+      dev.log('Hard');
+    }
+    snakeHead = snakePosition.first;
+    timer = Timer.periodic(Duration(milliseconds: gameDifficulties),
+        (timerOne) async {
+      updateSnake();
+      setState(() {
+        seconds++;
+      });
+      isRunning = true;
+      // if (checkDamaged()) {
+      //   bestScore = await StorageService().getHighScore();
+      //   dev.log('Best Score $bestScore');
+      //   if (bestScore == 0 || score > bestScore) {
+      //     StorageService().setHighScore(score);
+      //     bestScore = await StorageService().getHighScore();
+      //   }
+      //   timer?.cancel();
+      //   if (vibrationIsActiveOrNot == 'yes') {
+      //     Vibration.vibrate(duration: 600);
+      //     dev.log('Vibration Active');
+      //   } else if (vibrationIsActiveOrNot == 'no') {
+      //     dev.log('Vibration Not Active');
+      //   }
+      //   gameOverDialog();
+      // }
     });
   }
 
@@ -280,16 +422,16 @@ class _GameScreenState extends State<GameScreen> {
           return AlertDialog(
               title: Column(children: [
             Text('Game Over',
-                style: AppStyles.instance.gamePopTextStyles(
-                    fontSize: 20.sp, fontWeight: FontWeight.w500)),
+                style: AppStyles.instance.gameFontStylesBlack(
+                    fontSize: 16.sp, fontWeight: FontWeight.w500)),
             SizedBox(height: 8.h),
-            Text('Best Score $bestScore',
-                style: AppStyles.instance.gamePopTextStyles(
-                    fontSize: 15.sp, fontWeight: FontWeight.w700)),
+            Text('Best $bestScore',
+                style: AppStyles.instance.gameFontStylesBlack(
+                    fontSize: 11.sp, fontWeight: FontWeight.w700)),
             SizedBox(height: 8.h),
-            Text('Your Score is $score',
-                style: AppStyles.instance.gamePopTextStyles(
-                    fontSize: 15.sp, fontWeight: FontWeight.w500)),
+            Text('Score $score',
+                style: AppStyles.instance.gameFontStylesBlack(
+                    fontSize: 11.sp, fontWeight: FontWeight.w700)),
             SizedBox(height: 12.h),
             GestureDetector(
                 behavior: HitTestBehavior.opaque,
@@ -309,10 +451,37 @@ class _GameScreenState extends State<GameScreen> {
                     child: Center(
                       child: Text(
                         'Restart',
-                        style: AppStyles.instance.whiteTextStyles(
-                            fontWeight: FontWeight.w500, fontSize: 16.sp),
+                        style: AppStyles.instance.gameFontStyles(
+                            fontWeight: FontWeight.w500, fontSize: 14.sp),
                       ),
                     )))
+          ]));
+        });
+  }
+
+  resumeAlertDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        barrierColor: Colors.black87,
+        builder: (context) {
+          return AlertDialog(
+              title: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(),
+                Text('Paused',
+                    style: AppStyles.instance.gameFontStylesBlack(
+                        fontSize: 16.sp, fontWeight: FontWeight.w500)),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Icon(Icons.close, color: AppColors.primaryTextColor))
+              ],
+            ),
+            SizedBox(height: 8.h),
           ]));
         });
   }
@@ -351,6 +520,14 @@ class _GameScreenState extends State<GameScreen> {
     if (snakeHead == foodPosition) {
       score++;
       generateFood();
+      dev.log('Generate Food');
+      // setState(() {
+      //   gameDifficulties += 100;
+      // });
+      updateTimeSpeed();
+
+      // timer!.cancel();
+
       if (vibrationIsActiveOrNot == 'yes') {
         Vibration.vibrate(duration: 200);
         dev.log('Vibration Active');
@@ -378,5 +555,31 @@ class _GameScreenState extends State<GameScreen> {
     if (borderSideList.contains(foodPosition)) {
       generateFood();
     }
+  }
+}
+
+class TrianglePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    // Create a paint object with color and style
+    final paint = Paint()
+      ..color = Colors.white.withOpacity(0.7)
+      ..strokeWidth = 1
+      ..style = PaintingStyle.stroke;
+
+    // Define the points of the triangle
+    final path = Path()
+      ..moveTo(size.width / 2, 6) // Top center
+      ..lineTo(1, size.height) // Bottom left
+      ..lineTo(size.width, size.height) // Bottom right
+      ..close(); // Connect back to the top center
+
+    // Draw the triangle on the canvas
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
   }
 }

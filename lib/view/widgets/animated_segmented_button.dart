@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
@@ -24,7 +26,7 @@ class _AnimatedSegmentedButtonState extends State<AnimatedSegmentedButton> {
   }
 
   getSwipeInitialPositionData() async {
-    initialPosition = await StorageService().getControls();
+    // initialPosition = await StorageService().getControls();
   }
 
   @override
@@ -41,6 +43,7 @@ class _AnimatedSegmentedButtonState extends State<AnimatedSegmentedButton> {
               if (!initialPosition) {
                 index = 1;
               }
+              log('Initial Position ${initialPosition}');
               widget.onToggleCallback(index);
               setState(() {});
             },
@@ -55,7 +58,7 @@ class _AnimatedSegmentedButtonState extends State<AnimatedSegmentedButton> {
                 children: List.generate(
                   widget.values.length,
                   (index) => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 10.r),
                     child: Center(
                       child: Text(widget.values[index],
                           style: AppStyles.instance.gameFontStylesBlack(
@@ -76,7 +79,7 @@ class _AnimatedSegmentedButtonState extends State<AnimatedSegmentedButton> {
               height: 55,
               decoration: BoxDecoration(
                   color: Colors.green,
-                  borderRadius: BorderRadius.all(Radius.circular(30.sp))),
+                  borderRadius: BorderRadius.all(Radius.circular(30.r))),
               alignment: Alignment.center,
               child: Text(
                 initialPosition ? widget.values[0] : widget.values[1],

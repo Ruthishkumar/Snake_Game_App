@@ -7,7 +7,6 @@ import 'package:segmented_button_slide/segmented_button_slide.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
 import 'package:snake_game_app/view/service/storage_service.dart';
-import 'package:snake_game_app/view/widgets/animated_segmented_button.dart';
 
 class GameSettingScreen extends StatefulWidget {
   const GameSettingScreen({super.key});
@@ -24,33 +23,56 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
   }
 
   String vibration = '';
-
   bool vibrationChanges = true;
 
+  String audio = '';
   bool audioChanges = true;
 
-  String audio = '';
-
+  String controls = '';
   int controlsSegment = 0;
+
+  String difficulty = '';
+  int difficultyIndex = 0;
 
   /// get storage data method
   getStorageData() async {
-    vibration = await StorageService().getVibration();
-    log('Initial Vibration ${vibrationChanges}');
+    /// storage data with audio
     audio = await StorageService().getAudio();
+    log('Initial Audio $audio');
     if (audio == 'yes') {
       audioChanges = true;
     } else if (audio == 'no') {
       audioChanges = false;
     }
 
+    /// storage data with vibration
+    vibration = await StorageService().getVibration();
+    log('Initial Vibration $vibrationChanges');
     if (vibration == 'yes') {
       vibrationChanges = true;
     } else if (vibration == 'no') {
       vibrationChanges = false;
     }
 
-    log('Initial Audio ${audioChanges}');
+    /// storage data with controls
+    controls = await StorageService().getControls();
+    log('Initial Controls $controls');
+    if (controls == 'JoyPad') {
+      controlsIndex = 0;
+    } else if (controls == 'Swipe') {
+      controlsIndex = 1;
+    }
+
+    difficulty = await StorageService().getDifficulty();
+    log('Initial Difficulty $difficulty');
+    if (difficulty == 'easy') {
+      difficultyIndex = 0;
+    } else if (difficulty == 'medium') {
+      difficultyIndex = 1;
+    } else if (difficulty == 'hard') {
+      difficultyIndex = 2;
+    }
+
     // controlsSegment = await StorageService().getControls();
     // log('Initial Controls ${controlsSegment}');
     setState(() {});
@@ -93,8 +115,8 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
               vibrationSettingsWidget(),
               SizedBox(height: 40.h),
               controlSettingsWidget(),
-              // SizedBox(height: 40.h),
-              // difficultySettingWidget(),
+              SizedBox(height: 40.h),
+              difficultySettingWidget(),
             ],
           ),
         ),
@@ -138,10 +160,6 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
             } else if (value == false) {
               StorageService().setAudio('no');
             }
-
-            // if (vibrationChanges == true) {
-            //
-            // }
             log('Audio State Changes ${audioChanges}');
           },
           styleBuilder: (value) => ToggleStyle(
@@ -234,7 +252,7 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
     );
   }
 
-  int? controlIndex = 0;
+  int controlsIndex = 0;
 
   /// controls setting widget
   controlSettingsWidget() {
@@ -249,100 +267,37 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
           ],
         ),
         SizedBox(height: 30.h),
-        // Row(
-        //   children: [
-        //     GestureDetector(
-        //       onTap: () {
-        //         setState(() {
-        //           selectedWing = 0;
-        //         });
-        //       },
-        //       child: Container(
-        //         width: 165.w,
-        //         height: 50.h,
-        //         padding:
-        //             EdgeInsets.symmetric(vertical: 10.sp, horizontal: 8.sp),
-        //         decoration: BoxDecoration(
-        //           // border: Border.all(
-        //           //     color: selectedWing == 0
-        //           //         ? const Color(0xff2D2C2C)
-        //           //         : const Color(0xffA7E4DF)),
-        //           borderRadius: BorderRadius.only(
-        //               topLeft: Radius.circular(30.r),
-        //               bottomLeft: Radius.circular(30.r)),
-        //           color: selectedWing == 0
-        //               ? Colors.green
-        //               : Colors.white.withOpacity(0.6),
-        //         ),
-        //         child: Center(
-        //             child: Text(
-        //           'KeyPad',
-        //           style: selectedWing == 0
-        //               ? AppStyles.instance.gameFontStyles(
-        //                   fontSize: 14.sp, fontWeight: FontWeight.w400)
-        //               : AppStyles.instance.gameFontStylesBlack(
-        //                   fontSize: 14.sp, fontWeight: FontWeight.w400),
-        //         )),
-        //       ),
-        //     ),
-        //     GestureDetector(
-        //       onTap: () {
-        //         setState(() {
-        //           selectedWing = 1;
-        //         });
-        //       },
-        //       child: Container(
-        //         width: 165.w,
-        //         height: 50.h,
-        //         padding:
-        //             EdgeInsets.symmetric(vertical: 10.sp, horizontal: 8.sp),
-        //         decoration: BoxDecoration(
-        //           // border: Border.all(
-        //           //     color: selectedWing == 1
-        //           //         ? const Color(0xff2D2C2C)
-        //           //         : const Color(0xffA7E4DF)),
-        //           borderRadius: BorderRadius.only(
-        //               topRight: Radius.circular(30.r),
-        //               bottomRight: Radius.circular(30.r)),
-        //           color: selectedWing == 1
-        //               ? Colors.green
-        //               : Colors.white.withOpacity(0.6),
-        //         ),
-        //         child: Center(
-        //             child: Text(
-        //           'Swipe',
-        //           style: selectedWing == 1
-        //               ? AppStyles.instance.gameFontStyles(
-        //                   fontSize: 14.sp, fontWeight: FontWeight.w400)
-        //               : AppStyles.instance.gameFontStylesBlack(
-        //                   fontSize: 14.sp, fontWeight: FontWeight.w400),
-        //         )),
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        AnimatedSegmentedButton(
-          values: const [
-            'KeyPad',
-            'Swipe',
-          ],
-          onToggleCallback: (value) {
-            setState(() {
-              controlsSegment = value;
-              log('Control Segment ${controlsSegment}');
-            });
-            if (controlsSegment == 0) {
-              StorageService().setControls(true);
-            } else if (controlsSegment == 1) {
-              StorageService().setControls(false);
+        SegmentedButtonSlide(
+          selectedEntry: controlsIndex,
+          onChange: (index) {
+            setState(() => controlsIndex = index);
+            if (index == 0) {
+              StorageService().setControls('JoyPad');
+            } else if (index == 1) {
+              StorageService().setControls('Swipe');
             }
           },
+          entries: const [
+            SegmentedButtonSlideEntry(label: "JoyPad"),
+            SegmentedButtonSlideEntry(label: "Swipe"),
+          ],
+          colors: SegmentedButtonSlideColors(
+            barColor: Colors.white.withOpacity(0.7),
+            backgroundSelectedColor: Colors.green,
+          ),
+          height: 55,
+          borderRadius: BorderRadius.circular(30),
+          selectedTextStyle: AppStyles.instance
+              .gameFontStyles(fontSize: 14.sp, fontWeight: FontWeight.w400),
+          unselectedTextStyle: AppStyles.instance.gameFontStylesBlack(
+              fontSize: 14.sp, fontWeight: FontWeight.w400),
+          hoverTextStyle: const TextStyle(
+            color: Colors.orange,
+          ),
         ),
       ],
     );
   }
-
-  int selectedOption = 0;
 
   /// difficulty settings widget
   difficultySettingWidget() {
@@ -358,47 +313,32 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
         ),
         SizedBox(height: 30.h),
         SegmentedButtonSlide(
-          selectedEntry: selectedOption,
-          onChange: (selected) => setState(() => selectedOption = selected),
+          selectedEntry: difficultyIndex,
+          onChange: (index) {
+            setState(() => difficultyIndex = index);
+            if (index == 0) {
+              StorageService().setDifficulty('easy');
+            } else if (index == 1) {
+              StorageService().setDifficulty('medium');
+            } else if (index == 2) {
+              StorageService().setDifficulty('hard');
+            }
+          },
           entries: const [
-            SegmentedButtonSlideEntry(
-              icon: Icons.home_rounded,
-              label: "Home",
-            ),
-            SegmentedButtonSlideEntry(
-              icon: Icons.list_rounded,
-              label: "List",
-            ),
-            SegmentedButtonSlideEntry(
-              icon: Icons.settings_rounded,
-              label: "Settings",
-            ),
+            SegmentedButtonSlideEntry(label: "Easy"),
+            SegmentedButtonSlideEntry(label: "Medium"),
+            SegmentedButtonSlideEntry(label: "Hard"),
           ],
           colors: SegmentedButtonSlideColors(
-            barColor:
-                Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
-            backgroundSelectedColor:
-                Theme.of(context).colorScheme.primaryContainer,
+            barColor: Colors.white.withOpacity(0.7),
+            backgroundSelectedColor: Colors.green,
           ),
-          slideShadow: [
-            BoxShadow(
-              color: Colors.blue.withOpacity(1),
-              blurRadius: 5,
-              spreadRadius: 1,
-            )
-          ],
-          margin: const EdgeInsets.all(16),
-          height: 70,
-          padding: const EdgeInsets.all(16),
-          borderRadius: BorderRadius.circular(8),
-          selectedTextStyle: const TextStyle(
-            fontWeight: FontWeight.w700,
-            color: Colors.green,
-          ),
-          unselectedTextStyle: const TextStyle(
-            fontWeight: FontWeight.w400,
-            color: Colors.red,
-          ),
+          height: 55,
+          borderRadius: BorderRadius.circular(30),
+          selectedTextStyle: AppStyles.instance
+              .gameFontStyles(fontSize: 14.sp, fontWeight: FontWeight.w400),
+          unselectedTextStyle: AppStyles.instance.gameFontStylesBlack(
+              fontSize: 14.sp, fontWeight: FontWeight.w400),
           hoverTextStyle: const TextStyle(
             color: Colors.orange,
           ),

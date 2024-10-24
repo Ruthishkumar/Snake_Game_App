@@ -45,15 +45,27 @@ class StorageService {
     return prefs.getString('audio') ?? '';
   }
 
-  Future<void> setControls(bool? controls) async {
+  Future<void> setControls(String? controls) async {
     if (controls != null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setBool('controls', controls);
+      prefs.setString('controls', controls);
     }
   }
 
-  Future<bool> getControls() async {
+  Future<String> getControls() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('controls') ?? false;
+    return prefs.getString('controls') ?? '';
+  }
+
+  Future<void> setDifficulty(String? difficulty) async {
+    if (difficulty != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('difficulty', difficulty);
+    }
+  }
+
+  Future<String> getDifficulty() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('difficulty') ?? '';
   }
 }
