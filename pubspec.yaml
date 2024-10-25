@@ -21,7 +21,9 @@ dependencies:
   segmented_button_slide: ^2.0.0
   vibration: ^2.0.1
   audioplayers: ^6.1.0
-  pushable_button: ^0.0.4
+  fluttertoast: ^8.2.8
+  flutter_joystick: ^0.2.1
+
 
 
 

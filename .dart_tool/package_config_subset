@@ -86,6 +86,10 @@ fixnum
 3.1
 file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/fixnum-1.1.1/
 file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/fixnum-1.1.1/lib/
+flutter_joystick
+3.1
+file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_joystick-0.2.1/
+file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_joystick-0.2.1/lib/
 flutter_lints
 2.18
 file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.2/
@@ -94,6 +98,10 @@ flutter_screenutil
 2.17
 file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_screenutil-5.9.3/
 file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_screenutil-5.9.3/lib/
+fluttertoast
+2.12
+file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/fluttertoast-8.2.8/
+file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/fluttertoast-8.2.8/lib/
 font_awesome_flutter
 3.0
 file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/font_awesome_flutter-10.7.0/
@@ -178,10 +186,6 @@ plugin_platform_interface
 3.0
 file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/plugin_platform_interface-2.1.8/
 file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/plugin_platform_interface-2.1.8/lib/
-pushable_button
-3.2
-file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/pushable_button-0.0.4/
-file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/pushable_button-0.0.4/lib/
 segmented_button_slide
 3.1
 file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/segmented_button_slide-2.0.0/

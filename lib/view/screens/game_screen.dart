@@ -47,7 +47,6 @@ class _GameScreenState extends State<GameScreen> {
     timer?.cancel();
     resumeTimer?.cancel();
     player.dispose();
-
     super.dispose();
   }
 
@@ -68,70 +67,79 @@ class _GameScreenState extends State<GameScreen> {
     setState(() {});
   }
 
+  /// exit app alert dialog
+  onWillPop() async {
+    timer!.cancel();
+    resumeAlertDialog();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      backgroundColor: AppColors.primaryTextColor,
-      body: Column(
-        children: [
-          scoreCardWidget(),
-          gameView(),
-          controls == 'JoyPad' ? joyPadView() : swipeView(),
-          // GestureDetector(
-          //   onTap: () {
-          //     dev.log('Up On Pressed');
-          //   },
-          //   child: Container(
-          //     color: Colors.orange,
-          //     child: RotationTransition(
-          //       turns: new AlwaysStoppedAnimation(180 / 360),
-          //       child: CustomPaint(
-          //         size: Size(130, 70),
-          //         painter: TrianglePainter(),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     Stack(
-          //       alignment: Alignment.center,
-          //       children: [
-          //         RotationTransition(
-          //           turns: new AlwaysStoppedAnimation(90 / 360),
-          //           child: CustomPaint(
-          //             size: Size(120, 70),
-          //             painter: TrianglePainter(),
-          //           ),
-          //         ),
-          //         Icon(
-          //           Icons.arrow_back_ios,
-          //           color: Colors.white,
-          //         ),
-          //       ],
-          //     ),
-          //     RotationTransition(
-          //       turns: new AlwaysStoppedAnimation(270 / 360),
-          //       child: CustomPaint(
-          //         size: Size(120, 70),
-          //         painter: TrianglePainter(),
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          // RotationTransition(
-          //   turns: new AlwaysStoppedAnimation(360 / 360),
-          //   child: CustomPaint(
-          //     size: Size(130, 70), // Adjust size as needed
-          //     painter: TrianglePainter(),
-          //   ),
-          // ),
-          // controlView(),
-        ],
-      ),
-    ));
+    return WillPopScope(
+      onWillPop: () => onWillPop(),
+      child: SafeArea(
+          child: Scaffold(
+        backgroundColor: AppColors.primaryTextColor,
+        body: Column(
+          children: [
+            scoreCardWidget(),
+            gameView(),
+            controls == 'JoyPad' ? joyPadView() : swipeView(),
+            // GestureDetector(
+            //   onTap: () {
+            //     dev.log('Up On Pressed');
+            //   },
+            //   child: Container(
+            //     color: Colors.orange,
+            //     child: RotationTransition(
+            //       turns: new AlwaysStoppedAnimation(180 / 360),
+            //       child: CustomPaint(
+            //         size: Size(130, 70),
+            //         painter: TrianglePainter(),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Stack(
+            //       alignment: Alignment.center,
+            //       children: [
+            //         RotationTransition(
+            //           turns: new AlwaysStoppedAnimation(90 / 360),
+            //           child: CustomPaint(
+            //             size: Size(120, 70),
+            //             painter: TrianglePainter(),
+            //           ),
+            //         ),
+            //         Icon(
+            //           Icons.arrow_back_ios,
+            //           color: Colors.white,
+            //         ),
+            //       ],
+            //     ),
+            //     RotationTransition(
+            //       turns: new AlwaysStoppedAnimation(270 / 360),
+            //       child: CustomPaint(
+            //         size: Size(120, 70),
+            //         painter: TrianglePainter(),
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            // RotationTransition(
+            //   turns: new AlwaysStoppedAnimation(360 / 360),
+            //   child: CustomPaint(
+            //     size: Size(130, 70), // Adjust size as needed
+            //     painter: TrianglePainter(),
+            //   ),
+            // ),
+            // controlView(),
+          ],
+        ),
+      )),
+    );
   }
 
   /// score card widget
@@ -175,6 +183,7 @@ class _GameScreenState extends State<GameScreen> {
   Timer? resumeTimer;
   int resumeCountDownValue = 3;
 
+  /// start resume timer
   void startResumeTimer() {
     resumeTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (resumeDuration.inSeconds <= 0) {
@@ -234,16 +243,16 @@ class _GameScreenState extends State<GameScreen> {
                   ),
                 ),
               ),
-              IconButton(
-                onPressed: () {
-                  if (direction != Direction.down) {
-                    direction = Direction.up;
-                  }
-                },
-                iconSize: 80.h,
-                icon: const Icon(Icons.arrow_circle_up_rounded),
-                color: Colors.white,
-              ),
+              // IconButton(
+              //   onPressed: () {
+              //     if (direction != Direction.down) {
+              //       direction = Direction.up;
+              //     }
+              //   },
+              //   iconSize: 80.h,
+              //   icon: const Icon(Icons.arrow_circle_up_rounded),
+              //   color: Colors.white,
+              // ),
               GamePlayFancyButton(
                 icon: const FaIcon(FontAwesomeIcons.pause,
                     color: AppColors.appWhiteTextColor),
@@ -272,42 +281,119 @@ class _GameScreenState extends State<GameScreen> {
             ],
           ),
           SizedBox(height: 10.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                onPressed: () {
-                  if (direction != Direction.right) {
-                    direction = Direction.left;
-                  }
-                },
-                iconSize: 80.h,
-                icon: const Icon(Icons.arrow_circle_left_rounded),
-                color: Colors.white,
-              ),
-              SizedBox(width: 50.w),
-              IconButton(
-                onPressed: () {
-                  if (direction != Direction.left) {
-                    direction = Direction.right;
-                  }
-                },
-                iconSize: 80.h,
-                icon: const Icon(Icons.arrow_circle_right_rounded),
-                color: Colors.white,
-              ),
-            ],
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.5),
+                borderRadius: BorderRadius.all(Radius.circular(100.sp))),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Up Arrow with controlled size and padding
+                SizedBox(
+                  height: 70,
+                  width: 70,
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_drop_up, color: Colors.white),
+                    iconSize: 50,
+                    padding: EdgeInsets.all(5),
+                    onPressed: () {
+                      if (direction != Direction.down) {
+                        direction = Direction.up;
+                      }
+                    },
+                  ),
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Left Arrow
+                    SizedBox(
+                      height: 70,
+                      width: 70,
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_left, color: Colors.white),
+                        iconSize: 50,
+                        padding: EdgeInsets.all(5),
+                        onPressed: () {
+                          if (direction != Direction.right) {
+                            direction = Direction.left;
+                          }
+                        },
+                      ),
+                    ),
+                    // Center Spacer
+                    SizedBox(width: 40),
+                    // Right Arrow
+                    SizedBox(
+                      height: 70,
+                      width: 70,
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_right, color: Colors.white),
+                        iconSize: 50,
+                        padding: EdgeInsets.all(5),
+                        onPressed: () {
+                          if (direction != Direction.left) {
+                            direction = Direction.right;
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                // Down Arrow
+                SizedBox(
+                  height: 70,
+                  width: 70,
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_drop_down, color: Colors.white),
+                    iconSize: 50,
+                    padding: EdgeInsets.all(5),
+                    onPressed: () {
+                      if (direction != Direction.up) {
+                        direction = Direction.down;
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
-          IconButton(
-            onPressed: () {
-              if (direction != Direction.up) {
-                direction = Direction.down;
-              }
-            },
-            iconSize: 80.h,
-            icon: const Icon(Icons.arrow_circle_down_rounded),
-            color: Colors.white,
-          )
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     IconButton(
+          //       onPressed: () {
+          //         if (direction != Direction.right) {
+          //           direction = Direction.left;
+          //         }
+          //       },
+          //       iconSize: 80.h,
+          //       icon: const Icon(Icons.arrow_circle_left_rounded),
+          //       color: Colors.white,
+          //     ),
+          //     SizedBox(width: 50.w),
+          //     IconButton(
+          //       onPressed: () {
+          //         if (direction != Direction.left) {
+          //           direction = Direction.right;
+          //         }
+          //       },
+          //       iconSize: 80.h,
+          //       icon: const Icon(Icons.arrow_circle_right_rounded),
+          //       color: Colors.white,
+          //     ),
+          //   ],
+          // ),
+          // IconButton(
+          //   onPressed: () {
+          //     if (direction != Direction.up) {
+          //       direction = Direction.down;
+          //     }
+          //   },
+          //   iconSize: 80.h,
+          //   icon: const Icon(Icons.arrow_circle_down_rounded),
+          //   color: Colors.white,
+          // )
         ],
       ),
     );
