@@ -5,9 +5,12 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:snake_game_app/utils/styles/animated_fancy_button.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
 import 'package:snake_game_app/utils/styles/direction_enum.dart';
+import 'package:snake_game_app/view/screens/game_onboarding_screen.dart';
 import 'package:snake_game_app/view/service/storage_service.dart';
 import 'package:vibration/vibration.dart';
 
@@ -42,6 +45,7 @@ class _GameScreenState extends State<GameScreen> {
   @override
   void dispose() {
     timer?.cancel();
+    resumeTimer?.cancel();
     player.dispose();
 
     super.dispose();
@@ -71,8 +75,9 @@ class _GameScreenState extends State<GameScreen> {
       backgroundColor: AppColors.primaryTextColor,
       body: Column(
         children: [
+          scoreCardWidget(),
           gameView(),
-
+          controls == 'JoyPad' ? joyPadView() : swipeView(),
           // GestureDetector(
           //   onTap: () {
           //     dev.log('Up On Pressed');
@@ -124,16 +129,32 @@ class _GameScreenState extends State<GameScreen> {
           //   ),
           // ),
           // controlView(),
-          controls == 'JoyPad' ? joyPadView() : swipeView()
         ],
       ),
     ));
   }
 
+  /// score card widget
+  scoreCardWidget() {
+    return Container(
+      padding: EdgeInsets.fromLTRB(20.r, 20.r, 8.r, 0.r),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Score : $score',
+            style: AppStyles.instance
+                .gameFontStyles(fontSize: 16.sp, fontWeight: FontWeight.w500),
+          ),
+        ],
+      ),
+    );
+  }
+
   /// game view
   Widget gameView() {
     return Container(
-      padding: EdgeInsets.fromLTRB(8.r, 40.r, 8.r, 0.r),
+      padding: EdgeInsets.fromLTRB(8.r, 20.r, 8.r, 0.r),
       child: GridView.builder(
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -150,31 +171,91 @@ class _GameScreenState extends State<GameScreen> {
     );
   }
 
+  Duration resumeDuration = const Duration(seconds: 3);
+  Timer? resumeTimer;
+  int resumeCountDownValue = 3;
+
+  void startResumeTimer() {
+    resumeTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (resumeDuration.inSeconds <= 0) {
+        resumeTimer?.cancel();
+        setState(() {
+          isCountDownVisible = false;
+          resumeCountDownValue = 3;
+          resumeDuration = const Duration(seconds: 3);
+          resumeGame();
+        });
+      } else {
+        setState(() {
+          resumeCountDownValue = resumeDuration.inSeconds;
+          resumeDuration = resumeDuration - const Duration(seconds: 1);
+        });
+      }
+    });
+  }
+
+  bool isCountDownVisible = false;
+
   /// joy Pad View
   Widget joyPadView() {
     return Container(
-      padding: EdgeInsets.fromLTRB(15.r, 12.r, 15.r, 0.r),
+      padding: EdgeInsets.fromLTRB(15.r, 30.r, 15.r, 0.r),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          isCountDownVisible == true
+              ? Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      '$resumeCountDownValue',
+                      style: AppStyles.instance.gameFontStyles(
+                          fontSize: 15.sp, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                )
+              : Container(),
           Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Score : $score',
-                style: AppStyles.instance.gameFontStyles(
-                    fontSize: 16.sp, fontWeight: FontWeight.w500),
+              // Container(),
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                  padding: EdgeInsets.all(10.r),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.transparent),
+                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                      color: Colors.transparent),
+                  child: Icon(
+                    Icons.start,
+                    color: Colors.transparent,
+                    size: 20.sp,
+                  ),
+                ),
               ),
-              // Text(
-              //   "$gameDifficulties seconds",
-              //   style: TextStyle(fontSize: 24, color: Colors.white),
-              // ),
+              IconButton(
+                onPressed: () {
+                  if (direction != Direction.down) {
+                    direction = Direction.up;
+                  }
+                },
+                iconSize: 80.h,
+                icon: const Icon(Icons.arrow_circle_up_rounded),
+                color: Colors.white,
+              ),
+              GamePlayFancyButton(
+                icon: const FaIcon(FontAwesomeIcons.pause,
+                    color: AppColors.appWhiteTextColor),
+                color: AppColors.primaryColor,
+                onPressed: () {
+                  dev.log('On Tap');
+                  timer!.cancel();
+                  resumeAlertDialog();
+                },
+              ),
               // GestureDetector(
-              //   onTap: () {
-              //     dev.log('On Tap');
-              //     resumeAlertDialog();
-              //   },
+              //   onTap: () {},
               //   child: Container(
               //     padding: EdgeInsets.all(10.r),
               //     decoration: BoxDecoration(
@@ -187,28 +268,10 @@ class _GameScreenState extends State<GameScreen> {
               //       size: 20.sp,
               //     ),
               //   ),
-              // )
+              // ),
             ],
           ),
           SizedBox(height: 10.h),
-          // ElevatedButton(
-          //   onPressed: isRunning ? _pauseTimer : resumeTimer,
-          //   child: Text(isRunning ? 'Pause' : 'Resume'),
-          // ),
-          // Text(
-          //   'Score ${score}',
-          //   style: TextStyle(color: Colors.white),
-          // ),
-          IconButton(
-            onPressed: () {
-              if (direction != Direction.down) {
-                direction = Direction.up;
-              }
-            },
-            iconSize: 80.h,
-            icon: const Icon(Icons.arrow_circle_up_rounded),
-            color: Colors.white,
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -324,7 +387,6 @@ class _GameScreenState extends State<GameScreen> {
       gameDifficulties = 100;
       dev.log('Hard');
     }
-    gameDifficulties += 100;
     snakeHead = snakePosition.first;
     timer = Timer.periodic(Duration(milliseconds: gameDifficulties),
         (timerOne) async {
@@ -332,23 +394,7 @@ class _GameScreenState extends State<GameScreen> {
       setState(() {
         seconds++;
       });
-      isRunning = true;
-      if (checkDamaged()) {
-        bestScore = await StorageService().getHighScore();
-        dev.log('Best Score $bestScore');
-        if (bestScore == 0 || score > bestScore) {
-          StorageService().setHighScore(score);
-          bestScore = await StorageService().getHighScore();
-        }
-        timer?.cancel();
-        if (vibrationIsActiveOrNot == 'yes') {
-          Vibration.vibrate(duration: 600);
-          dev.log('Vibration Active');
-        } else if (vibrationIsActiveOrNot == 'no') {
-          dev.log('Vibration Not Active');
-        }
-        gameOverDialog();
-      }
+      snakeSmashMethod();
     });
   }
 
@@ -381,35 +427,60 @@ class _GameScreenState extends State<GameScreen> {
       setState(() {
         seconds++;
       });
-      isRunning = true;
-      if (checkDamaged()) {
-        bestScore = await StorageService().getHighScore();
-        dev.log('Best Score $bestScore');
-        if (bestScore == 0 || score > bestScore) {
-          StorageService().setHighScore(score);
-          bestScore = await StorageService().getHighScore();
-        }
-        timer?.cancel();
-        if (vibrationIsActiveOrNot == 'yes') {
-          Vibration.vibrate(duration: 600);
-          dev.log('Vibration Active');
-        } else if (vibrationIsActiveOrNot == 'no') {
-          dev.log('Vibration Not Active');
-        }
-        gameOverDialog();
-      }
+      snakeSmashMethod();
     });
   }
 
-  void _pauseTimer() {
+  /// resume game
+  resumeGame() {
     if (timer != null) {
       timer!.cancel();
     }
-    isRunning = false;
+    if (difficulty == 'easy') {
+      setState(() {
+        gameDifficulties -= 2;
+      });
+      dev.log('Easy');
+    } else if (difficulty == 'medium') {
+      setState(() {
+        gameDifficulties -= 4;
+      });
+      dev.log('Medium');
+    } else if (difficulty == 'hard') {
+      setState(() {
+        gameDifficulties -= 6;
+      });
+      dev.log('Hard');
+    }
+    snakeHead = snakePosition.first;
+    timer = Timer.periodic(Duration(milliseconds: gameDifficulties),
+        (timerOne) async {
+      updateSnake();
+      setState(() {
+        seconds++;
+      });
+      snakeSmashMethod();
+    });
   }
 
-  void resumeTimer() {
-    startGame();
+  /// snake smash method
+  snakeSmashMethod() async {
+    if (checkDamaged()) {
+      bestScore = await StorageService().getHighScore();
+      dev.log('Best Score $bestScore');
+      if (bestScore == 0 || score > bestScore) {
+        StorageService().setHighScore(score);
+        bestScore = await StorageService().getHighScore();
+      }
+      timer?.cancel();
+      if (vibrationIsActiveOrNot == 'yes') {
+        Vibration.vibrate(duration: 600);
+        dev.log('Vibration Active');
+      } else if (vibrationIsActiveOrNot == 'no') {
+        dev.log('Vibration Not Active');
+      }
+      gameOverDialog();
+    }
   }
 
   /// game over alert dialog widget method
@@ -424,41 +495,55 @@ class _GameScreenState extends State<GameScreen> {
             Text('Game Over',
                 style: AppStyles.instance.gameFontStylesBlack(
                     fontSize: 16.sp, fontWeight: FontWeight.w500)),
-            SizedBox(height: 8.h),
-            Text('Best $bestScore',
-                style: AppStyles.instance.gameFontStylesBlack(
-                    fontSize: 11.sp, fontWeight: FontWeight.w700)),
-            SizedBox(height: 8.h),
-            Text('Score $score',
-                style: AppStyles.instance.gameFontStylesBlack(
-                    fontSize: 11.sp, fontWeight: FontWeight.w700)),
             SizedBox(height: 12.h),
-            GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
+            SizedBox(
+              width: 120.w,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Best',
+                      style: AppStyles.instance.gameFontStylesBlack(
+                          fontSize: 11.sp, fontWeight: FontWeight.w700)),
+                  Text('$bestScore',
+                      style: AppStyles.instance.gameFontStylesBlack(
+                          fontSize: 11.sp, fontWeight: FontWeight.w700)),
+                ],
+              ),
+            ),
+            SizedBox(height: 8.h),
+            SizedBox(
+              width: 120.w,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Score',
+                      style: AppStyles.instance.gameFontStylesBlack(
+                          fontSize: 11.sp, fontWeight: FontWeight.w700)),
+                  Text('$score',
+                      style: AppStyles.instance.gameFontStylesBlack(
+                          fontSize: 11.sp, fontWeight: FontWeight.w700)),
+                ],
+              ),
+            ),
+            SizedBox(height: 40.h),
+            RestartFancyButton(
+              text: 'Restart',
+              color: AppColors.appBackgroundColor,
+              onPressed: () {
+                Future.delayed(const Duration(milliseconds: 100), () {
                   Navigator.of(context).pop();
                   startGame();
                   setState(() {
                     score = 0;
                   });
-                },
-                child: Container(
-                    padding: EdgeInsets.all(12.r),
-                    width: 150.w,
-                    decoration: BoxDecoration(
-                        color: AppColors.appBackgroundColor,
-                        borderRadius: BorderRadius.all(Radius.circular(12.r))),
-                    child: Center(
-                      child: Text(
-                        'Restart',
-                        style: AppStyles.instance.gameFontStyles(
-                            fontWeight: FontWeight.w500, fontSize: 14.sp),
-                      ),
-                    )))
+                });
+              },
+            ),
           ]));
         });
   }
 
+  /// resume alert dialog widget
   resumeAlertDialog() {
     showDialog(
         context: context,
@@ -468,20 +553,110 @@ class _GameScreenState extends State<GameScreen> {
           return AlertDialog(
               title: Column(children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(),
                 Text('Paused',
                     style: AppStyles.instance.gameFontStylesBlack(
                         fontSize: 16.sp, fontWeight: FontWeight.w500)),
-                GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Icon(Icons.close, color: AppColors.primaryTextColor))
               ],
             ),
-            SizedBox(height: 8.h),
+            SizedBox(height: 30.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                GamePlayFancyButton(
+                  icon: const FaIcon(FontAwesomeIcons.house,
+                      color: AppColors.appWhiteTextColor),
+                  color: Colors.red,
+                  onPressed: () {
+                    Future.delayed(const Duration(milliseconds: 100), () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const GameOnboardingScreen()),
+                          (Route<dynamic> route) => false);
+                    });
+                  },
+                ),
+                GamePlayFancyButton(
+                  icon: const FaIcon(Icons.restart_alt_rounded,
+                      color: AppColors.appWhiteTextColor),
+                  color: Colors.orange,
+                  onPressed: () {
+                    Future.delayed(const Duration(milliseconds: 100), () {
+                      Navigator.of(context).pop();
+                      startGame();
+                      setState(() {
+                        score = 0;
+                      });
+                    });
+                  },
+                ),
+                GamePlayFancyButton(
+                  icon: const FaIcon(FontAwesomeIcons.play,
+                      color: AppColors.appWhiteTextColor),
+                  color: Colors.green,
+                  onPressed: () {
+                    Future.delayed(const Duration(milliseconds: 100), () {
+                      Navigator.of(context).pop();
+                      startResumeTimer();
+                      setState(() {
+                        isCountDownVisible = true;
+                      });
+                    });
+                  },
+                ),
+                // GestureDetector(
+                //   behavior: HitTestBehavior.opaque,
+                //   onTap: () {
+                //
+                //   },
+                //   child: Container(
+                //     padding: EdgeInsets.all(12.r),
+                //     decoration: BoxDecoration(
+                //         color: Colors.red,
+                //         borderRadius: BorderRadius.all(Radius.circular(8.r))),
+                //     child: const FaIcon(FontAwesomeIcons.house,
+                //         color: AppColors.appWhiteTextColor),
+                //   ),
+                // ),
+                // GestureDetector(
+                //   behavior: HitTestBehavior.opaque,
+                //   onTap: () {
+                //     Navigator.of(context).pop();
+                //     startGame();
+                //     setState(() {
+                //       score = 0;
+                //     });
+                //   },
+                //   child: Container(
+                //     padding: EdgeInsets.all(12.r),
+                //     decoration: BoxDecoration(
+                //         color: Colors.orange,
+                //         borderRadius: BorderRadius.all(Radius.circular(8.r))),
+                //     child: const FaIcon(Icons.restart_alt_rounded,
+                //         color: AppColors.appWhiteTextColor),
+                //   ),
+                // ),
+                // GestureDetector(
+                //   behavior: HitTestBehavior.opaque,
+                //   onTap: () {
+                //     Navigator.of(context).pop();
+                //     resumeGame();
+                //   },
+                //   child: Container(
+                //     padding: EdgeInsets.all(12.r),
+                //     decoration: BoxDecoration(
+                //         color: Colors.green,
+                //         borderRadius: BorderRadius.all(Radius.circular(8.r))),
+                //     child: const FaIcon(FontAwesomeIcons.play,
+                //         color: AppColors.appWhiteTextColor),
+                //   ),
+                // )
+              ],
+            )
           ]));
         });
   }

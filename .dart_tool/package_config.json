@@ -290,6 +290,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "pushable_button",
+      "rootUri": "file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/pushable_button-0.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
       "name": "segmented_button_slide",
       "rootUri": "file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/segmented_button_slide-2.0.0",
       "packageUri": "lib/",
@@ -458,7 +464,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2024-10-24T10:07:40.922425Z",
+  "generated": "2024-10-25T10:40:26.654095Z",
   "generator": "pub",
   "generatorVersion": "3.5.3",
   "flutterRoot": "file:///C:/Users/intel/fvm/versions/3.24.3",

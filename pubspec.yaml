@@ -21,6 +21,8 @@ dependencies:
   segmented_button_slide: ^2.0.0
   vibration: ^2.0.1
   audioplayers: ^6.1.0
+  pushable_button: ^0.0.4
+
 
 
 

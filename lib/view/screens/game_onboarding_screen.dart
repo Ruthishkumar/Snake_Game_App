@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:snake_game_app/utils/routes/app_routes.dart';
-import 'package:snake_game_app/utils/styles/app_button.dart';
+import 'package:snake_game_app/utils/styles/animated_fancy_button.dart';
+import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/view/screens/game_screen.dart';
 import 'package:snake_game_app/view/screens/game_settings_screen.dart';
 import 'package:snake_game_app/view/service/storage_service.dart';
@@ -68,26 +69,32 @@ class _GameOnboardingScreenState extends State<GameOnboardingScreen> {
             children: [
               Lottie.asset('assets/lottie_images/snake_animation.json'),
               SizedBox(height: 60.h),
-              AppButton(
+              AnimatedFancyButton(
                 iconData: Icons.play_arrow_rounded,
-                label: 'Play',
-                type: AppButtonType.primary,
-                onTap: () {
-                  Navigator.push(
-                      context, AnimationPageRoute(widget: const GameScreen()));
+                text: 'Play',
+                color: AppColors.appBackgroundColor,
+                onPressed: () {
+                  Future.delayed(const Duration(milliseconds: 100), () {
+                    Navigator.push(context,
+                        AnimationPageRoute(widget: const GameScreen()));
+                  });
                 },
               ),
               SizedBox(height: 30.h),
-              AppButton(
+              AnimatedFancyButton(
                 iconData: Icons.settings,
-                label: 'Settings',
-                type: AppButtonType.secondary,
-                onTap: () {
-                  Navigator.push(context,
-                      AnimationPageRoute(widget: const GameSettingScreen()));
+                text: 'Settings',
+                color: AppColors.primaryColor,
+                onPressed: () {
+                  if (!mounted) {
+                    return;
+                  }
+                  Future.delayed(const Duration(milliseconds: 100), () {
+                    Navigator.push(context,
+                        AnimationPageRoute(widget: const GameSettingScreen()));
+                  });
                 },
               ),
-              SizedBox(height: 30.h),
               // AppButton(
               //   iconData: Icons.settings,
               //   label: 'Clear',
