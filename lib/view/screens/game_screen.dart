@@ -163,19 +163,40 @@ class _GameScreenState extends State<GameScreen> {
   Widget gameView() {
     return Container(
       padding: EdgeInsets.fromLTRB(8.r, 20.r, 8.r, 0.r),
-      child: GridView.builder(
-          shrinkWrap: true,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: columnSide),
-          itemCount: rowSide * columnSide,
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              margin: EdgeInsets.all(1.r),
-              decoration: BoxDecoration(
-                  color: fillColor(index),
-                  borderRadius: BorderRadius.all(Radius.circular(8.r))),
-            );
-          }),
+      child: GestureDetector(
+        child: GridView.builder(
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: columnSide),
+            itemCount: rowSide * columnSide,
+            itemBuilder: (BuildContext context, int index) {
+              return GestureDetector(
+                onVerticalDragUpdate: (details) {
+                  dev.log('Sa');
+                  if (direction != Direction.up && details.delta.dy > 0) {
+                    direction = Direction.down;
+                  } else if (direction != Direction.down &&
+                      details.delta.dy < 0) {
+                    direction = Direction.up;
+                  }
+                },
+                onHorizontalDragUpdate: (details) {
+                  if (direction != Direction.left && details.delta.dx > 0) {
+                    direction = Direction.right;
+                  } else if (direction != Direction.right &&
+                      details.delta.dx < 0) {
+                    direction = Direction.left;
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.all(1.r),
+                  decoration: BoxDecoration(
+                      color: fillColor(index),
+                      borderRadius: BorderRadius.all(Radius.circular(8.r))),
+                ),
+              );
+            }),
+      ),
     );
   }
 
@@ -401,11 +422,32 @@ class _GameScreenState extends State<GameScreen> {
 
   /// swipe view
   Widget swipeView() {
-    return Column(
-      children: [
-        SizedBox(height: 100.h),
-        Image.asset('assets/images/swipe_gestures.png', height: 200.h),
-      ],
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onVerticalDragUpdate: (details) {
+        if (direction != Direction.up && details.delta.dy > 0) {
+          direction = Direction.down;
+        } else if (direction != Direction.down && details.delta.dy < 0) {
+          direction = Direction.up;
+        }
+      },
+      onHorizontalDragUpdate: (details) {
+        if (direction != Direction.left && details.delta.dx > 0) {
+          direction = Direction.right;
+        } else if (direction != Direction.right && details.delta.dx < 0) {
+          direction = Direction.left;
+        }
+      },
+      child: Container(
+        // color: Colors.red,
+        width: 400,
+        child: Column(
+          children: [
+            SizedBox(height: 100.h),
+            Image.asset('assets/images/swipe_gestures.png', height: 200.h),
+          ],
+        ),
+      ),
     );
   }
 
