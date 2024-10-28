@@ -21,7 +21,7 @@ class GameScreen extends StatefulWidget {
   State<GameScreen> createState() => _GameScreenState();
 }
 
-class _GameScreenState extends State<GameScreen> {
+class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
   int rowSide = 20;
   int columnSide = 20;
 
@@ -39,6 +39,7 @@ class _GameScreenState extends State<GameScreen> {
   @override
   void initState() {
     getStorageData();
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
@@ -47,6 +48,7 @@ class _GameScreenState extends State<GameScreen> {
     timer?.cancel();
     resumeTimer?.cancel();
     player.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -71,6 +73,22 @@ class _GameScreenState extends State<GameScreen> {
   onWillPop() async {
     timer!.cancel();
     resumeAlertDialog();
+  }
+
+  /// pause game with mi
+  void pauseTimer() {
+    timer!.cancel();
+    resumeTimer!.cancel();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
+      pauseTimer();
+    } else if (state == AppLifecycleState.resumed) {
+      resumeAlertDialog();
+    }
   }
 
   @override
