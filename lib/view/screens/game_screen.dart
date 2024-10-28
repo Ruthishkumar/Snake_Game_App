@@ -532,7 +532,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
       setState(() {
         seconds++;
       });
-      // snakeSmashMethod();
+      snakeSmashMethod();
     });
   }
 
@@ -565,7 +565,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
       setState(() {
         seconds++;
       });
-      // snakeSmashMethod();
+      snakeSmashMethod();
     });
   }
 
@@ -597,7 +597,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
       setState(() {
         seconds++;
       });
-      // snakeSmashMethod();
+      snakeSmashMethod();
     });
   }
 
