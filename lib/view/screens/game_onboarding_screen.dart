@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/animated_fancy_button.dart';
-import 'package:snake_game_app/utils/styles/app_button.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/view/screens/game_screen.dart';
 import 'package:snake_game_app/view/screens/game_settings_screen.dart';
@@ -99,15 +96,15 @@ class _GameOnboardingScreenState extends State<GameOnboardingScreen> {
                     });
                   },
                 ),
-                SizedBox(height: 30.h),
-                Text(
-                  'Clear',
-                  style: GoogleFonts.pressStart2p(
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18.sp,
-                      color: AppColors.appWhiteTextColor),
-                ),
+                // SizedBox(height: 30.h),
+                // Text(
+                //   'Clear',
+                //   style: GoogleFonts.pressStart2p(
+                //       fontStyle: FontStyle.normal,
+                //       fontWeight: FontWeight.w700,
+                //       fontSize: 18.sp,
+                //       color: AppColors.appWhiteTextColor),
+                // ),
                 SizedBox(height: 30.h),
                 AnimatedFancyButton(
                   iconData: Icons.settings,
@@ -188,16 +185,16 @@ class _GameOnboardingScreenState extends State<GameOnboardingScreen> {
                 //     ],
                 //   ),
                 // )
-                AppButton(
-                  iconData: Icons.settings,
-                  label: 'Clear',
-                  type: AppButtonType.secondary,
-                  onTap: () async {
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    await prefs.clear();
-                  },
-                ),
+                // AppButton(
+                //   iconData: Icons.settings,
+                //   label: 'Clear',
+                //   type: AppButtonType.secondary,
+                //   onTap: () async {
+                //     SharedPreferences prefs =
+                //         await SharedPreferences.getInstance();
+                //     await prefs.clear();
+                //   },
+                // ),
               ],
             ),
           ),

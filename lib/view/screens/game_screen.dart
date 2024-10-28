@@ -322,7 +322,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
           SizedBox(height: 10.h),
           Container(
             decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.5),
+                color: Colors.grey.withOpacity(0.2),
                 borderRadius: BorderRadius.all(Radius.circular(100.sp))),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -472,7 +472,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
   /// fill color
   Color fillColor(int index) {
     if (borderSideList.contains(index)) {
-      return Colors.orange.withOpacity(0.7);
+      return Colors.grey.withOpacity(0.8);
     } else {
       if (snakePosition.contains(index)) {
         if (snakeHead == index) {
@@ -540,7 +540,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
       setState(() {
         seconds++;
       });
-      snakeSmashMethod();
+      // snakeSmashMethod();
     });
   }
 
@@ -573,7 +573,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
       setState(() {
         seconds++;
       });
-      snakeSmashMethod();
+      // snakeSmashMethod();
     });
   }
 
@@ -605,7 +605,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
       setState(() {
         seconds++;
       });
-      snakeSmashMethod();
+      // snakeSmashMethod();
     });
   }
 
