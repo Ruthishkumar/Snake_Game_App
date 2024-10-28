@@ -92,7 +92,7 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
               Container(),
               Text(
                 'Settings',
-                style: AppStyles.instance.gameFontStyles(
+                style: AppStyles.instance.gameFontStylesWithMonsterat(
                     fontSize: 15.sp, fontWeight: FontWeight.w500),
               ),
               GestureDetector(
@@ -130,8 +130,8 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text('Audio',
-            style: AppStyles.instance
-                .gameFontStyles(fontSize: 15.sp, fontWeight: FontWeight.w500)),
+            style: AppStyles.instance.gameFontStylesWithMonsterat(
+                fontSize: 15.sp, fontWeight: FontWeight.w500)),
         AnimatedToggleSwitch<bool>.dual(
           current: audioChanges,
           first: true,
@@ -176,12 +176,14 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
           textBuilder: (value) => value
               ? Center(
                   child: Text('On',
-                      style: AppStyles.instance.gameFontStylesBlack(
-                          fontWeight: FontWeight.w400, fontSize: 12.sp)))
+                      style: AppStyles.instance
+                          .gameFontStylesBlackWithMontserrat(
+                              fontWeight: FontWeight.w400, fontSize: 12.sp)))
               : Center(
                   child: Text('Off',
-                      style: AppStyles.instance.gameFontStylesBlack(
-                          fontWeight: FontWeight.w400, fontSize: 12.sp))),
+                      style: AppStyles.instance
+                          .gameFontStylesBlackWithMontserrat(
+                              fontWeight: FontWeight.w400, fontSize: 12.sp))),
         ),
       ],
     );
@@ -193,8 +195,8 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text('Vibrations',
-            style: AppStyles.instance
-                .gameFontStyles(fontSize: 15.sp, fontWeight: FontWeight.w500)),
+            style: AppStyles.instance.gameFontStylesWithMonsterat(
+                fontSize: 15.sp, fontWeight: FontWeight.w500)),
         AnimatedToggleSwitch<bool>.dual(
           current: vibrationChanges,
           first: true,
@@ -241,12 +243,14 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
           textBuilder: (value) => value
               ? Center(
                   child: Text('On',
-                      style: AppStyles.instance.gameFontStylesBlack(
-                          fontWeight: FontWeight.w400, fontSize: 12.sp)))
+                      style: AppStyles.instance
+                          .gameFontStylesBlackWithMontserrat(
+                              fontWeight: FontWeight.w400, fontSize: 12.sp)))
               : Center(
                   child: Text('Off',
-                      style: AppStyles.instance.gameFontStylesBlack(
-                          fontWeight: FontWeight.w400, fontSize: 12.sp))),
+                      style: AppStyles.instance
+                          .gameFontStylesBlackWithMontserrat(
+                              fontWeight: FontWeight.w400, fontSize: 12.sp))),
         ),
       ],
     );
@@ -262,7 +266,7 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
         Row(
           children: [
             Text('Controls',
-                style: AppStyles.instance.gameFontStyles(
+                style: AppStyles.instance.gameFontStylesWithMonsterat(
                     fontSize: 15.sp, fontWeight: FontWeight.w500)),
           ],
         ),
@@ -287,10 +291,11 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
           ),
           height: 55,
           borderRadius: BorderRadius.circular(30),
-          selectedTextStyle: AppStyles.instance
-              .gameFontStyles(fontSize: 14.sp, fontWeight: FontWeight.w400),
-          unselectedTextStyle: AppStyles.instance.gameFontStylesBlack(
+          selectedTextStyle: AppStyles.instance.gameFontStylesWithMonsterat(
               fontSize: 14.sp, fontWeight: FontWeight.w400),
+          unselectedTextStyle: AppStyles.instance
+              .gameFontStylesBlackWithMontserrat(
+                  fontSize: 14.sp, fontWeight: FontWeight.w400),
           hoverTextStyle: const TextStyle(
             color: Colors.orange,
           ),
@@ -307,7 +312,7 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
         Row(
           children: [
             Text('Difficulty',
-                style: AppStyles.instance.gameFontStyles(
+                style: AppStyles.instance.gameFontStylesWithMonsterat(
                     fontSize: 15.sp, fontWeight: FontWeight.w500)),
           ],
         ),
@@ -335,10 +340,11 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
           ),
           height: 55,
           borderRadius: BorderRadius.circular(30),
-          selectedTextStyle: AppStyles.instance
-              .gameFontStyles(fontSize: 14.sp, fontWeight: FontWeight.w400),
-          unselectedTextStyle: AppStyles.instance.gameFontStylesBlack(
+          selectedTextStyle: AppStyles.instance.gameFontStylesWithMonsterat(
               fontSize: 14.sp, fontWeight: FontWeight.w400),
+          unselectedTextStyle: AppStyles.instance
+              .gameFontStylesBlackWithMontserrat(
+                  fontSize: 14.sp, fontWeight: FontWeight.w400),
           hoverTextStyle: const TextStyle(
             color: Colors.orange,
           ),

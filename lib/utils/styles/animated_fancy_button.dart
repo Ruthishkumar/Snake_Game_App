@@ -37,8 +37,8 @@ class AnimatedFancyButton extends StatelessWidget {
             SizedBox(width: 10.r),
             Text(
               text,
-              style: AppStyles.instance
-                  .gameFontStyles(fontSize: 16.sp, fontWeight: FontWeight.w500),
+              style: AppStyles.instance.gameFontStylesWithMonsterat(
+                  fontSize: 16.sp, fontWeight: FontWeight.w500),
             ),
           ],
         ),
@@ -76,8 +76,8 @@ class RestartFancyButton extends StatelessWidget {
           children: [
             Text(
               text,
-              style: AppStyles.instance
-                  .gameFontStyles(fontSize: 16.sp, fontWeight: FontWeight.w500),
+              style: AppStyles.instance.gameFontStylesWithMonsterat(
+                  fontSize: 16.sp, fontWeight: FontWeight.w500),
             ),
           ],
         ),

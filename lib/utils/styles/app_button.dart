@@ -37,8 +37,8 @@ class AppButton extends StatelessWidget {
             SizedBox(width: 10.r),
             Text(
               label,
-              style: AppStyles.instance
-                  .gameFontStyles(fontSize: 16.sp, fontWeight: FontWeight.w500),
+              style: AppStyles.instance.gameFontStylesWithMonsterat(
+                  fontSize: 16.sp, fontWeight: FontWeight.w500),
             )
           ],
         ),

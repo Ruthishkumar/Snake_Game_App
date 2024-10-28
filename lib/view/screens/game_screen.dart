@@ -169,8 +169,8 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
         children: [
           Text(
             'Score : $score',
-            style: AppStyles.instance
-                .gameFontStyles(fontSize: 16.sp, fontWeight: FontWeight.w500),
+            style: AppStyles.instance.gameFontStylesWithMonsterat(
+                fontSize: 16.sp, fontWeight: FontWeight.w500),
           ),
         ],
       ),
@@ -251,47 +251,22 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          isCountDownVisible == true
-              ? Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      '$resumeCountDownValue',
-                      style: AppStyles.instance.gameFontStyles(
-                          fontSize: 15.sp, fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                )
-              : Container(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Container(),
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  padding: EdgeInsets.all(10.r),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.transparent),
-                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                      color: Colors.transparent),
-                  child: Icon(
-                    Icons.start,
-                    color: Colors.transparent,
-                    size: 20.sp,
-                  ),
-                ),
-              ),
-              // IconButton(
-              //   onPressed: () {
-              //     if (direction != Direction.down) {
-              //       direction = Direction.up;
-              //     }
-              //   },
-              //   iconSize: 80.h,
-              //   icon: const Icon(Icons.arrow_circle_up_rounded),
-              //   color: Colors.white,
-              // ),
+              isCountDownVisible == true
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          '$resumeCountDownValue',
+                          style: AppStyles.instance.gameFontStylesWithMonsterat(
+                              fontSize: 15.sp, fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    )
+                  : Container(),
               GamePlayFancyButton(
                 icon: const FaIcon(FontAwesomeIcons.pause,
                     color: AppColors.appWhiteTextColor),
@@ -302,21 +277,6 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
                   resumeAlertDialog();
                 },
               ),
-              // GestureDetector(
-              //   onTap: () {},
-              //   child: Container(
-              //     padding: EdgeInsets.all(10.r),
-              //     decoration: BoxDecoration(
-              //         border: Border.all(color: AppColors.appWhiteTextColor),
-              //         borderRadius: BorderRadius.all(Radius.circular(8.r)),
-              //         color: Colors.transparent),
-              //     child: Icon(
-              //       Icons.pause,
-              //       color: AppColors.appWhiteTextColor,
-              //       size: 20.sp,
-              //     ),
-              //   ),
-              // ),
             ],
           ),
           SizedBox(height: 10.h),
@@ -456,13 +416,45 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
           direction = Direction.left;
         }
       },
-      child: Container(
-        // color: Colors.red,
+      child: SizedBox(
         width: 400,
         child: Column(
           children: [
-            SizedBox(height: 100.h),
-            Image.asset('assets/images/swipe_gestures.png', height: 200.h),
+            Container(
+              padding: EdgeInsets.fromLTRB(15.r, 30.r, 15.r, 0.r),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  isCountDownVisible == true
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              '$resumeCountDownValue',
+                              style: AppStyles.instance
+                                  .gameFontStylesWithMonsterat(
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  GamePlayFancyButton(
+                    icon: const FaIcon(FontAwesomeIcons.pause,
+                        color: AppColors.appWhiteTextColor),
+                    color: AppColors.primaryColor,
+                    onPressed: () {
+                      dev.log('On Tap');
+                      timer!.cancel();
+                      resumeAlertDialog();
+                    },
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 80.h),
+            Image.asset('assets/images/swipe_gestures.png', height: 150.h),
           ],
         ),
       ),
@@ -639,7 +631,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
           return AlertDialog(
               title: Column(children: [
             Text('Game Over',
-                style: AppStyles.instance.gameFontStylesBlack(
+                style: AppStyles.instance.gameFontStylesBlackWithMontserrat(
                     fontSize: 16.sp, fontWeight: FontWeight.w500)),
             SizedBox(height: 12.h),
             SizedBox(
@@ -648,11 +640,13 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Best',
-                      style: AppStyles.instance.gameFontStylesBlack(
-                          fontSize: 11.sp, fontWeight: FontWeight.w700)),
+                      style: AppStyles.instance
+                          .gameFontStylesBlackWithMontserrat(
+                              fontSize: 16.sp, fontWeight: FontWeight.w700)),
                   Text('$bestScore',
-                      style: AppStyles.instance.gameFontStylesBlack(
-                          fontSize: 11.sp, fontWeight: FontWeight.w700)),
+                      style: AppStyles.instance
+                          .gameFontStylesBlackWithMontserrat(
+                              fontSize: 16.sp, fontWeight: FontWeight.w700)),
                 ],
               ),
             ),
@@ -663,11 +657,13 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Score',
-                      style: AppStyles.instance.gameFontStylesBlack(
-                          fontSize: 11.sp, fontWeight: FontWeight.w700)),
+                      style: AppStyles.instance
+                          .gameFontStylesBlackWithMontserrat(
+                              fontSize: 16.sp, fontWeight: FontWeight.w700)),
                   Text('$score',
-                      style: AppStyles.instance.gameFontStylesBlack(
-                          fontSize: 11.sp, fontWeight: FontWeight.w700)),
+                      style: AppStyles.instance
+                          .gameFontStylesBlackWithMontserrat(
+                              fontSize: 16.sp, fontWeight: FontWeight.w700)),
                 ],
               ),
             ),
@@ -703,7 +699,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
               children: [
                 Container(),
                 Text('Paused',
-                    style: AppStyles.instance.gameFontStylesBlack(
+                    style: AppStyles.instance.gameFontStylesBlackWithMontserrat(
                         fontSize: 16.sp, fontWeight: FontWeight.w500)),
               ],
             ),

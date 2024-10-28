@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
-import 'package:snake_game_app/view/service/storage_service.dart';
 
 class AnimatedSegmentedButton extends StatefulWidget {
   final List<String> values;
@@ -61,8 +60,10 @@ class _AnimatedSegmentedButtonState extends State<AnimatedSegmentedButton> {
                     padding: EdgeInsets.symmetric(horizontal: 10.r),
                     child: Center(
                       child: Text(widget.values[index],
-                          style: AppStyles.instance.gameFontStylesBlack(
-                              fontSize: 14.sp, fontWeight: FontWeight.w400)),
+                          style: AppStyles.instance
+                              .gameFontStylesBlackWithMontserrat(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400)),
                     ),
                   ),
                 ),
@@ -83,7 +84,7 @@ class _AnimatedSegmentedButtonState extends State<AnimatedSegmentedButton> {
               alignment: Alignment.center,
               child: Text(
                 initialPosition ? widget.values[0] : widget.values[1],
-                style: AppStyles.instance.gameFontStyles(
+                style: AppStyles.instance.gameFontStylesWithMonsterat(
                     fontSize: 14.sp, fontWeight: FontWeight.w400),
               ),
             ),

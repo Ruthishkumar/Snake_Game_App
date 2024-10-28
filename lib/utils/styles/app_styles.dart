@@ -36,9 +36,27 @@ class AppStyles {
         color: AppColors.appWhiteTextColor);
   }
 
+  TextStyle? gameFontStylesWithMonsterat(
+      {required double fontSize, required FontWeight fontWeight}) {
+    return GoogleFonts.montserrat(
+        fontStyle: FontStyle.normal,
+        fontWeight: fontWeight,
+        fontSize: fontSize,
+        color: AppColors.appWhiteTextColor);
+  }
+
   TextStyle? gameFontStylesBlack(
       {required double fontSize, required FontWeight fontWeight}) {
     return GoogleFonts.pressStart2p(
+        fontStyle: FontStyle.normal,
+        fontWeight: fontWeight,
+        fontSize: fontSize,
+        color: AppColors.primaryTextColor);
+  }
+
+  TextStyle? gameFontStylesBlackWithMontserrat(
+      {required double fontSize, required FontWeight fontWeight}) {
+    return GoogleFonts.montserrat(
         fontStyle: FontStyle.normal,
         fontWeight: fontWeight,
         fontSize: fontSize,
