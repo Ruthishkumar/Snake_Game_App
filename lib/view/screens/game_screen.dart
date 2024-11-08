@@ -40,6 +40,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
   void initState() {
     getStorageData();
     WidgetsBinding.instance.addObserver(this);
+
     super.initState();
   }
 
@@ -181,14 +182,14 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
   Widget gameView() {
     return Container(
       padding: EdgeInsets.fromLTRB(8.r, 20.r, 8.r, 0.r),
-      child: GestureDetector(
-        child: GridView.builder(
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: columnSide),
-            itemCount: rowSide * columnSide,
-            itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
+      child: GridView.builder(
+          shrinkWrap: true,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: columnSide),
+          itemCount: rowSide * columnSide,
+          itemBuilder: (BuildContext context, int index) {
+            // dev.log('Index ${index}');
+            return GestureDetector(
                 onVerticalDragUpdate: (details) {
                   dev.log('Sa');
                   if (direction != Direction.up && details.delta.dy > 0) {
@@ -211,10 +212,8 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
                   decoration: BoxDecoration(
                       color: fillColor(index),
                       borderRadius: BorderRadius.all(Radius.circular(8.r))),
-                ),
-              );
-            }),
-      ),
+                ));
+          }),
     );
   }
 
@@ -292,9 +291,9 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
                   height: 70,
                   width: 70,
                   child: IconButton(
-                    icon: Icon(Icons.arrow_drop_up, color: Colors.white),
+                    icon: const Icon(Icons.arrow_drop_up, color: Colors.white),
                     iconSize: 50,
-                    padding: EdgeInsets.all(5),
+                    padding: EdgeInsets.all(5.r),
                     onPressed: () {
                       if (direction != Direction.down) {
                         direction = Direction.up;
@@ -310,9 +309,9 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
                       height: 70,
                       width: 70,
                       child: IconButton(
-                        icon: Icon(Icons.arrow_left, color: Colors.white),
+                        icon: const Icon(Icons.arrow_left, color: Colors.white),
                         iconSize: 50,
-                        padding: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(5.r),
                         onPressed: () {
                           if (direction != Direction.right) {
                             direction = Direction.left;
@@ -321,15 +320,16 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
                       ),
                     ),
                     // Center Spacer
-                    SizedBox(width: 40),
+                    SizedBox(width: 40.h),
                     // Right Arrow
                     SizedBox(
                       height: 70,
                       width: 70,
                       child: IconButton(
-                        icon: Icon(Icons.arrow_right, color: Colors.white),
+                        icon:
+                            const Icon(Icons.arrow_right, color: Colors.white),
                         iconSize: 50,
-                        padding: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(5.r),
                         onPressed: () {
                           if (direction != Direction.left) {
                             direction = Direction.right;
@@ -344,9 +344,10 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
                   height: 70,
                   width: 70,
                   child: IconButton(
-                    icon: Icon(Icons.arrow_drop_down, color: Colors.white),
+                    icon:
+                        const Icon(Icons.arrow_drop_down, color: Colors.white),
                     iconSize: 50,
-                    padding: EdgeInsets.all(5),
+                    padding: EdgeInsets.all(5.r),
                     onPressed: () {
                       if (direction != Direction.up) {
                         direction = Direction.down;
@@ -483,19 +484,24 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
 
   /// game border color
   makeBorderColor() {
+    // dev.log('COLUMN SIDE ${columnSide}');
     for (int i = 0; i < columnSide; i++) {
       if (!borderSideList.contains(i)) borderSideList.add(i);
+      // dev.log('Up $i');
     }
     for (int i = 0; i < rowSide * columnSide; i = i + columnSide) {
       if (!borderSideList.contains(i)) borderSideList.add(i);
+      // dev.log('Left $i');
     }
     for (int i = columnSide - 1; i < rowSide * columnSide; i = i + columnSide) {
       if (!borderSideList.contains(i)) borderSideList.add(i);
+      // dev.log('Right $i');
     }
     for (int i = (rowSide * columnSide) - columnSide;
         i < rowSide * columnSide;
         i = i + 1) {
       if (!borderSideList.contains(i)) borderSideList.add(i);
+      // dev.log('Down $i');
     }
   }
 
@@ -513,7 +519,12 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
     }
     direction = Direction.right;
     makeBorderColor();
-    generateFood();
+
+    if (snakePosition.contains(rowSide * columnSide)) {
+      timer!.cancel();
+    } else {
+      generateFood();
+    }
     snakePosition = [45, 44, 43];
     if (difficulty == 'easy') {
       gameDifficulties = 200;
@@ -528,11 +539,16 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
     snakeHead = snakePosition.first;
     timer = Timer.periodic(Duration(milliseconds: gameDifficulties),
         (timerOne) async {
-      updateSnake();
-      setState(() {
-        seconds++;
-      });
-      snakeSmashMethod();
+      if (snakePosition.contains(rowSide * columnSide)) {
+        timer!.cancel();
+        dev.log('WINNER');
+      } else {
+        updateSnake();
+        setState(() {
+          seconds++;
+        });
+        snakeSmashMethod();
+      }
     });
   }
 
@@ -541,7 +557,12 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
     if (timer != null) {
       timer!.cancel();
     }
-    generateFood();
+    if (snakePosition.contains(rowSide * columnSide)) {
+      timer!.cancel();
+    } else {
+      generateFood();
+    }
+
     if (difficulty == 'easy') {
       setState(() {
         gameDifficulties -= 2;
@@ -561,11 +582,17 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
     snakeHead = snakePosition.first;
     timer = Timer.periodic(Duration(milliseconds: gameDifficulties),
         (timerOne) async {
-      updateSnake();
-      setState(() {
-        seconds++;
-      });
-      snakeSmashMethod();
+      if (snakePosition.contains(rowSide * columnSide)) {
+        timer!.cancel();
+
+        dev.log('WINNER');
+      } else {
+        updateSnake();
+        setState(() {
+          seconds++;
+        });
+        snakeSmashMethod();
+      }
     });
   }
 
@@ -593,11 +620,16 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
     snakeHead = snakePosition.first;
     timer = Timer.periodic(Duration(milliseconds: gameDifficulties),
         (timerOne) async {
-      updateSnake();
-      setState(() {
-        seconds++;
-      });
-      snakeSmashMethod();
+      if (snakePosition.contains(rowSide * columnSide)) {
+        timer!.cancel();
+        dev.log('WINNER');
+      } else {
+        updateSnake();
+        setState(() {
+          seconds++;
+        });
+        snakeSmashMethod();
+      }
     });
   }
 
@@ -617,7 +649,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
       } else if (vibrationIsActiveOrNot == 'no') {
         dev.log('Vibration Not Active');
       }
-      gameOverDialog();
+      // gameOverDialog();
     }
   }
 
@@ -820,6 +852,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
       switch (direction) {
         case Direction.up:
           snakePosition.insert(0, snakeHead - columnSide);
+          dev.log('COLUMN SIDE ${columnSide}');
           break;
         case Direction.down:
           snakePosition.insert(0, snakeHead + columnSide);
@@ -836,7 +869,12 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
     });
     if (snakeHead == foodPosition) {
       score++;
-      generateFood();
+      if (snakePosition.contains(rowSide * columnSide)) {
+        timer!.cancel();
+        winnerAlertDialog();
+      } else {
+        generateFood();
+      }
       dev.log('Generate Food');
       // setState(() {
       //   gameDifficulties += 100;
@@ -862,16 +900,67 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
     } else {
       snakePosition.removeLast();
     }
-
     snakeHead = snakePosition.first;
   }
 
   /// generate food method
   void generateFood() {
     foodPosition = Random().nextInt(rowSide * columnSide);
-    if (borderSideList.contains(foodPosition)) {
-      generateFood();
+    dev.log('Random Number $foodPosition');
+    for (int i = 0; i < snakePosition.length; i++) {
+      dev.log('Snake Position $snakePosition');
     }
+    if (snakePosition.contains(foodPosition)) {
+      dev.log('EXCLUDED');
+      generateFood();
+    } else {
+      if (borderSideList.contains(foodPosition)) {
+        dev.log('INCLUDED');
+        generateFood();
+      }
+    }
+  }
+
+  /// winner alert dialog
+  winnerAlertDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        barrierColor: Colors.black87,
+        builder: (context) {
+          return AlertDialog(
+              title: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Congratulations',
+                    style: AppStyles.instance.gameFontStylesBlackWithMontserrat(
+                        fontSize: 16.sp, fontWeight: FontWeight.w500))
+              ],
+            ),
+            SizedBox(height: 30.h),
+            Text(
+              'You Win',
+              style: AppStyles.instance.gameFontStylesBlackWithMontserrat(
+                  fontSize: 20.sp, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 40.h),
+            RestartFancyButton(
+              text: 'Home',
+              color: AppColors.appBackgroundColor,
+              onPressed: () {
+                Future.delayed(const Duration(milliseconds: 100), () {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              const GameOnboardingScreen()),
+                      (Route<dynamic> route) => false);
+                });
+              },
+            ),
+          ]));
+        });
   }
 }
 
