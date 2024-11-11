@@ -5,7 +5,7 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:snake_game_app/utils/styles/animated_fancy_button.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
@@ -267,8 +267,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
                     )
                   : Container(),
               GamePlayFancyButton(
-                icon: const FaIcon(FontAwesomeIcons.pause,
-                    color: AppColors.appWhiteTextColor),
+                icon: SvgPicture.asset('assets/images/pause.svg', height: 25.h),
                 color: AppColors.primaryColor,
                 onPressed: () {
                   dev.log('On Tap');
@@ -442,8 +441,8 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
                         )
                       : Container(),
                   GamePlayFancyButton(
-                    icon: const FaIcon(FontAwesomeIcons.pause,
-                        color: AppColors.appWhiteTextColor),
+                    icon: SvgPicture.asset('assets/images/pause.svg',
+                        height: 25.h),
                     color: AppColors.primaryColor,
                     onPressed: () {
                       dev.log('On Tap');
@@ -454,8 +453,8 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
                 ],
               ),
             ),
-            SizedBox(height: 80.h),
-            Image.asset('assets/images/swipe_gestures.png', height: 150.h),
+            SizedBox(height: 40.h),
+            SvgPicture.asset('assets/images/swipe.svg', height: 150.h),
           ],
         ),
       ),
@@ -649,7 +648,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
       } else if (vibrationIsActiveOrNot == 'no') {
         dev.log('Vibration Not Active');
       }
-      // gameOverDialog();
+      gameOverDialog();
     }
   }
 
@@ -740,8 +739,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 GamePlayFancyButton(
-                  icon: const FaIcon(FontAwesomeIcons.house,
-                      color: AppColors.appWhiteTextColor),
+                  icon: SvgPicture.asset('assets/images/home.svg', height: 25),
                   color: Colors.red,
                   onPressed: () {
                     Future.delayed(const Duration(milliseconds: 100), () {
@@ -755,8 +753,8 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
                   },
                 ),
                 GamePlayFancyButton(
-                  icon: const FaIcon(Icons.restart_alt_rounded,
-                      color: AppColors.appWhiteTextColor),
+                  icon:
+                      SvgPicture.asset('assets/images/reload.svg', height: 25),
                   color: Colors.orange,
                   onPressed: () {
                     Future.delayed(const Duration(milliseconds: 100), () {
@@ -769,8 +767,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
                   },
                 ),
                 GamePlayFancyButton(
-                  icon: const FaIcon(FontAwesomeIcons.play,
-                      color: AppColors.appWhiteTextColor),
+                  icon: SvgPicture.asset('assets/images/play.svg', height: 25),
                   color: Colors.green,
                   onPressed: () {
                     Future.delayed(const Duration(milliseconds: 100), () {
@@ -852,7 +849,6 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
       switch (direction) {
         case Direction.up:
           snakePosition.insert(0, snakeHead - columnSide);
-          dev.log('COLUMN SIDE ${columnSide}');
           break;
         case Direction.down:
           snakePosition.insert(0, snakeHead + columnSide);
