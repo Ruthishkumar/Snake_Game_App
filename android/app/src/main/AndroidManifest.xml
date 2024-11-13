@@ -2,7 +2,7 @@
     package="com.example.snake_game_app">
     <uses-permission android:name="android.permission.VIBRATE"/>
     <application
-        android:label="snake_game_app"
+        android:label="Snake App"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

@@ -163,7 +163,7 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
             log('Audio State Changes ${audioChanges}');
           },
           styleBuilder: (value) => ToggleStyle(
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.white.withOpacity(0.7),
             indicatorColor: value ? Colors.green : Colors.red,
             borderRadius: BorderRadius.all(Radius.circular(30.r)),
             indicatorBorderRadius: BorderRadius.all(Radius.circular(30.r)),
@@ -178,12 +178,12 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
                   child: Text('On',
                       style: AppStyles.instance
                           .gameFontStylesBlackWithMontserrat(
-                              fontWeight: FontWeight.w400, fontSize: 12.sp)))
+                              fontWeight: FontWeight.bold, fontSize: 13.sp)))
               : Center(
                   child: Text('Off',
                       style: AppStyles.instance
                           .gameFontStylesBlackWithMontserrat(
-                              fontWeight: FontWeight.w400, fontSize: 12.sp))),
+                              fontWeight: FontWeight.bold, fontSize: 13.sp))),
         ),
       ],
     );
@@ -230,7 +230,7 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
             log('Vibration State Changes ${vibrationChanges}');
           },
           styleBuilder: (value) => ToggleStyle(
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.white.withOpacity(0.7),
             indicatorColor: value ? Colors.green : Colors.red,
             borderRadius: BorderRadius.all(Radius.circular(30.r)),
             indicatorBorderRadius: BorderRadius.all(Radius.circular(30.r)),
@@ -245,12 +245,12 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
                   child: Text('On',
                       style: AppStyles.instance
                           .gameFontStylesBlackWithMontserrat(
-                              fontWeight: FontWeight.w400, fontSize: 12.sp)))
+                              fontWeight: FontWeight.bold, fontSize: 13.sp)))
               : Center(
                   child: Text('Off',
                       style: AppStyles.instance
                           .gameFontStylesBlackWithMontserrat(
-                              fontWeight: FontWeight.w400, fontSize: 12.sp))),
+                              fontWeight: FontWeight.bold, fontSize: 13.sp))),
         ),
       ],
     );
@@ -292,10 +292,10 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
           height: 55,
           borderRadius: BorderRadius.circular(30),
           selectedTextStyle: AppStyles.instance.gameFontStylesWithMonsterat(
-              fontSize: 14.sp, fontWeight: FontWeight.w400),
+              fontSize: 14.sp, fontWeight: FontWeight.bold),
           unselectedTextStyle: AppStyles.instance
               .gameFontStylesBlackWithMontserrat(
-                  fontSize: 14.sp, fontWeight: FontWeight.w400),
+                  fontSize: 14.sp, fontWeight: FontWeight.bold),
           hoverTextStyle: const TextStyle(
             color: Colors.orange,
           ),
@@ -341,10 +341,10 @@ class _GameSettingScreenState extends State<GameSettingScreen> {
           height: 55,
           borderRadius: BorderRadius.circular(30),
           selectedTextStyle: AppStyles.instance.gameFontStylesWithMonsterat(
-              fontSize: 14.sp, fontWeight: FontWeight.w400),
+              fontSize: 14.sp, fontWeight: FontWeight.bold),
           unselectedTextStyle: AppStyles.instance
               .gameFontStylesBlackWithMontserrat(
-                  fontSize: 14.sp, fontWeight: FontWeight.w400),
+                  fontSize: 14.sp, fontWeight: FontWeight.bold),
           hoverTextStyle: const TextStyle(
             color: Colors.orange,
           ),
