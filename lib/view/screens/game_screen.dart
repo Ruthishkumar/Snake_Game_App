@@ -99,62 +99,127 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
       child: SafeArea(
           child: Scaffold(
         backgroundColor: AppColors.primaryTextColor,
-        body: Column(
+        body: Stack(
+          alignment: Alignment.center,
           children: [
-            scoreCardWidget(),
-            gameView(),
-            controls == 'JoyPad' ? joyPadView() : swipeView(),
-            // GestureDetector(
-            //   onTap: () {
-            //     dev.log('Up On Pressed');
-            //   },
-            //   child: Container(
-            //     color: Colors.orange,
-            //     child: RotationTransition(
-            //       turns: new AlwaysStoppedAnimation(180 / 360),
-            //       child: CustomPaint(
-            //         size: Size(130, 70),
-            //         painter: TrianglePainter(),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Stack(
-            //       alignment: Alignment.center,
-            //       children: [
-            //         RotationTransition(
-            //           turns: new AlwaysStoppedAnimation(90 / 360),
-            //           child: CustomPaint(
-            //             size: Size(120, 70),
-            //             painter: TrianglePainter(),
-            //           ),
-            //         ),
-            //         Icon(
-            //           Icons.arrow_back_ios,
-            //           color: Colors.white,
-            //         ),
-            //       ],
-            //     ),
-            //     RotationTransition(
-            //       turns: new AlwaysStoppedAnimation(270 / 360),
-            //       child: CustomPaint(
-            //         size: Size(120, 70),
-            //         painter: TrianglePainter(),
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            // RotationTransition(
-            //   turns: new AlwaysStoppedAnimation(360 / 360),
-            //   child: CustomPaint(
-            //     size: Size(130, 70), // Adjust size as needed
-            //     painter: TrianglePainter(),
-            //   ),
-            // ),
-            // controlView(),
+            Column(
+              children: [
+                scoreCardWidget(),
+                gameView(),
+
+                controls == 'JoyPad' ? joyPadView() : swipeView(),
+                // GestureDetector(
+                //   onTap: () {
+                //     dev.log('Up On Pressed');
+                //   },
+                //   child: Container(
+                //     color: Colors.orange,
+                //     child: RotationTransition(
+                //       turns: new AlwaysStoppedAnimation(180 / 360),
+                //       child: CustomPaint(
+                //         size: Size(130, 70),
+                //         painter: TrianglePainter(),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Stack(
+                //       alignment: Alignment.center,
+                //       children: [
+                //         RotationTransition(
+                //           turns: new AlwaysStoppedAnimation(90 / 360),
+                //           child: CustomPaint(
+                //             size: Size(120, 70),
+                //             painter: TrianglePainter(),
+                //           ),
+                //         ),
+                //         Icon(
+                //           Icons.arrow_back_ios,
+                //           color: Colors.white,
+                //         ),
+                //       ],
+                //     ),
+                //     RotationTransition(
+                //       turns: new AlwaysStoppedAnimation(270 / 360),
+                //       child: CustomPaint(
+                //         size: Size(120, 70),
+                //         painter: TrianglePainter(),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                // RotationTransition(
+                //   turns: new AlwaysStoppedAnimation(360 / 360),
+                //   child: CustomPaint(
+                //     size: Size(130, 70), // Adjust size as needed
+                //     painter: TrianglePainter(),
+                //   ),
+                // ),
+                // controlView(),
+              ],
+            ),
+            isCountDownVisible == true
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: ClipOval(
+                          child: Container(
+                            color: Colors.white54,
+                            width: 100,
+                            height: 150,
+                            child: Center(
+                              child: Text(
+                                '$resumeCountDownValue',
+                                style: AppStyles.instance
+                                    .gameFontStylesBlackWithMontserrat(
+                                        fontSize: 45.sp,
+                                        fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Align(
+                      //   child: Container(
+                      //     height: 120,
+                      //     width: 50,
+                      //     margin: EdgeInsets.only(top: 40, left: 40, right: 40),
+                      //     decoration: new BoxDecoration(
+                      //       color: Colors.green,
+                      //       border: Border.all(color: Colors.black, width: 0.0),
+                      //       borderRadius: new BorderRadius.all(
+                      //           Radius.elliptical(100, 50)),
+                      //     ),
+                      //     child: Center(
+                      //       child: Text(
+                      //         '$resumeCountDownValue',
+                      //         style: AppStyles.instance
+                      //             .gameFontStylesWithMonsterat(
+                      //                 fontSize: 15.sp,
+                      //                 fontWeight: FontWeight.w500),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // Container(
+                      //   padding: EdgeInsets.all(20.r),
+                      //   decoration: BoxDecoration(
+                      //       color: Colors.white,
+                      //       borderRadius:
+                      //           BorderRadius.all(Radius.circular(8.r))),
+                      //   child: Text(
+                      //     '$resumeCountDownValue',
+                      //     style: AppStyles.instance.gameFontStylesWithMonsterat(
+                      //         fontSize: 15.sp, fontWeight: FontWeight.w500),
+                      //   ),
+                      // ),
+                    ],
+                  )
+                : Container(),
           ],
         ),
       )),
@@ -164,9 +229,9 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
   /// score card widget
   scoreCardWidget() {
     return Container(
-      padding: EdgeInsets.fromLTRB(20.r, 20.r, 8.r, 0.r),
+      padding: EdgeInsets.fromLTRB(20.r, 20.r, 20.r, 0.r),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text(
             'Score : $score',
@@ -251,21 +316,21 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              isCountDownVisible == true
-                  ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          '$resumeCountDownValue',
-                          style: AppStyles.instance.gameFontStylesWithMonsterat(
-                              fontSize: 15.sp, fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    )
-                  : Container(),
+              // isCountDownVisible == true
+              //     ? Row(
+              //         crossAxisAlignment: CrossAxisAlignment.end,
+              //         children: [
+              //           Text(
+              //             '$resumeCountDownValue',
+              //             style: AppStyles.instance.gameFontStylesWithMonsterat(
+              //                 fontSize: 15.sp, fontWeight: FontWeight.w500),
+              //           ),
+              //         ],
+              //       )
+              //     : Container(),
               GamePlayFancyButton(
                 icon: SvgPicture.asset('assets/images/pause.svg', height: 25.h),
                 color: AppColors.primaryColor,
@@ -423,23 +488,23 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
             Container(
               padding: EdgeInsets.fromLTRB(15.r, 30.r, 15.r, 0.r),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  isCountDownVisible == true
-                      ? Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              '$resumeCountDownValue',
-                              style: AppStyles.instance
-                                  .gameFontStylesWithMonsterat(
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        )
-                      : Container(),
+                  // isCountDownVisible == true
+                  //     ? Row(
+                  //         crossAxisAlignment: CrossAxisAlignment.end,
+                  //         children: [
+                  //           Text(
+                  //             '$resumeCountDownValue',
+                  //             style: AppStyles.instance
+                  //                 .gameFontStylesWithMonsterat(
+                  //                     fontSize: 15.sp,
+                  //                     fontWeight: FontWeight.w500),
+                  //           ),
+                  //         ],
+                  //       )
+                  //     : Container(),
                   GamePlayFancyButton(
                     icon: SvgPicture.asset('assets/images/pause.svg',
                         height: 25.h),

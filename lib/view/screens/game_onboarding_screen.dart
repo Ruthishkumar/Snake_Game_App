@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/animated_fancy_button.dart';
@@ -44,7 +45,7 @@ class _GameOnboardingScreenState extends State<GameOnboardingScreen> {
     }
 
     if (controls == '') {
-      StorageService().setControls('JoyPad');
+      StorageService().setControls('Swipe');
     }
 
     if (difficulty == '') {
