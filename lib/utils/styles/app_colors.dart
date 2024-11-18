@@ -10,4 +10,6 @@ class AppColors {
   static const appBackGroundColor = Color(0xff8E54E9);
   static const asteriskColor = Color(0xffF15252);
   static const yellowColor = Color(0xffFFC837);
+
+  static const numberFindBgColor = Color(0xff7AA1D2);
 }
