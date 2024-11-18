@@ -10,18 +10,19 @@ import 'package:snake_game_app/utils/styles/animated_fancy_button.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
 import 'package:snake_game_app/utils/styles/direction_enum.dart';
-import 'package:snake_game_app/view/screens/game_onboarding_screen.dart';
-import 'package:snake_game_app/view/service/storage_service.dart';
+import 'package:snake_game_app/view/snake_game/screens/game_onboarding_screen.dart';
+import 'package:snake_game_app/view/snake_game/service/storage_service.dart';
 import 'package:vibration/vibration.dart';
 
-class GameScreen extends StatefulWidget {
-  const GameScreen({super.key});
+class SnakeGamePlayScreen extends StatefulWidget {
+  const SnakeGamePlayScreen({super.key});
 
   @override
-  State<GameScreen> createState() => _GameScreenState();
+  State<SnakeGamePlayScreen> createState() => _SnakeGamePlayScreenState();
 }
 
-class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
+class _SnakeGamePlayScreenState extends State<SnakeGamePlayScreen>
+    with WidgetsBindingObserver {
   int rowSide = 20;
   int columnSide = 20;
 

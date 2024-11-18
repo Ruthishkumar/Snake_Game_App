@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/animated_fancy_button.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
-import 'package:snake_game_app/view/screens/game_screen.dart';
-import 'package:snake_game_app/view/screens/game_settings_screen.dart';
-import 'package:snake_game_app/view/service/storage_service.dart';
+import 'package:snake_game_app/view/game_select_view.dart';
+import 'package:snake_game_app/view/snake_game/screens/game_settings_screen.dart';
+import 'package:snake_game_app/view/snake_game/screens/snake_game_play_screen.dart';
+import 'package:snake_game_app/view/snake_game/service/storage_service.dart';
 
 class GameOnboardingScreen extends StatefulWidget {
   const GameOnboardingScreen({super.key});
@@ -65,17 +64,9 @@ class _GameOnboardingScreenState extends State<GameOnboardingScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        final difference = DateTime.now().difference(timeBackPressed);
-        final isExisting = difference >= const Duration(seconds: 2);
-        timeBackPressed = DateTime.now();
-        if (isExisting) {
-          String message = "Tap again to exit";
-          Fluttertoast.showToast(msg: message);
-          return false;
-        } else {
-          Fluttertoast.cancel();
-          return true;
-        }
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const GameSelectView()));
+        return false;
       },
       child: SafeArea(
         child: Scaffold(
@@ -92,8 +83,10 @@ class _GameOnboardingScreenState extends State<GameOnboardingScreen> {
                   color: AppColors.appBackgroundColor,
                   onPressed: () {
                     Future.delayed(const Duration(milliseconds: 100), () {
-                      Navigator.push(context,
-                          AnimationPageRoute(widget: const GameScreen()));
+                      Navigator.push(
+                          context,
+                          AnimationPageRoute(
+                              widget: const SnakeGamePlayScreen()));
                     });
                   },
                 ),

@@ -62,4 +62,58 @@ class AppStyles {
         fontSize: fontSize,
         color: AppColors.primaryTextColor);
   }
+
+  TextStyle? gameViewChooseStyle(
+      {required double fontSize, required FontWeight fontWeight}) {
+    return GoogleFonts.oswald(
+        fontStyle: FontStyle.normal,
+        fontWeight: fontWeight,
+        fontSize: fontSize,
+        color: AppColors.appWhiteTextColor);
+  }
+
+  TextStyle? gameViewChooseStyleWithOpacity(
+      {required double fontSize, required FontWeight fontWeight}) {
+    return GoogleFonts.oswald(
+        fontStyle: FontStyle.normal,
+        fontWeight: fontWeight,
+        fontSize: fontSize,
+        color: AppColors.appWhiteTextColor.withOpacity(0.2));
+  }
+
+  TextStyle? gameFontStylesWithWhite(
+      {required double fontSize, required FontWeight fontWeight}) {
+    return GoogleFonts.bangers(
+        fontStyle: FontStyle.normal,
+        fontWeight: fontWeight,
+        fontSize: fontSize,
+        color: AppColors.appWhiteTextColor);
+  }
+
+  TextStyle? gameFontStylesWithPurple(
+      {required double fontSize, required FontWeight fontWeight}) {
+    return GoogleFonts.bangers(
+        fontStyle: FontStyle.normal,
+        fontWeight: fontWeight,
+        fontSize: fontSize,
+        color: AppColors.appBackGroundColor);
+  }
+
+  TextStyle? gameFontStyleWithAbeZee(
+      {required double fontSize, required FontWeight fontWeight}) {
+    return GoogleFonts.aBeeZee(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontStyle: FontStyle.normal,
+        color: AppColors.appWhiteTextColor);
+  }
+
+  TextStyle? gameFontStyleWithAbeZeeRed(
+      {required double fontSize, required FontWeight fontWeight}) {
+    return GoogleFonts.aBeeZee(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontStyle: FontStyle.normal,
+        color: AppColors.asteriskColor);
+  }
 }

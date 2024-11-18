@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:segmented_button_slide/segmented_button_slide.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
-import 'package:snake_game_app/view/service/storage_service.dart';
+import 'package:snake_game_app/view/snake_game/service/storage_service.dart';
 
 class GameSettingScreen extends StatefulWidget {
   const GameSettingScreen({super.key});
