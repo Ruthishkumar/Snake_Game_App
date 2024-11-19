@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
+import 'package:snake_game_app/view/number_identify/screens/find_number_game_onboarding_screen.dart';
 import 'package:snake_game_app/view/snake_game/screens/game_onboarding_screen.dart';
 import 'package:snake_game_app/view/tic_tac_toe/screens/enter_player_name_screen.dart';
 
@@ -48,7 +49,7 @@ class _GameSelectViewState extends State<GameSelectView> {
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
@@ -160,6 +161,69 @@ class _GameSelectViewState extends State<GameSelectView> {
                               ],
                             )),
                       ),
+                    ],
+                  ),
+                  SizedBox(height: 20.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              AnimationPageRoute(
+                                  widget:
+                                      const FindNumberGameOnboardingScreen()));
+                        },
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white10,
+                                // border: Border.all(color: Colors.grey),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.r))),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 150,
+                                  height: 110,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.r)),
+                                  child: Image.asset(
+                                    'assets/new_images/game_search.png',
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                                // ClipRRect(
+                                //   borderRadius:
+                                //       BorderRadius.all(Radius.circular(8.r)),
+                                //   child: SvgPicture.asset(
+                                //       'assets/images/app_logo.svg',
+                                //       height: 150,
+                                //       width: 180,
+                                //       fit: BoxFit.contain),
+                                // ),
+                                SizedBox(height: 10.h),
+                                Text(
+                                  'Find The Number',
+                                  style: AppStyles.instance.gameViewChooseStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(height: 5.h),
+                                Text(
+                                  'Puzzle',
+                                  style: AppStyles.instance
+                                      .gameViewChooseStyleWithOpacity(
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(height: 20.h),
+                              ],
+                            )),
+                      ),
+                      Container()
                     ],
                   ),
                 ],

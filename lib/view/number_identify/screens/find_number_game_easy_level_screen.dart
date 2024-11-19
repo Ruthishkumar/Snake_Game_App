@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer' as dev;
 import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -8,21 +9,24 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
-import 'package:snake_game_app/view/number_identify/screens/number_game_onboarding_screen.dart';
+import 'package:snake_game_app/view/number_identify/screens/find_number_game_onboarding_screen.dart';
+import 'package:snake_game_app/view/snake_game/service/storage_service.dart';
 
-class FindNumberGameScreen extends StatefulWidget {
-  const FindNumberGameScreen({super.key});
+class FindNumberGameEasyLevelScreen extends StatefulWidget {
+  const FindNumberGameEasyLevelScreen({super.key});
 
   @override
-  State<FindNumberGameScreen> createState() => _FindNumberGameScreenState();
+  State<FindNumberGameEasyLevelScreen> createState() =>
+      _FindNumberGameEasyLevelScreenState();
 }
 
-class _FindNumberGameScreenState extends State<FindNumberGameScreen> {
+class _FindNumberGameEasyLevelScreenState
+    extends State<FindNumberGameEasyLevelScreen> {
   int expectedNumber = 1;
   List<int> numbers = [];
-  Map<int, Color> clickedNumberColors = {};
+  List<int> clickedColor = [];
   Timer? timer;
-  int overallTime = 300;
+  int timerRun = 0;
   bool gameOver = false;
   AudioPlayer player = AudioPlayer();
 
@@ -30,6 +34,7 @@ class _FindNumberGameScreenState extends State<FindNumberGameScreen> {
   void initState() {
     super.initState();
     startGame();
+    getAudioData();
   }
 
   @override
@@ -41,7 +46,15 @@ class _FindNumberGameScreenState extends State<FindNumberGameScreen> {
     super.dispose();
   }
 
-  bool isPaused = false; // Flag to track if the timer is paused
+  String getAudio = "";
+
+  /// get audio
+  getAudioData() async {
+    getAudio = await StorageService().getAudioForNumber();
+    setState(() {});
+  }
+
+  bool isPaused = false;
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +72,10 @@ class _FindNumberGameScreenState extends State<FindNumberGameScreen> {
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 8,
-                    mainAxisSpacing: 21,
-                    crossAxisSpacing: 0.1,
-                    childAspectRatio: 1.4,
+                    crossAxisCount: 6,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 0.5,
+                    childAspectRatio: 1.9,
                   ),
                   itemCount: numbers.length, // Total items
                   itemBuilder: (context, index) {
@@ -76,10 +89,12 @@ class _FindNumberGameScreenState extends State<FindNumberGameScreen> {
                         margin: EdgeInsets.all(1.r),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
+                            // color: Colors.red,
                             // color: clickedNumberColors[number] ?? Colors.blueAccent,
                             border: Border.all(
-                              color: clickedNumberColors[number] ??
-                                  Colors.transparent,
+                              color: clickedColor.contains(number)
+                                  ? Colors.black
+                                  : Colors.transparent,
                               width: 2,
                             ),
                             shape: BoxShape.circle),
@@ -103,19 +118,20 @@ class _FindNumberGameScreenState extends State<FindNumberGameScreen> {
     );
   }
 
+  int highScore = 0;
+  int easyNumberTimer = 0;
+
   /// app header widget
   appHeaderWidget() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(formatTime(overallTime),
+        Text(formatTime(timerRun),
             style: GoogleFonts.outfit(
                 fontWeight: FontWeight.bold,
                 fontSize: 18.sp,
                 fontStyle: FontStyle.normal,
-                color: overallTime <= 10
-                    ? AppColors.asteriskColor
-                    : AppColors.appWhiteTextColor)),
+                color: AppColors.appWhiteTextColor)),
         Row(
           children: [
             Image.asset('assets/new_images/target.png', height: 30.h),
@@ -128,13 +144,40 @@ class _FindNumberGameScreenState extends State<FindNumberGameScreen> {
                     color: const Color(0xff0F2027))),
           ],
         ),
-        GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              pauseGameTimer();
-              gameMenuAlertDialog();
-            },
-            child: Image.asset('assets/new_images/menu.png', height: 25.h))
+        Row(
+          children: [
+            GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () async {
+                  highScore = await StorageService().getEasyNumberScore();
+                  easyNumberTimer = await StorageService().getEasyNumberTimer();
+                  dev.log('High Score $highScore');
+                  dev.log('Expected Score $expectedNumber');
+                  dev.log('Timer $timerRun');
+                  if (highScore == 0 || expectedNumber > highScore) {
+                    StorageService().setEasyNumberScore(expectedNumber);
+                    highScore = await StorageService().getEasyNumberScore();
+                    StorageService().setEasyNumberTimer(timerRun);
+                    easyNumberTimer =
+                        await StorageService().getEasyNumberTimer();
+                    formatTimeWithAchievements(easyNumberTimer);
+                  }
+                  pauseGameTimer();
+                  leaderBoardAlertDialog();
+                },
+                child: Image.asset('assets/new_images/leader_board.png',
+                    height: 30.h, color: AppColors.appWhiteTextColor)),
+            SizedBox(width: 15.w),
+            GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  pauseGameTimer();
+                  gameMenuAlertDialog();
+                },
+                child: Image.asset('assets/new_images/menu.png',
+                    height: 25.h, color: AppColors.appWhiteTextColor)),
+          ],
+        )
       ],
     );
   }
@@ -144,7 +187,7 @@ class _FindNumberGameScreenState extends State<FindNumberGameScreen> {
     setState(() {
       expectedNumber = 1;
       numbers = List.generate(100, (index) => index + 1)..shuffle();
-      clickedNumberColors.clear();
+      clickedColor.clear();
       startTimer();
     });
   }
@@ -154,27 +197,30 @@ class _FindNumberGameScreenState extends State<FindNumberGameScreen> {
     if (gameOver) return;
     if (number == expectedNumber) {
       setState(() {
-        clickedNumberColors[number] =
-            generateRandomColor(); // Assign a random color to the clicked number
+        clickedColor.add(number);
         expectedNumber++;
-        numbers.shuffle();
       });
-      player = AudioPlayer();
-      player.setReleaseMode(ReleaseMode.stop);
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        await player.setSource(AssetSource('audio/number_select.mp3'));
-        await player.resume();
-      });
-      // showMessage(
-      //     'Success! Click ${expectedNumber > 10 ? 'Restart' : expectedNumber}');
+      if (getAudio == "yes") {
+        player = AudioPlayer();
+        player.setReleaseMode(ReleaseMode.stop);
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          await player.setSource(AssetSource('audio/number_select.mp3'));
+          await player.resume();
+        });
+      } else if (getAudio == "no") {
+        dev.log('Audio Not');
+      }
     } else {
-      player = AudioPlayer();
-      player.setReleaseMode(ReleaseMode.stop);
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        await player.setSource(AssetSource('audio/number_error.mp3'));
-        await player.resume();
-      });
-      // showMessage('Error! You must click $expectedNumber.');
+      if (getAudio == "yes") {
+        player = AudioPlayer();
+        player.setReleaseMode(ReleaseMode.stop);
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          await player.setSource(AssetSource('audio/number_error.mp3'));
+          await player.resume();
+        });
+      } else if (getAudio == "no") {
+        dev.log('Audio Not');
+      }
     }
   }
 
@@ -193,12 +239,12 @@ class _FindNumberGameScreenState extends State<FindNumberGameScreen> {
 
   /// start timer
   void startTimer() {
-    overallTime = 300;
+    timerRun = 0;
     gameOver = false;
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        if (overallTime > 0 && !isPaused) {
-          overallTime--;
+        if (!isPaused) {
+          timerRun++;
         } else {
           timer.cancel();
           // _endGame();
@@ -238,6 +284,13 @@ class _FindNumberGameScreenState extends State<FindNumberGameScreen> {
     return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
   }
 
+  /// formatted time with minutes and seconds in achievements
+  String formatTimeWithAchievements(int seconds) {
+    int minutes = seconds ~/ 60;
+    int remainingSeconds = seconds % 60;
+    return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+  }
+
   /// game menu alert dialog
   gameMenuAlertDialog() {
     showDialog(
@@ -264,8 +317,12 @@ class _FindNumberGameScreenState extends State<FindNumberGameScreen> {
                     GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: () {
-                          // Navigator.of(context).pop();
-                          // resumeGameTimer();
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const FindNumberGameOnboardingScreen()),
+                              (Route<dynamic> route) => false);
                         },
                         child: Container(
                           padding: EdgeInsets.all(8.r),
@@ -301,125 +358,79 @@ class _FindNumberGameScreenState extends State<FindNumberGameScreen> {
                             ),
                           ),
                         )),
+                  ],
+                )
+              ]));
+        });
+  }
+
+  /// leader board alert dialog
+  leaderBoardAlertDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        barrierColor: Colors.black87,
+        builder: (context) {
+          return AlertDialog(
+              backgroundColor: AppColors.appWhiteTextColor,
+              title: Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
                     GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: () {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const NumberGameOnboardingScreen()),
-                              (Route<dynamic> route) => false);
+                          Navigator.of(context).pop();
+                          resumeGameTimer();
                         },
-                        child: Container(
-                          padding: EdgeInsets.all(8.r),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8.r)),
-                              border: Border.all(
-                                  color: AppColors.numberFindBgColor,
-                                  width: 2)),
-                          child: Center(
-                            child: Image.asset('assets/images/audio_off.png',
-                                color: AppColors.numberFindBgColor,
-                                height: 40.h),
-                          ),
-                        )),
+                        child: Image.asset('assets/new_images/close.png',
+                            height: 20.h)),
                   ],
+                ),
+                SizedBox(height: 5.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(),
+                    Text('Achievement',
+                        style: AppStyles.instance.gameFontStylesWithOutfit(
+                            fontSize: 30.sp, fontWeight: FontWeight.w500)),
+                  ],
+                ),
+                SizedBox(height: 20.h),
+                Image.asset('assets/new_images/target.png', height: 30.h),
+                SizedBox(height: 12.h),
+                Container(
+                  width: 180,
+                  padding: EdgeInsets.all(12.sp),
+                  decoration: BoxDecoration(
+                      color: AppColors.numberFindBgColor,
+                      borderRadius: BorderRadius.all(Radius.circular(8.r))),
+                  child: Center(
+                    child: Text(
+                      highScore.toString(),
+                      style: AppStyles.instance.gameFontStylesWithWhiteOutfit(
+                          fontWeight: FontWeight.w500, fontSize: 20.sp),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20.h),
+                Image.asset('assets/new_images/clock.png', height: 30.h),
+                SizedBox(height: 12.h),
+                Container(
+                  width: 180,
+                  padding: EdgeInsets.all(12.sp),
+                  decoration: BoxDecoration(
+                      color: AppColors.numberFindBgColor,
+                      borderRadius: BorderRadius.all(Radius.circular(8.r))),
+                  child: Center(
+                    child: Text(
+                      formatTimeWithAchievements(easyNumberTimer),
+                      style: AppStyles.instance.gameFontStylesWithWhiteOutfit(
+                          fontWeight: FontWeight.w500, fontSize: 20.sp),
+                    ),
+                  ),
                 )
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //   children: [
-                //     GamePlayFancyButton(
-                //       icon: SvgPicture.asset('assets/images/home.svg', height: 25),
-                //       color: Colors.red,
-                //       onPressed: () {
-                //         Future.delayed(const Duration(milliseconds: 100), () {
-                //           Navigator.pushAndRemoveUntil(
-                //               context,
-                //               MaterialPageRoute(
-                //                   builder: (BuildContext context) =>
-                //                       const GameOnboardingScreen()),
-                //               (Route<dynamic> route) => false);
-                //         });
-                //       },
-                //     ),
-                //     GamePlayFancyButton(
-                //       icon:
-                //           SvgPicture.asset('assets/images/reload.svg', height: 25),
-                //       color: Colors.orange,
-                //       onPressed: () {
-                //         Future.delayed(const Duration(milliseconds: 100), () {
-                //           Navigator.of(context).pop();
-                //           startGame();
-                //           setState(() {
-                //             score = 0;
-                //           });
-                //         });
-                //       },
-                //     ),
-                //     GamePlayFancyButton(
-                //       icon: SvgPicture.asset('assets/images/play.svg', height: 25),
-                //       color: Colors.green,
-                //       onPressed: () {
-                //         Future.delayed(const Duration(milliseconds: 100), () {
-                //           Navigator.of(context).pop();
-                //           startResumeTimer();
-                //           setState(() {
-                //             isCountDownVisible = true;
-                //           });
-                //         });
-                //       },
-                //     ),
-                //     // GestureDetector(
-                //     //   behavior: HitTestBehavior.opaque,
-                //     //   onTap: () {
-                //     //
-                //     //   },
-                //     //   child: Container(
-                //     //     padding: EdgeInsets.all(12.r),
-                //     //     decoration: BoxDecoration(
-                //     //         color: Colors.red,
-                //     //         borderRadius: BorderRadius.all(Radius.circular(8.r))),
-                //     //     child: const FaIcon(FontAwesomeIcons.house,
-                //     //         color: AppColors.appWhiteTextColor),
-                //     //   ),
-                //     // ),
-                //     // GestureDetector(
-                //     //   behavior: HitTestBehavior.opaque,
-                //     //   onTap: () {
-                //     //     Navigator.of(context).pop();
-                //     //     startGame();
-                //     //     setState(() {
-                //     //       score = 0;
-                //     //     });
-                //     //   },
-                //     //   child: Container(
-                //     //     padding: EdgeInsets.all(12.r),
-                //     //     decoration: BoxDecoration(
-                //     //         color: Colors.orange,
-                //     //         borderRadius: BorderRadius.all(Radius.circular(8.r))),
-                //     //     child: const FaIcon(Icons.restart_alt_rounded,
-                //     //         color: AppColors.appWhiteTextColor),
-                //     //   ),
-                //     // ),
-                //     // GestureDetector(
-                //     //   behavior: HitTestBehavior.opaque,
-                //     //   onTap: () {
-                //     //     Navigator.of(context).pop();
-                //     //     resumeGame();
-                //     //   },
-                //     //   child: Container(
-                //     //     padding: EdgeInsets.all(12.r),
-                //     //     decoration: BoxDecoration(
-                //     //         color: Colors.green,
-                //     //         borderRadius: BorderRadius.all(Radius.circular(8.r))),
-                //     //     child: const FaIcon(FontAwesomeIcons.play,
-                //     //         color: AppColors.appWhiteTextColor),
-                //     //   ),
-                //     // )
-                //   ],
-                // )
               ]));
         });
   }
@@ -442,8 +453,8 @@ class _FindNumberGameScreenState extends State<FindNumberGameScreen> {
     gameOver = false;
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        if (overallTime > 0 && !isPaused) {
-          overallTime--;
+        if (!isPaused) {
+          timerRun++;
         } else {
           timer.cancel();
           // _endGame();

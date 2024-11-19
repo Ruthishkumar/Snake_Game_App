@@ -134,4 +134,13 @@ class AppStyles {
         fontStyle: FontStyle.normal,
         color: AppColors.numberFindBgColor);
   }
+
+  TextStyle? gameFontStylesWithWhiteOutfit(
+      {required double fontSize, required FontWeight fontWeight}) {
+    return GoogleFonts.outfit(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontStyle: FontStyle.normal,
+        color: AppColors.appWhiteTextColor);
+  }
 }

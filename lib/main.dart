@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'view/number_identify/screens/find_number_game_screen.dart';
+import 'package:snake_game_app/view/game_select_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
           title: 'Snake App',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primarySwatch: Colors.blue),
-          home: FindNumberGameScreen(),
+          home: const GameSelectView(),
         );
       },
     );
