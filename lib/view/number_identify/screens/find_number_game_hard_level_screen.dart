@@ -21,7 +21,7 @@ class FindNumberGameHardLevelScreen extends StatefulWidget {
 }
 
 class _FindNumberGameHardLevelScreenState
-    extends State<FindNumberGameHardLevelScreen> {
+    extends State<FindNumberGameHardLevelScreen> with WidgetsBindingObserver {
   int expectedNumber = 1;
   List<int> numbers = [];
   Map<int, Color> clickedNumberColors = {};
@@ -32,17 +32,17 @@ class _FindNumberGameHardLevelScreenState
 
   @override
   void initState() {
-    super.initState();
     startGame();
     getAudioData();
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
   }
 
   @override
   void dispose() {
     timer?.cancel();
-    // resumeTimer?.cancel();
-    // player.dispose();
-    // WidgetsBinding.instance.removeObserver(this);
+    player.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -54,62 +54,81 @@ class _FindNumberGameHardLevelScreenState
     setState(() {});
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
+      pauseGameTimer();
+    } else if (state == AppLifecycleState.resumed) {
+      gameMenuAlertDialog();
+    }
+  }
+
+  /// exit app alert dialog
+  onWillPop() async {
+    timer!.cancel();
+    gameMenuAlertDialog();
+  }
+
   bool isPaused = false;
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.numberFindBgColor,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            appHeaderWidget(),
-            Container(
-              padding: EdgeInsets.fromLTRB(20.r, 0.r, 20.r, 0.r),
-              child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 8,
-                  mainAxisSpacing: 21,
-                  crossAxisSpacing: 1.1,
-                  childAspectRatio: 1.4,
-                ),
-                itemCount: numbers.length,
-                itemBuilder: (context, index) {
-                  int number = numbers[index];
-                  return GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () {
-                      numberClick(number);
-                    },
-                    child: Container(
-                      margin: EdgeInsets.all(1.r),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          // color: clickedNumberColors[number] ?? Colors.blueAccent,
-                          border: Border.all(
-                            color: clickedNumberColors[number] ??
-                                Colors.transparent,
-                            width: 2,
-                          ),
-                          shape: BoxShape.circle),
-                      child: Text(
-                        number.toString(),
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16.sp,
-                            fontStyle: FontStyle.italic),
+    return WillPopScope(
+      onWillPop: () => onWillPop(),
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: AppColors.numberFindBgColor,
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              appHeaderWidget(),
+              Container(
+                padding: EdgeInsets.fromLTRB(20.r, 0.r, 20.r, 0.r),
+                child: GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 8,
+                    mainAxisSpacing: 21,
+                    crossAxisSpacing: 1.1,
+                    childAspectRatio: 1.4,
+                  ),
+                  itemCount: numbers.length,
+                  itemBuilder: (context, index) {
+                    int number = numbers[index];
+                    return GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        numberClick(number);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.all(1.r),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            // color: clickedNumberColors[number] ?? Colors.blueAccent,
+                            border: Border.all(
+                              color: clickedNumberColors[number] ??
+                                  Colors.transparent,
+                              width: 2,
+                            ),
+                            shape: BoxShape.circle),
+                        child: Text(
+                          number.toString(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16.sp,
+                              fontStyle: FontStyle.italic),
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-            Container()
-          ],
+              Container()
+            ],
+          ),
         ),
       ),
     );
@@ -203,6 +222,13 @@ class _FindNumberGameHardLevelScreenState
         expectedNumber++;
         numbers.shuffle();
       });
+      if (expectedNumber > 100) {
+        timer?.cancel();
+        dev.log('Game Over');
+        gameOverAlertDialog();
+      } else {
+        dev.log('Next');
+      }
       if (getAudio == "yes") {
         player = AudioPlayer();
         player.setReleaseMode(ReleaseMode.stop);
@@ -433,6 +459,50 @@ class _FindNumberGameHardLevelScreenState
                     ),
                   ),
                 )
+              ]));
+        });
+  }
+
+  /// game over alert dialog
+  gameOverAlertDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        barrierColor: Colors.black87,
+        builder: (context) {
+          return AlertDialog(
+              backgroundColor: AppColors.appWhiteTextColor,
+              title: Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Congratulations!!!',
+                        style: AppStyles.instance.gameFontStylesWithOutfit(
+                            fontSize: 20.sp, fontWeight: FontWeight.w500)),
+                  ],
+                ),
+                SizedBox(height: 30.h),
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    startGame();
+                  },
+                  child: Container(
+                    width: 180,
+                    padding: EdgeInsets.all(12.sp),
+                    decoration: BoxDecoration(
+                        color: AppColors.numberFindBgColor,
+                        borderRadius: BorderRadius.all(Radius.circular(8.r))),
+                    child: Center(
+                      child: Text(
+                        'Play Again',
+                        style: AppStyles.instance.gameFontStylesWithWhiteOutfit(
+                            fontWeight: FontWeight.w500, fontSize: 20.sp),
+                      ),
+                    ),
+                  ),
+                ),
               ]));
         });
   }

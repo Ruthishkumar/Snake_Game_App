@@ -41,7 +41,6 @@ class _SnakeGamePlayScreenState extends State<SnakeGamePlayScreen>
   void initState() {
     getStorageData();
     WidgetsBinding.instance.addObserver(this);
-
     super.initState();
   }
 

@@ -21,7 +21,7 @@ class FindNumberGameEasyLevelScreen extends StatefulWidget {
 }
 
 class _FindNumberGameEasyLevelScreenState
-    extends State<FindNumberGameEasyLevelScreen> {
+    extends State<FindNumberGameEasyLevelScreen> with WidgetsBindingObserver {
   int expectedNumber = 1;
   List<int> numbers = [];
   List<int> clickedColor = [];
@@ -32,17 +32,17 @@ class _FindNumberGameEasyLevelScreenState
 
   @override
   void initState() {
-    super.initState();
     startGame();
     getAudioData();
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
   }
 
   @override
   void dispose() {
     timer?.cancel();
-    // resumeTimer?.cancel();
-    // player.dispose();
-    // WidgetsBinding.instance.removeObserver(this);
+    player.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -57,60 +57,80 @@ class _FindNumberGameEasyLevelScreenState
   bool isPaused = false;
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
+      pauseGameTimer();
+    } else if (state == AppLifecycleState.resumed) {
+      gameMenuAlertDialog();
+    }
+  }
+
+  /// exit app alert dialog
+  onWillPop() async {
+    timer!.cancel();
+    gameMenuAlertDialog();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.numberFindBgColor,
-        body: Container(
-          padding: EdgeInsets.fromLTRB(20.r, 30.r, 20.r, 0.r),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                appHeaderWidget(),
-                SizedBox(height: 30.h),
-                GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 6,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 0.5,
-                    childAspectRatio: 1.9,
-                  ),
-                  itemCount: numbers.length, // Total items
-                  itemBuilder: (context, index) {
-                    int number = numbers[index];
-                    return GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        numberClick(number);
-                      },
-                      child: Container(
-                        margin: EdgeInsets.all(1.r),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            // color: Colors.red,
-                            // color: clickedNumberColors[number] ?? Colors.blueAccent,
-                            border: Border.all(
-                              color: clickedColor.contains(number)
-                                  ? Colors.black
-                                  : Colors.transparent,
-                              width: 2,
-                            ),
-                            shape: BoxShape.circle),
-                        child: Text(
-                          number.toString(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.sp,
-                              fontStyle: FontStyle.italic),
+    return WillPopScope(
+      onWillPop: () => onWillPop(),
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: AppColors.numberFindBgColor,
+          body: Container(
+            padding: EdgeInsets.fromLTRB(20.r, 30.r, 20.r, 0.r),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  appHeaderWidget(),
+                  SizedBox(height: 30.h),
+                  GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 6,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 0.5,
+                      childAspectRatio: 1.9,
+                    ),
+                    itemCount: numbers.length, // Total items
+                    itemBuilder: (context, index) {
+                      int number = numbers[index];
+                      return GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          numberClick(number);
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(1.r),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              // color: Colors.red,
+                              // color: clickedNumberColors[number] ?? Colors.blueAccent,
+                              border: Border.all(
+                                color: clickedColor.contains(number)
+                                    ? Colors.black
+                                    : Colors.transparent,
+                                width: 2,
+                              ),
+                              shape: BoxShape.circle),
+                          child: Text(
+                            number.toString(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16.sp,
+                                fontStyle: FontStyle.italic),
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ],
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -200,6 +220,13 @@ class _FindNumberGameEasyLevelScreenState
         clickedColor.add(number);
         expectedNumber++;
       });
+      if (expectedNumber > 100) {
+        timer?.cancel();
+        dev.log('Game Over');
+        gameOverAlertDialog();
+      } else {
+        dev.log('Next');
+      }
       if (getAudio == "yes") {
         player = AudioPlayer();
         player.setReleaseMode(ReleaseMode.stop);
@@ -431,6 +458,50 @@ class _FindNumberGameEasyLevelScreenState
                     ),
                   ),
                 )
+              ]));
+        });
+  }
+
+  /// game over alert dialog
+  gameOverAlertDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        barrierColor: Colors.black87,
+        builder: (context) {
+          return AlertDialog(
+              backgroundColor: AppColors.appWhiteTextColor,
+              title: Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Congratulations!!!',
+                        style: AppStyles.instance.gameFontStylesWithOutfit(
+                            fontSize: 20.sp, fontWeight: FontWeight.w500)),
+                  ],
+                ),
+                SizedBox(height: 30.h),
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    startGame();
+                  },
+                  child: Container(
+                    width: 180,
+                    padding: EdgeInsets.all(12.sp),
+                    decoration: BoxDecoration(
+                        color: AppColors.numberFindBgColor,
+                        borderRadius: BorderRadius.all(Radius.circular(8.r))),
+                    child: Center(
+                      child: Text(
+                        'Play Again',
+                        style: AppStyles.instance.gameFontStylesWithWhiteOutfit(
+                            fontWeight: FontWeight.w500, fontSize: 20.sp),
+                      ),
+                    ),
+                  ),
+                ),
               ]));
         });
   }
