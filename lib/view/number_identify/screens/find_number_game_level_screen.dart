@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:snake_game_app/utils/app_screen_container.dart';
 import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
@@ -45,58 +46,55 @@ class _FindNumberGameLevelScreenState extends State<FindNumberGameLevelScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.numberFindBgColor,
-        body: Container(
-          padding: EdgeInsets.fromLTRB(20.r, 20.r, 20.r, 20.r),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Difficulty',
-                      style: GoogleFonts.outfit(
-                          fontSize: 30.sp,
-                          fontWeight: FontWeight.w600,
-                          fontStyle: FontStyle.normal,
-                          color: AppColors.appWhiteTextColor)),
-                  SizedBox(height: 30.h),
-                  levelContainerCardWidget(
-                      level: 'Easy',
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            AnimationPageRoute(
-                                widget: const FindNumberGameEasyLevelScreen()));
-                      }),
-                  SizedBox(height: 20.h),
-                  levelContainerCardWidget(
-                      level: 'Medium',
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            AnimationPageRoute(
-                                widget:
-                                    const FindNumberGameMediumLevelScreen()));
-                      }),
-                  SizedBox(height: 20.h),
-                  levelContainerCardWidget(
-                      level: 'Hard',
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            AnimationPageRoute(
-                                widget: const FindNumberGameHardLevelScreen()));
-                      }),
-                  SizedBox(height: 20.h),
-                ],
-              ),
-              bottomWidget()
-            ],
-          ),
+    return AppScreenContainer(
+      appBackGroundColor: AppColors.numberFindBgColor,
+      bodyWidget: Container(
+        padding: EdgeInsets.fromLTRB(20.r, 20.r, 20.r, 20.r),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Difficulty',
+                    style: GoogleFonts.outfit(
+                        fontSize: 30.sp,
+                        fontWeight: FontWeight.w600,
+                        fontStyle: FontStyle.normal,
+                        color: AppColors.appWhiteTextColor)),
+                SizedBox(height: 30.h),
+                levelContainerCardWidget(
+                    level: 'Easy',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          AnimationPageRoute(
+                              widget: const FindNumberGameEasyLevelScreen()));
+                    }),
+                SizedBox(height: 20.h),
+                levelContainerCardWidget(
+                    level: 'Medium',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          AnimationPageRoute(
+                              widget: const FindNumberGameMediumLevelScreen()));
+                    }),
+                SizedBox(height: 20.h),
+                levelContainerCardWidget(
+                    level: 'Hard',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          AnimationPageRoute(
+                              widget: const FindNumberGameHardLevelScreen()));
+                    }),
+                SizedBox(height: 20.h),
+              ],
+            ),
+            bottomWidget()
+          ],
         ),
       ),
     );

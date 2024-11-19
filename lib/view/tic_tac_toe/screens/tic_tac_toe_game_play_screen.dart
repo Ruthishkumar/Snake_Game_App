@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:snake_game_app/utils/app_screen_container.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
 
@@ -185,80 +186,78 @@ class _TicTacToeGamePlayScreenState extends State<TicTacToeGamePlayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.appBackGroundColor,
-        body: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.fromLTRB(20.r, 60.r, 20.r, 20.r),
-            child: Column(
-              children: [
-                playersNameWidget(),
-                SizedBox(height: 30.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Turn : ',
-                        style: AppStyles.instance.gameFontStylesWithWhite(
-                            fontSize: 35.sp, fontWeight: FontWeight.w400)),
-                    SizedBox(width: 10.r),
-                    Text(
-                      currentPlayer == widget.chooseSide
-                          ? widget.playerOneName
-                          : widget.playerTwoName,
+    return AppScreenContainer(
+      appBackGroundColor: AppColors.appBackGroundColor,
+      bodyWidget: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.fromLTRB(20.r, 60.r, 20.r, 20.r),
+          child: Column(
+            children: [
+              playersNameWidget(),
+              SizedBox(height: 30.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Turn : ',
                       style: AppStyles.instance.gameFontStylesWithWhite(
-                          fontSize: 40, fontWeight: FontWeight.w400),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 30.h),
-                Container(
-                  margin: EdgeInsets.all(5.r),
-                  decoration: BoxDecoration(
-                      color: AppColors.appWhiteTextColor.withOpacity(0.9),
-                      borderRadius: BorderRadius.all(Radius.circular(10.r))),
-                  child: GridView.builder(
-                      itemCount: 9,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3),
-                      itemBuilder: (context, index) {
-                        int row = index ~/ 3;
-                        int column = index % 3;
-                        return GestureDetector(
-                          onTap: () {
-                            makeMove(row, column);
-                          },
-                          child: Container(
-                            margin: EdgeInsets.all(4.r),
-                            decoration: BoxDecoration(
-                                color: const Color(0xff1A2980),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.r))),
-                            child: Center(
-                              child: Text(
-                                board[row][column],
-                                style: board[row][column] == widget.chooseSide
-                                    ? GoogleFonts.bangers(
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 35.sp,
-                                        color: AppColors.asteriskColor)
-                                    : GoogleFonts.bangers(
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 35.sp,
-                                        color: AppColors.yellowColor),
-                              ),
+                          fontSize: 35.sp, fontWeight: FontWeight.w400)),
+                  SizedBox(width: 10.r),
+                  Text(
+                    currentPlayer == widget.chooseSide
+                        ? widget.playerOneName
+                        : widget.playerTwoName,
+                    style: AppStyles.instance.gameFontStylesWithWhite(
+                        fontSize: 40, fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
+              SizedBox(height: 30.h),
+              Container(
+                margin: EdgeInsets.all(5.r),
+                decoration: BoxDecoration(
+                    color: AppColors.appWhiteTextColor.withOpacity(0.9),
+                    borderRadius: BorderRadius.all(Radius.circular(10.r))),
+                child: GridView.builder(
+                    itemCount: 9,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3),
+                    itemBuilder: (context, index) {
+                      int row = index ~/ 3;
+                      int column = index % 3;
+                      return GestureDetector(
+                        onTap: () {
+                          makeMove(row, column);
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(4.r),
+                          decoration: BoxDecoration(
+                              color: const Color(0xff1A2980),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.r))),
+                          child: Center(
+                            child: Text(
+                              board[row][column],
+                              style: board[row][column] == widget.chooseSide
+                                  ? GoogleFonts.bangers(
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 35.sp,
+                                      color: AppColors.asteriskColor)
+                                  : GoogleFonts.bangers(
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 35.sp,
+                                      color: AppColors.yellowColor),
                             ),
                           ),
-                        );
-                      }),
-                )
-              ],
-            ),
+                        ),
+                      );
+                    }),
+              )
+            ],
           ),
         ),
       ),

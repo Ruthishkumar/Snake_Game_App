@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:snake_game_app/utils/app_screen_container.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
 import 'package:snake_game_app/view/number_identify/screens/find_number_game_onboarding_screen.dart';
@@ -76,58 +77,55 @@ class _FindNumberGameMediumLevelScreenState
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => onWillPop(),
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: AppColors.numberFindBgColor,
-          body: Container(
-            padding: EdgeInsets.fromLTRB(20.r, 30.r, 20.r, 0.r),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  appHeaderWidget(),
-                  SizedBox(height: 30.h),
-                  GridView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 6,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 0.5,
-                      childAspectRatio: 1.9,
-                    ),
-                    itemCount: numbers.length, // Total items
-                    itemBuilder: (context, index) {
-                      int number = numbers[index];
-                      return GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          numberClick(number);
-                        },
-                        child: Container(
-                          margin: EdgeInsets.all(1.r),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: clickedNumberColors[number] ??
-                                    Colors.transparent,
-                                width: 2,
-                              ),
-                              shape: BoxShape.circle),
-                          child: Text(
-                            number.toString(),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16.sp,
-                                fontStyle: FontStyle.italic),
-                          ),
-                        ),
-                      );
-                    },
+      child: AppScreenContainer(
+        appBackGroundColor: AppColors.numberFindBgColor,
+        bodyWidget: Container(
+          padding: EdgeInsets.fromLTRB(20.r, 30.r, 20.r, 0.r),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                appHeaderWidget(),
+                SizedBox(height: 30.h),
+                GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 6,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 0.5,
+                    childAspectRatio: 1.9,
                   ),
-                ],
-              ),
+                  itemCount: numbers.length, // Total items
+                  itemBuilder: (context, index) {
+                    int number = numbers[index];
+                    return GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        numberClick(number);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.all(1.r),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              color: clickedNumberColors[number] ??
+                                  Colors.transparent,
+                              width: 2,
+                            ),
+                            shape: BoxShape.circle),
+                        child: Text(
+                          number.toString(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16.sp,
+                              fontStyle: FontStyle.italic),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
           ),
         ),

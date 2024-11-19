@@ -6,6 +6,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:snake_game_app/utils/app_screen_container.dart';
 import 'package:snake_game_app/utils/styles/animated_fancy_button.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
@@ -96,10 +97,9 @@ class _SnakeGamePlayScreenState extends State<SnakeGamePlayScreen>
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => onWillPop(),
-      child: SafeArea(
-          child: Scaffold(
-        backgroundColor: AppColors.primaryTextColor,
-        body: Stack(
+      child: AppScreenContainer(
+        appBackGroundColor: AppColors.primaryTextColor,
+        bodyWidget: Stack(
           alignment: Alignment.center,
           children: [
             Column(
@@ -222,7 +222,7 @@ class _SnakeGamePlayScreenState extends State<SnakeGamePlayScreen>
                 : Container(),
           ],
         ),
-      )),
+      ),
     );
   }
 
