@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:snake_game_app/view/game_select_view.dart';
+import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_easy_level_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
           title: 'Snake App',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primarySwatch: Colors.blue),
-          home: const GameSelectView(),
+          home: const MemoryCardGameEasyLevelScreen(),
         );
       },
     );

@@ -12,4 +12,6 @@ class AppColors {
   static const yellowColor = Color(0xffFFC837);
 
   static const numberFindBgColor = Color(0xff7AA1D2);
+
+  static const cardMatchingBgColor = Color(0xffDEAA79);
 }

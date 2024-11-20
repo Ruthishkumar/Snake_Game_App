@@ -41,7 +41,7 @@ class _GameSelectViewState extends State<GameSelectView> {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [Color(0xffC04848), Color(0xff480048)],
+                colors: [Color(0xff5C258D), Color(0xff4389A2)],
               ),
             ),
             child: Container(
