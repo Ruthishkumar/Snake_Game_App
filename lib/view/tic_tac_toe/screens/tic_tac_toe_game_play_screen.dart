@@ -202,12 +202,14 @@ class _TicTacToeGamePlayScreenState extends State<TicTacToeGamePlayScreen> {
                       style: AppStyles.instance.gameFontStylesWithWhite(
                           fontSize: 35.sp, fontWeight: FontWeight.w400)),
                   SizedBox(width: 10.r),
-                  Text(
-                    currentPlayer == widget.chooseSide
-                        ? widget.playerOneName
-                        : widget.playerTwoName,
-                    style: AppStyles.instance.gameFontStylesWithWhite(
-                        fontSize: 40, fontWeight: FontWeight.w400),
+                  Flexible(
+                    child: Text(
+                      currentPlayer == widget.chooseSide
+                          ? widget.playerOneName
+                          : widget.playerTwoName,
+                      style: AppStyles.instance.gameFontStylesWithWhite(
+                          fontSize: 40, fontWeight: FontWeight.w400),
+                    ),
                   ),
                 ],
               ),
@@ -277,21 +279,21 @@ class _TicTacToeGamePlayScreenState extends State<TicTacToeGamePlayScreen> {
           ),
           child: Column(
             children: [
-              Text(
-                widget.playerOneName,
-                style: AppStyles.instance.gameFontStylesWithWhite(
-                    fontSize: 30.sp, fontWeight: FontWeight.w400),
+              Flexible(
+                child: Text(
+                  widget.playerOneName,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppStyles.instance.gameFontStylesWithWhite(
+                      fontSize: 30.sp, fontWeight: FontWeight.w400),
+                ),
               ),
               SizedBox(height: 10.h),
-              Flexible(
-                child: Text(widget.chooseSide,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.bangers(
-                        fontStyle: FontStyle.normal,
-                        fontSize: 30.sp,
-                        color: AppColors.asteriskColor,
-                        fontWeight: FontWeight.w400)),
-              ),
+              Text(widget.chooseSide,
+                  style: GoogleFonts.bangers(
+                      fontStyle: FontStyle.normal,
+                      fontSize: 30.sp,
+                      color: AppColors.asteriskColor,
+                      fontWeight: FontWeight.w400)),
             ],
           )),
       Container(
