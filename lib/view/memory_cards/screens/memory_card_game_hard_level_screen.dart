@@ -8,16 +8,16 @@ import 'package:snake_game_app/utils/app_screen_container.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
 
-class MemoryCardGameEasyLevelScreen extends StatefulWidget {
-  const MemoryCardGameEasyLevelScreen({super.key});
+class MemoryCardGameHardLevelScreen extends StatefulWidget {
+  const MemoryCardGameHardLevelScreen({super.key});
 
   @override
-  State<MemoryCardGameEasyLevelScreen> createState() =>
-      _MemoryCardGameEasyLevelScreenState();
+  State<MemoryCardGameHardLevelScreen> createState() =>
+      _MemoryCardGameHardLevelScreenState();
 }
 
-class _MemoryCardGameEasyLevelScreenState
-    extends State<MemoryCardGameEasyLevelScreen> {
+class _MemoryCardGameHardLevelScreenState
+    extends State<MemoryCardGameHardLevelScreen> {
   List<IconData?> shuffledIcons = [];
   List<int> selectedCard = [];
   Set<int> revealedCard = {};
@@ -44,6 +44,10 @@ class _MemoryCardGameEasyLevelScreenState
     FontAwesomeIcons.shieldHalved,
     FontAwesomeIcons.bolt,
     FontAwesomeIcons.ghost,
+    FontAwesomeIcons.apple,
+    FontAwesomeIcons.windows,
+    FontAwesomeIcons.fire,
+    FontAwesomeIcons.snowflake,
   ];
 
   /// start games
@@ -54,8 +58,8 @@ class _MemoryCardGameEasyLevelScreenState
     revealedCard.clear();
     matchedCard.clear();
     currentPlayer = 1;
-    score = {1: 0, 2: 0};
     isProcessing = false;
+    score = {1: 0, 2: 0};
   }
 
   @override
@@ -183,9 +187,9 @@ class _MemoryCardGameEasyLevelScreenState
       selectedCard.add(index);
       revealedCard.add(index);
       if (selectedCard.length == 2) {
+        isProcessing = true;
         final firstIndex = selectedCard[0];
         final secondIndex = selectedCard[1];
-        isProcessing = true;
 
         if (shuffledIcons[firstIndex] == shuffledIcons[secondIndex]) {
           Future.delayed(const Duration(milliseconds: 300), () {

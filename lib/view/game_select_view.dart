@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
+import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_level_screen.dart';
 import 'package:snake_game_app/view/number_identify/screens/find_number_game_onboarding_screen.dart';
 import 'package:snake_game_app/view/snake_game/screens/game_onboarding_screen.dart';
 import 'package:snake_game_app/view/tic_tac_toe/screens/enter_player_name_screen.dart';
@@ -49,181 +50,67 @@ class _GameSelectViewState extends State<GameSelectView> {
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              AnimationPageRoute(
-                                  widget: const GameOnboardingScreen()));
-                        },
-                        child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white10,
-                                // border: Border.all(color: Colors.grey),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.r))),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 150,
-                                  height: 110,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8.r)),
-                                  child: SvgPicture.asset(
-                                    'assets/images/app_logo.svg',
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                // ClipRRect(
-                                //   borderRadius:
-                                //       BorderRadius.all(Radius.circular(8.r)),
-                                //   child: SvgPicture.asset(
-                                //       'assets/images/app_logo.svg',
-                                //       height: 150,
-                                //       width: 180,
-                                //       fit: BoxFit.contain),
-                                // ),
-                                SizedBox(height: 10.h),
-                                Text(
-                                  'Snake Game',
-                                  style: AppStyles.instance.gameViewChooseStyle(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(height: 5.h),
-                                Text(
-                                  'Action',
-                                  style: AppStyles.instance
-                                      .gameViewChooseStyleWithOpacity(
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(height: 20.h),
-                              ],
-                            )),
-                      ),
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              AnimationPageRoute(
-                                  widget: const EnterPlayerNameScreen()));
-                        },
-                        child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white10,
-                                // border: Border.all(color: Colors.grey),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.r))),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 150,
-                                  height: 110,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8.r)),
-                                  child: Image.asset(
-                                    'assets/new_images/tic-tac-toe.png',
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                // ClipRRect(
-                                //   borderRadius:
-                                //       BorderRadius.all(Radius.circular(8.r)),
-                                //   child: SvgPicture.asset(
-                                //       'assets/images/app_logo.svg',
-                                //       height: 150,
-                                //       width: 180,
-                                //       fit: BoxFit.contain),
-                                // ),
-                                SizedBox(height: 10.h),
-                                Text(
-                                  'Tic Tac Toe',
-                                  style: AppStyles.instance.gameViewChooseStyle(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(height: 5.h),
-                                Text(
-                                  'Puzzle',
-                                  style: AppStyles.instance
-                                      .gameViewChooseStyleWithOpacity(
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(height: 20.h),
-                              ],
-                            )),
-                      ),
+                      gameCardWidget(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                AnimationPageRoute(
+                                    widget: const GameOnboardingScreen()));
+                          },
+                          image: SvgPicture.asset(
+                            'assets/images/app_logo.svg',
+                            fit: BoxFit.fill,
+                          ),
+                          gameName: 'Snake Game',
+                          gameMode: 'Action'),
+                      gameCardWidget(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                AnimationPageRoute(
+                                    widget: const EnterPlayerNameScreen()));
+                          },
+                          image: Image.asset(
+                            'assets/new_images/tic-tac-toe.png',
+                            fit: BoxFit.fill,
+                          ),
+                          gameName: 'Tic Tac Toe',
+                          gameMode: 'Puzzle'),
                     ],
                   ),
                   SizedBox(height: 20.h),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              AnimationPageRoute(
-                                  widget:
-                                      const FindNumberGameOnboardingScreen()));
-                        },
-                        child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white10,
-                                // border: Border.all(color: Colors.grey),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.r))),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 150,
-                                  height: 110,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8.r)),
-                                  child: Image.asset(
-                                    'assets/new_images/game_search.png',
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                                // ClipRRect(
-                                //   borderRadius:
-                                //       BorderRadius.all(Radius.circular(8.r)),
-                                //   child: SvgPicture.asset(
-                                //       'assets/images/app_logo.svg',
-                                //       height: 150,
-                                //       width: 180,
-                                //       fit: BoxFit.contain),
-                                // ),
-                                SizedBox(height: 10.h),
-                                Text(
-                                  'Find The Number',
-                                  style: AppStyles.instance.gameViewChooseStyle(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(height: 5.h),
-                                Text(
-                                  'Puzzle',
-                                  style: AppStyles.instance
-                                      .gameViewChooseStyleWithOpacity(
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(height: 20.h),
-                              ],
-                            )),
-                      ),
-                      Container()
+                      gameCardWidget(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                AnimationPageRoute(
+                                    widget:
+                                        const FindNumberGameOnboardingScreen()));
+                          },
+                          image: Image.asset(
+                            'assets/new_images/game_search.png',
+                            fit: BoxFit.contain,
+                          ),
+                          gameName: 'Find The Number',
+                          gameMode: 'Puzzle'),
+                      gameCardWidget(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                AnimationPageRoute(
+                                    widget: const MemoryCardGameLevelScreen()));
+                          },
+                          image: Image.asset(
+                            'assets/new_images/memory_card.png',
+                            fit: BoxFit.fill,
+                          ),
+                          gameName: 'Memory Cards',
+                          gameMode: 'Action'),
                     ],
                   ),
                 ],
@@ -232,6 +119,48 @@ class _GameSelectViewState extends State<GameSelectView> {
           ),
         ),
       ),
+    );
+  }
+
+  /// game card container widget
+  Widget gameCardWidget(
+      {required GestureTapCallback onTap,
+      required Widget image,
+      required String gameName,
+      required String gameMode}) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        onTap();
+      },
+      child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white10,
+              borderRadius: BorderRadius.all(Radius.circular(8.r))),
+          child: Column(
+            children: [
+              Container(
+                  width: 150,
+                  height: 110,
+                  clipBehavior: Clip.antiAlias,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(8.r)),
+                  child: image),
+              SizedBox(height: 10.h),
+              Text(
+                gameName,
+                style: AppStyles.instance.gameViewChooseStyle(
+                    fontSize: 16.sp, fontWeight: FontWeight.w500),
+              ),
+              SizedBox(height: 5.h),
+              Text(
+                gameMode,
+                style: AppStyles.instance.gameViewChooseStyleWithOpacity(
+                    fontSize: 16.sp, fontWeight: FontWeight.w500),
+              ),
+              SizedBox(height: 20.h),
+            ],
+          )),
     );
   }
 }
