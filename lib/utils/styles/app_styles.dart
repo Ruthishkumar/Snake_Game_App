@@ -143,4 +143,13 @@ class AppStyles {
         fontStyle: FontStyle.normal,
         color: AppColors.appWhiteTextColor);
   }
+
+  TextStyle? gameFontsStylesWithRubik(
+      {required double fontSize, required FontWeight fontWeight}) {
+    return GoogleFonts.rubik(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontStyle: FontStyle.normal,
+        color: AppColors.appWhiteTextColor);
+  }
 }

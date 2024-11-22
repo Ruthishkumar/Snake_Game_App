@@ -342,8 +342,12 @@ class _FindNumberGameMediumLevelScreenState
                     GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: () {
-                          // Navigator.of(context).pop();
-                          // resumeGameTimer();
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const FindNumberGameOnboardingScreen()),
+                              (Route<dynamic> route) => false);
                         },
                         child: Container(
                           padding: EdgeInsets.all(8.r),
@@ -377,30 +381,6 @@ class _FindNumberGameMediumLevelScreenState
                               'assets/images/play.svg',
                               color: AppColors.numberFindBgColor,
                             ),
-                          ),
-                        )),
-                    GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const FindNumberGameOnboardingScreen()),
-                              (Route<dynamic> route) => false);
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(8.r),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8.r)),
-                              border: Border.all(
-                                  color: AppColors.numberFindBgColor,
-                                  width: 2)),
-                          child: Center(
-                            child: Image.asset('assets/images/audio_off.png',
-                                color: AppColors.numberFindBgColor,
-                                height: 40.h),
                           ),
                         )),
                   ],

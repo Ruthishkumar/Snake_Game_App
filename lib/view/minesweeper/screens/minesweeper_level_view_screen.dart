@@ -4,25 +4,24 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:snake_game_app/utils/app_screen_container.dart';
 import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
-import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_easy_level_screen.dart';
-import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_hard_level_screen.dart';
-import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_medium_level_screen.dart';
+import 'package:snake_game_app/view/minesweeper/screens/minesweeper_easy_level_screen.dart';
 
-class MemoryCardGameLevelScreen extends StatefulWidget {
-  const MemoryCardGameLevelScreen({super.key});
+class MinesweeperLevelViewScreen extends StatefulWidget {
+  const MinesweeperLevelViewScreen({super.key});
 
   @override
-  State<MemoryCardGameLevelScreen> createState() =>
-      _MemoryCardGameLevelScreenState();
+  State<MinesweeperLevelViewScreen> createState() =>
+      _MinesweeperLevelViewScreenState();
 }
 
-class _MemoryCardGameLevelScreenState extends State<MemoryCardGameLevelScreen> {
+class _MinesweeperLevelViewScreenState
+    extends State<MinesweeperLevelViewScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScreenContainer(
-        appBackGroundColor: AppColors.cardMatchingBgColor,
+        appBackGroundColor: AppColors.mineSweeperBgColor,
         bodyWidget: Container(
-          padding: EdgeInsets.fromLTRB(20.r, 40.r, 20.r, 20.r),
+          padding: EdgeInsets.fromLTRB(20.r, 20.r, 20.r, 20.r),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -32,7 +31,7 @@ class _MemoryCardGameLevelScreenState extends State<MemoryCardGameLevelScreen> {
                   Navigator.push(
                       context,
                       AnimationPageRoute(
-                          widget: const MemoryCardGameEasyLevelScreen()));
+                          widget: const MineSweeperEasyLevelScreen()));
                 },
               ),
               SizedBox(height: 20.h),
@@ -42,7 +41,7 @@ class _MemoryCardGameLevelScreenState extends State<MemoryCardGameLevelScreen> {
                   Navigator.push(
                       context,
                       AnimationPageRoute(
-                          widget: const MemoryCardGameMediumLevelScreen()));
+                          widget: const MineSweeperEasyLevelScreen()));
                 },
               ),
               SizedBox(height: 20.h),
@@ -52,7 +51,7 @@ class _MemoryCardGameLevelScreenState extends State<MemoryCardGameLevelScreen> {
                   Navigator.push(
                       context,
                       AnimationPageRoute(
-                          widget: const MemoryCardGameHardLevelScreen()));
+                          widget: const MineSweeperEasyLevelScreen()));
                 },
               ),
             ],
@@ -74,18 +73,18 @@ class _MemoryCardGameLevelScreenState extends State<MemoryCardGameLevelScreen> {
           padding: EdgeInsets.all(15.r),
           decoration: BoxDecoration(
               border: Border.all(color: AppColors.appWhiteTextColor, width: 2),
-              color: const Color(0xffFFE6A9),
+              color: const Color(0xffCBD2A4),
               borderRadius: BorderRadius.all(Radius.circular(8.r))),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 level,
-                style: GoogleFonts.russoOne(
+                style: GoogleFonts.rubik(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w500,
                     fontStyle: FontStyle.normal,
-                    color: AppColors.appBackgroundColor),
+                    color: AppColors.primaryTextColor),
               ),
             ],
           ),

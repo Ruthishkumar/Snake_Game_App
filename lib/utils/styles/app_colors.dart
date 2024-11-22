@@ -14,4 +14,6 @@ class AppColors {
   static const numberFindBgColor = Color(0xff7AA1D2);
 
   static const cardMatchingBgColor = Color(0xffDEAA79);
+
+  static const mineSweeperBgColor = Color(0xff798645);
 }
