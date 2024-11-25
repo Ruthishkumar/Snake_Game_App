@@ -12,24 +12,24 @@ import 'package:snake_game_app/utils/styles/app_styles.dart';
 import 'package:snake_game_app/view/minesweeper/model/cell_model.dart';
 import 'package:snake_game_app/view/minesweeper/screens/minesweeper_level_view_screen.dart';
 
-class MineSweeperEasyLevelScreen extends StatefulWidget {
-  const MineSweeperEasyLevelScreen({super.key});
+class MineSweeperHardLevelScreen extends StatefulWidget {
+  const MineSweeperHardLevelScreen({super.key});
 
   @override
-  State<MineSweeperEasyLevelScreen> createState() =>
-      _MineSweeperEasyLevelScreenState();
+  State<MineSweeperHardLevelScreen> createState() =>
+      _MineSweeperHardLevelScreenState();
 }
 
-class _MineSweeperEasyLevelScreenState
-    extends State<MineSweeperEasyLevelScreen> {
-  int rows = 6;
-  int columns = 5;
-  int totalMines = 10;
+class _MineSweeperHardLevelScreenState
+    extends State<MineSweeperHardLevelScreen> {
+  int rows = 10;
+  int columns = 8;
+  int totalMines = 15;
   List<List<Cell>> grid = [];
   Timer? timer;
   int timerRun = 0;
 
-  int flagCount = 10;
+  int flagCount = 15;
   bool gameOver = false;
 
   @override
@@ -61,12 +61,15 @@ class _MineSweeperEasyLevelScreenState
                 itemCount: rows * columns,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: columns,
-                    crossAxisSpacing: 8.0,
-                    mainAxisSpacing: 8.0),
+                    crossAxisSpacing: 3,
+                    childAspectRatio: 0.9,
+                    mainAxisSpacing: 3.0),
                 itemBuilder: (context, index) {
                   final int row = index ~/ columns;
                   final int col = index % columns;
                   final cell = grid[row][col];
+                  dev.log(cell.hasMine.toString());
+                  dev.log('Cell Open ${cell.isOpen}');
                   // if (cell.hasMine) {
                   //   dev.log(cell.adjacentMines.toString());
                   // }
@@ -88,7 +91,13 @@ class _MineSweeperEasyLevelScreenState
                                       : const Color(0xffABBA7C)
                               : cell.isFlagged
                                   ? const Color(0xffD91656)
-                                  : const Color(0xffFEFAE0)),
+                                  : const Color(0xffFEFAE0)
+                          // color: cell.isOpen
+                          //     ? const Color(0xffABBA7C)
+                          //     : cell.isFlagged
+                          //         ? const Color(0xffAF1740)
+                          //         : const Color(0xffFEFAE0),
+                          ),
                       child: Center(
                           child: Text(
                               cell.isOpen
@@ -351,7 +360,7 @@ class _MineSweeperEasyLevelScreenState
       }
     }
     // Calculate adjacent mines for each cell
-    // a number 0-8 base on surounding / neighbour mines
+    // a number 0-8 base on surrounding / neighbour mines
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < columns; col++) {
         /// has mines no nothing
@@ -403,6 +412,7 @@ class _MineSweeperEasyLevelScreenState
             }
           }
         }
+
         Future.delayed(const Duration(milliseconds: 500)).then((val) {
           gameOverAlertDialog(label: 'Game Over !!!');
         });
@@ -503,7 +513,7 @@ class _MineSweeperEasyLevelScreenState
     setState(() {
       grid = [];
       gameOver = false;
-      flagCount = 10;
+      flagCount = 15;
     });
     startGame();
   }

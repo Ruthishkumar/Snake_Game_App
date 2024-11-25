@@ -12,18 +12,18 @@ import 'package:snake_game_app/utils/styles/app_styles.dart';
 import 'package:snake_game_app/view/minesweeper/model/cell_model.dart';
 import 'package:snake_game_app/view/minesweeper/screens/minesweeper_level_view_screen.dart';
 
-class MineSweeperEasyLevelScreen extends StatefulWidget {
-  const MineSweeperEasyLevelScreen({super.key});
+class MineSweeperMediumLevelScreen extends StatefulWidget {
+  const MineSweeperMediumLevelScreen({super.key});
 
   @override
-  State<MineSweeperEasyLevelScreen> createState() =>
-      _MineSweeperEasyLevelScreenState();
+  State<MineSweeperMediumLevelScreen> createState() =>
+      _MineSweeperMediumLevelScreenState();
 }
 
-class _MineSweeperEasyLevelScreenState
-    extends State<MineSweeperEasyLevelScreen> {
-  int rows = 6;
-  int columns = 5;
+class _MineSweeperMediumLevelScreenState
+    extends State<MineSweeperMediumLevelScreen> {
+  int rows = 8;
+  int columns = 7;
   int totalMines = 10;
   List<List<Cell>> grid = [];
   Timer? timer;
@@ -61,8 +61,8 @@ class _MineSweeperEasyLevelScreenState
                 itemCount: rows * columns,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: columns,
-                    crossAxisSpacing: 8.0,
-                    mainAxisSpacing: 8.0),
+                    crossAxisSpacing: 7.0,
+                    mainAxisSpacing: 10.0),
                 itemBuilder: (context, index) {
                   final int row = index ~/ columns;
                   final int col = index % columns;

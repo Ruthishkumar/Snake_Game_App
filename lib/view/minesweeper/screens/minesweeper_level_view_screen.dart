@@ -4,7 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:snake_game_app/utils/app_screen_container.dart';
 import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
+import 'package:snake_game_app/view/game_select_view.dart';
 import 'package:snake_game_app/view/minesweeper/screens/minesweeper_easy_level_screen.dart';
+import 'package:snake_game_app/view/minesweeper/screens/minesweeper_hard_level_screen.dart';
+import 'package:snake_game_app/view/minesweeper/screens/minesweeper_medium_level_screen.dart';
 
 class MinesweeperLevelViewScreen extends StatefulWidget {
   const MinesweeperLevelViewScreen({super.key});
@@ -18,45 +21,52 @@ class _MinesweeperLevelViewScreenState
     extends State<MinesweeperLevelViewScreen> {
   @override
   Widget build(BuildContext context) {
-    return AppScreenContainer(
-        appBackGroundColor: AppColors.mineSweeperBgColor,
-        bodyWidget: Container(
-          padding: EdgeInsets.fromLTRB(20.r, 20.r, 20.r, 20.r),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              levelContainerCardWidget(
-                level: 'Easy',
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      AnimationPageRoute(
-                          widget: const MineSweeperEasyLevelScreen()));
-                },
-              ),
-              SizedBox(height: 20.h),
-              levelContainerCardWidget(
-                level: 'Medium',
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      AnimationPageRoute(
-                          widget: const MineSweeperEasyLevelScreen()));
-                },
-              ),
-              SizedBox(height: 20.h),
-              levelContainerCardWidget(
-                level: 'Hard',
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      AnimationPageRoute(
-                          widget: const MineSweeperEasyLevelScreen()));
-                },
-              ),
-            ],
-          ),
-        ));
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const GameSelectView()));
+        return false;
+      },
+      child: AppScreenContainer(
+          appBackGroundColor: AppColors.mineSweeperBgColor,
+          bodyWidget: Container(
+            padding: EdgeInsets.fromLTRB(20.r, 20.r, 20.r, 20.r),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                levelContainerCardWidget(
+                  level: 'Easy',
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        AnimationPageRoute(
+                            widget: const MineSweeperEasyLevelScreen()));
+                  },
+                ),
+                SizedBox(height: 20.h),
+                levelContainerCardWidget(
+                  level: 'Medium',
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        AnimationPageRoute(
+                            widget: const MineSweeperMediumLevelScreen()));
+                  },
+                ),
+                SizedBox(height: 20.h),
+                levelContainerCardWidget(
+                  level: 'Hard',
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        AnimationPageRoute(
+                            widget: const MineSweeperHardLevelScreen()));
+                  },
+                ),
+              ],
+            ),
+          )),
+    );
   }
 
   /// level container card widget

@@ -100,8 +100,24 @@ class _FindNumberGameMediumLevelScreenState
                     int number = numbers[index];
                     return GestureDetector(
                       behavior: HitTestBehavior.opaque,
-                      onTap: () {
+                      onTap: () async {
                         numberClick(number);
+                        highScore =
+                            await StorageService().getMediumNumberScore();
+                        mediumNumberTimer =
+                            await StorageService().getMediumNumberTimer();
+                        dev.log('High Score $highScore');
+                        dev.log('Expected Score $expectedNumber');
+                        dev.log('Timer $timerRun');
+                        if (highScore == 0 || expectedNumber > highScore) {
+                          StorageService().setMediumNumberScore(expectedNumber);
+                          highScore =
+                              await StorageService().getMediumNumberScore();
+                          StorageService().setMediumNumberTimer(timerRun);
+                          mediumNumberTimer =
+                              await StorageService().getMediumNumberTimer();
+                          formatTimeWithAchievements(mediumNumberTimer);
+                        }
                       },
                       child: Container(
                         margin: EdgeInsets.all(1.r),

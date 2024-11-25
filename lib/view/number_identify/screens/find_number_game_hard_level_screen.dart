@@ -99,8 +99,22 @@ class _FindNumberGameHardLevelScreenState
                   int number = numbers[index];
                   return GestureDetector(
                     behavior: HitTestBehavior.opaque,
-                    onTap: () {
+                    onTap: () async {
                       numberClick(number);
+                      highScore = await StorageService().getHardNumberScore();
+                      hardNumberTimer =
+                          await StorageService().getHardNumberTimer();
+                      dev.log('High Score $highScore');
+                      dev.log('Expected Score $expectedNumber');
+                      dev.log('Timer $timerRun');
+                      if (highScore == 0 || expectedNumber > highScore) {
+                        StorageService().setHardNumberScore(expectedNumber);
+                        highScore = await StorageService().getHardNumberScore();
+                        StorageService().setHardNumberTimer(timerRun);
+                        hardNumberTimer =
+                            await StorageService().getHardNumberTimer();
+                        formatTimeWithAchievements(hardNumberTimer);
+                      }
                     },
                     child: Container(
                       margin: EdgeInsets.all(1.r),

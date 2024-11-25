@@ -100,7 +100,22 @@ class _FindNumberGameEasyLevelScreenState
                     int number = numbers[index];
                     return GestureDetector(
                       behavior: HitTestBehavior.opaque,
-                      onTap: () {
+                      onTap: () async {
+                        highScore = await StorageService().getEasyNumberScore();
+                        easyNumberTimer =
+                            await StorageService().getEasyNumberTimer();
+                        dev.log('High Score $highScore');
+                        dev.log('Expected Score $expectedNumber');
+                        dev.log('Timer $timerRun');
+                        if (highScore == 0 || expectedNumber > highScore) {
+                          StorageService().setEasyNumberScore(expectedNumber);
+                          highScore =
+                              await StorageService().getEasyNumberScore();
+                          StorageService().setEasyNumberTimer(timerRun);
+                          easyNumberTimer =
+                              await StorageService().getEasyNumberTimer();
+                          formatTimeWithAchievements(easyNumberTimer);
+                        }
                         numberClick(number);
                       },
                       child: Container(
