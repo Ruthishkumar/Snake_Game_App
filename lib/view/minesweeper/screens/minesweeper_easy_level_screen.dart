@@ -403,7 +403,7 @@ class _MineSweeperEasyLevelScreenState
             }
           }
         }
-        Future.delayed(const Duration(milliseconds: 500)).then((val) {
+        Future.delayed(const Duration(seconds: 1)).then((val) {
           gameOverAlertDialog(label: 'Game Over !!!');
         });
       } else if (checkGameForWin()) {
@@ -415,7 +415,7 @@ class _MineSweeperEasyLevelScreenState
             cell.isOpen = true;
           }
         }
-        Future.delayed(const Duration(milliseconds: 500)).then((val) {
+        Future.delayed(const Duration(seconds: 1)).then((val) {
           gameOverAlertDialog(label: 'Congratulations !!!');
         });
       } else if (cell.adjacentMines == 0) {
@@ -478,7 +478,7 @@ class _MineSweeperEasyLevelScreenState
           }
         }
       }
-      Future.delayed(const Duration(milliseconds: 500)).then((val) {
+      Future.delayed(const Duration(seconds: 1)).then((val) {
         gameOverAlertDialog(label: 'Congratulations !!!');
       });
     }

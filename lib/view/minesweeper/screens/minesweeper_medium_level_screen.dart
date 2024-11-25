@@ -24,12 +24,12 @@ class _MineSweeperMediumLevelScreenState
     extends State<MineSweeperMediumLevelScreen> {
   int rows = 8;
   int columns = 7;
-  int totalMines = 10;
+  int totalMines = 12;
   List<List<Cell>> grid = [];
   Timer? timer;
   int timerRun = 0;
 
-  int flagCount = 10;
+  int flagCount = 12;
   bool gameOver = false;
 
   @override
@@ -403,7 +403,7 @@ class _MineSweeperMediumLevelScreenState
             }
           }
         }
-        Future.delayed(const Duration(milliseconds: 500)).then((val) {
+        Future.delayed(const Duration(seconds: 1)).then((val) {
           gameOverAlertDialog(label: 'Game Over !!!');
         });
       } else if (checkGameForWin()) {
@@ -415,7 +415,7 @@ class _MineSweeperMediumLevelScreenState
             cell.isOpen = true;
           }
         }
-        Future.delayed(const Duration(milliseconds: 500)).then((val) {
+        Future.delayed(const Duration(seconds: 1)).then((val) {
           gameOverAlertDialog(label: 'Congratulations !!!');
         });
       } else if (cell.adjacentMines == 0) {
@@ -478,7 +478,7 @@ class _MineSweeperMediumLevelScreenState
           }
         }
       }
-      Future.delayed(const Duration(milliseconds: 500)).then((val) {
+      Future.delayed(const Duration(seconds: 1)).then((val) {
         gameOverAlertDialog(label: 'Congratulations !!!');
       });
     }
@@ -503,7 +503,7 @@ class _MineSweeperMediumLevelScreenState
     setState(() {
       grid = [];
       gameOver = false;
-      flagCount = 10;
+      flagCount = 12;
     });
     startGame();
   }
