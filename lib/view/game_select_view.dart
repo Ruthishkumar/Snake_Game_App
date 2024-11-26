@@ -7,6 +7,7 @@ import 'package:snake_game_app/utils/styles/app_styles.dart';
 import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_level_screen.dart';
 import 'package:snake_game_app/view/minesweeper/screens/minesweeper_level_view_screen.dart';
 import 'package:snake_game_app/view/number_identify/screens/find_number_game_onboarding_screen.dart';
+import 'package:snake_game_app/view/sliding_puzzle/screens/sliding_puzzle_onboarding_screen.dart';
 import 'package:snake_game_app/view/snake_game/screens/game_onboarding_screen.dart';
 import 'package:snake_game_app/view/tic_tac_toe/screens/enter_player_name_screen.dart';
 
@@ -116,7 +117,7 @@ class _GameSelectViewState extends State<GameSelectView> {
                   ),
                   SizedBox(height: 20.h),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       gameCardWidget(
                           onTap: () {
@@ -131,6 +132,20 @@ class _GameSelectViewState extends State<GameSelectView> {
                             fit: BoxFit.contain,
                           ),
                           gameName: 'Mine Sweeper',
+                          gameMode: 'Puzzle'),
+                      gameCardWidget(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                AnimationPageRoute(
+                                    widget:
+                                        const SlidingPuzzleOnboardingScreen()));
+                          },
+                          image: Image.asset(
+                            'assets/new_images/number_puzzle.png',
+                            fit: BoxFit.contain,
+                          ),
+                          gameName: 'Sliding Puzzle',
                           gameMode: 'Puzzle'),
                       // gameCardWidget(
                       //     onTap: () {

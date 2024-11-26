@@ -152,4 +152,22 @@ class AppStyles {
         fontStyle: FontStyle.normal,
         color: AppColors.appWhiteTextColor);
   }
+
+  TextStyle? gameFontStyleWithBungeeWhite(
+      {required double fontSize, required FontWeight fontWeight}) {
+    return GoogleFonts.bungee(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontStyle: FontStyle.normal,
+        color: AppColors.appWhiteTextColor);
+  }
+
+  TextStyle? gameFontStyleWithBungeeBlack(
+      {required double fontSize, required FontWeight fontWeight}) {
+    return GoogleFonts.bungee(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontStyle: FontStyle.normal,
+        color: AppColors.primaryTextColor);
+  }
 }

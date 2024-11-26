@@ -16,4 +16,6 @@ class AppColors {
   static const cardMatchingBgColor = Color(0xffDEAA79);
 
   static const mineSweeperBgColor = Color(0xff798645);
+
+  static const slidingPuzzleBgColor = Color(0xff003C43);
 }

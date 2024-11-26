@@ -7,26 +7,12 @@ class TimerScreen extends StatefulWidget {
   _TimerScreenState createState() => _TimerScreenState();
 }
 
-class _TimerScreenState extends State<TimerScreen> with WidgetsBindingObserver {
+class _TimerScreenState extends State<TimerScreen> {
   Timer? _timer;
   int _seconds = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    _startTimer();
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    _timer?.cancel();
-    super.dispose();
-  }
-
-  // Start timer
   void _startTimer() {
+    _stopTimer(); // Ensure any existing timer is canceled before starting a new one
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         _seconds++;
@@ -34,28 +20,59 @@ class _TimerScreenState extends State<TimerScreen> with WidgetsBindingObserver {
     });
   }
 
-  // Pause timer
-  void _pauseTimer() {
+  void _stopTimer() {
     _timer?.cancel();
   }
 
-  // Handle lifecycle changes
+  void _resetTimer() {
+    _stopTimer();
+    setState(() {
+      _seconds = 0;
+    });
+  }
+
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused ||
-        state == AppLifecycleState.inactive) {
-      _pauseTimer(); // Pause when app is minimized
-    } else if (state == AppLifecycleState.resumed) {
-      _startTimer(); // Resume when app is back
-    }
+  void dispose() {
+    _stopTimer();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Timer Example')),
+      appBar: AppBar(
+        title: Text('Resettable Timer'),
+      ),
       body: Center(
-        child: Text('Seconds: $_seconds', style: TextStyle(fontSize: 30)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Time: $_seconds seconds',
+              style: TextStyle(fontSize: 30),
+            ),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: _startTimer,
+                  child: Text('Start'),
+                ),
+                SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: _stopTimer,
+                  child: Text('Stop'),
+                ),
+                SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: _resetTimer,
+                  child: Text('Reset'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
