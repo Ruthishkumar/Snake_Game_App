@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:snake_game_app/view/game_select_view.dart';
+import 'package:snake_game_app/view/game_splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,10 +15,10 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 805),
       builder: (context, child) {
         return MaterialApp(
-          title: 'Snake App',
+          title: 'Arcade Game',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primarySwatch: Colors.blue),
-          home: const GameSelectView(),
+          home: const GameSplashScreen(),
         );
       },
     );
