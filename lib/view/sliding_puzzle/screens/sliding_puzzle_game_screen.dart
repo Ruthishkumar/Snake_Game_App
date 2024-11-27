@@ -61,7 +61,9 @@ class _SlidingPuzzleGameScreenState extends State<SlidingPuzzleGameScreen>
 
   /// exit app alert dialog
   onWillPop() async {
-    timer!.cancel();
+    if (timer != null) {
+      timer!.cancel();
+    }
     gameMenuAlertDialog();
   }
 
