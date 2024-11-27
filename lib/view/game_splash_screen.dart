@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:snake_game_app/utils/app_screen_container.dart';
-import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
 import 'package:snake_game_app/view/game_select_view.dart';
 
@@ -25,8 +24,11 @@ class _GameSplashScreenState extends State<GameSplashScreen> {
       if (!mounted) {
         return;
       }
-      Navigator.push(
-          context, AnimationPageRoute(widget: const GameSelectView()));
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => const GameSelectView()),
+          (Route<dynamic> route) => false);
     });
   }
 
