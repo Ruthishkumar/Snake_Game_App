@@ -4,9 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:snake_game_app/utils/app_screen_container.dart';
 import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
-import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_easy_level_screen.dart';
-import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_hard_level_screen.dart';
-import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_medium_level_screen.dart';
+import 'package:snake_game_app/view/memory_cards/screens/memory_card_choose_mode_screen.dart';
 
 class MemoryCardGameLevelScreen extends StatefulWidget {
   const MemoryCardGameLevelScreen({super.key});
@@ -32,7 +30,9 @@ class _MemoryCardGameLevelScreenState extends State<MemoryCardGameLevelScreen> {
                   Navigator.push(
                       context,
                       AnimationPageRoute(
-                          widget: const MemoryCardGameEasyLevelScreen()));
+                          widget: const MemoryCardChooseModeScreen(
+                        difficultyLabel: 'Easy',
+                      )));
                 },
               ),
               SizedBox(height: 20.h),
@@ -42,7 +42,9 @@ class _MemoryCardGameLevelScreenState extends State<MemoryCardGameLevelScreen> {
                   Navigator.push(
                       context,
                       AnimationPageRoute(
-                          widget: const MemoryCardGameMediumLevelScreen()));
+                          widget: const MemoryCardChooseModeScreen(
+                        difficultyLabel: 'Medium',
+                      )));
                 },
               ),
               SizedBox(height: 20.h),
@@ -52,7 +54,9 @@ class _MemoryCardGameLevelScreenState extends State<MemoryCardGameLevelScreen> {
                   Navigator.push(
                       context,
                       AnimationPageRoute(
-                          widget: const MemoryCardGameHardLevelScreen()));
+                          widget: const MemoryCardChooseModeScreen(
+                        difficultyLabel: 'Hard',
+                      )));
                 },
               ),
             ],

@@ -117,7 +117,7 @@ class _GameSelectViewState extends State<GameSelectView> {
                   ),
                   SizedBox(height: 20.h),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       gameCardWidget(
                           onTap: () {
