@@ -9,16 +9,40 @@ class StorageService {
 
   StorageService._internal();
 
-  Future<void> setHighScore(int? highScore) async {
+  Future<void> setHighScoreForEasy(int? highScore) async {
     if (highScore != null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setInt('highScore', highScore);
+      prefs.setInt('easyHighScore', highScore);
     }
   }
 
-  Future<int> getHighScore() async {
+  Future<int> getHighScoreForEasy() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getInt('highScore') ?? 0;
+    return prefs.getInt('easyHighScore') ?? 0;
+  }
+
+  Future<void> setHighScoreForMedium(int? highScore) async {
+    if (highScore != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt('mediumHighScore', highScore);
+    }
+  }
+
+  Future<int> getHighScoreForMedium() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('mediumHighScore') ?? 0;
+  }
+
+  Future<void> setHighScoreForHard(int? highScore) async {
+    if (highScore != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt('hardHighScore', highScore);
+    }
+  }
+
+  Future<int> getHighScoreForHard() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('hardHighScore') ?? 0;
   }
 
   Future<void> setVibrations(String? vibration) async {

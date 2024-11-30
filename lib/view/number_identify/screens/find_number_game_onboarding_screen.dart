@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snake_game_app/utils/app_screen_container.dart';
 import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
@@ -77,13 +78,13 @@ class _FindNumberGameOnboardingScreenState
                   },
                   child: Lottie.asset('assets/lottie_images/play.json',
                       height: 100)),
-              // GestureDetector(
-              //     onTap: () async {
-              //       SharedPreferences prefs =
-              //           await SharedPreferences.getInstance();
-              //       prefs.clear();
-              //     },
-              //     child: Text('Clear'))
+              GestureDetector(
+                  onTap: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.clear();
+                  },
+                  child: Text('Clear'))
             ],
           ),
         ),

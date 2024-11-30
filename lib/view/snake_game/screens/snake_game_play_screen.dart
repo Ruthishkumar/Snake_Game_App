@@ -700,20 +700,52 @@ class _SnakeGamePlayScreenState extends State<SnakeGamePlayScreen>
   /// snake smash method
   snakeSmashMethod() async {
     if (checkDamaged()) {
-      bestScore = await StorageService().getHighScore();
-      dev.log('Best Score $bestScore');
-      if (bestScore == 0 || score > bestScore) {
-        StorageService().setHighScore(score);
-        bestScore = await StorageService().getHighScore();
+      if (difficulty == 'easy') {
+        bestScore = await StorageService().getHighScoreForEasy();
+        dev.log('Best Score $bestScore');
+        if (bestScore == 0 || score > bestScore) {
+          StorageService().setHighScoreForEasy(score);
+          bestScore = await StorageService().getHighScoreForEasy();
+        }
+        timer?.cancel();
+        if (vibrationIsActiveOrNot == 'yes') {
+          Vibration.vibrate(duration: 600);
+          dev.log('Vibration Active');
+        } else if (vibrationIsActiveOrNot == 'no') {
+          dev.log('Vibration Not Active');
+        }
+        gameOverDialog();
+      } else if (difficulty == 'medium') {
+        bestScore = await StorageService().getHighScoreForMedium();
+        dev.log('Best Score $bestScore');
+        if (bestScore == 0 || score > bestScore) {
+          StorageService().setHighScoreForMedium(score);
+          bestScore = await StorageService().getHighScoreForMedium();
+        }
+        timer?.cancel();
+        if (vibrationIsActiveOrNot == 'yes') {
+          Vibration.vibrate(duration: 600);
+          dev.log('Vibration Active');
+        } else if (vibrationIsActiveOrNot == 'no') {
+          dev.log('Vibration Not Active');
+        }
+        gameOverDialog();
+      } else if (difficulty == 'hard') {
+        bestScore = await StorageService().getHighScoreForHard();
+        dev.log('Best Score $bestScore');
+        if (bestScore == 0 || score > bestScore) {
+          StorageService().setHighScoreForHard(score);
+          bestScore = await StorageService().getHighScoreForHard();
+        }
+        timer?.cancel();
+        if (vibrationIsActiveOrNot == 'yes') {
+          Vibration.vibrate(duration: 600);
+          dev.log('Vibration Active');
+        } else if (vibrationIsActiveOrNot == 'no') {
+          dev.log('Vibration Not Active');
+        }
+        gameOverDialog();
       }
-      timer?.cancel();
-      if (vibrationIsActiveOrNot == 'yes') {
-        Vibration.vibrate(duration: 600);
-        dev.log('Vibration Active');
-      } else if (vibrationIsActiveOrNot == 'no') {
-        dev.log('Vibration Not Active');
-      }
-      gameOverDialog();
     }
   }
 
