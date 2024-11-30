@@ -176,4 +176,76 @@ class StorageService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getInt('hardNumberTimer') ?? 0;
   }
+
+  Future<void> setSoloEasyNumberScore(int? value) async {
+    if (value != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt('soloEasyNumberScore', value);
+    }
+  }
+
+  Future<int> getSoloEasyNumberScore() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('soloEasyNumberScore') ?? 0;
+  }
+
+  Future<void> setSoloMediumNumberScore(int? value) async {
+    if (value != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt('soloMediumNumberScore', value);
+    }
+  }
+
+  Future<int> getSoloMediumNumberScore() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('soloMediumNumberScore') ?? 0;
+  }
+
+  Future<void> setSoloHardNumberScore(int? value) async {
+    if (value != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt('soloHardNumberScore', value);
+    }
+  }
+
+  Future<int> getSoloHardNumberScore() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('soloHardNumberScore') ?? 0;
+  }
+
+  Future<void> setSoloEasyNumberTimer(int? value) async {
+    if (value != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt('soloEasyNumberTimer', value);
+    }
+  }
+
+  Future<int> getSoloEasyNumberTimer() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('soloEasyNumberTimer') ?? 0;
+  }
+
+  Future<void> setSoloMediumNumberTimer(int? value) async {
+    if (value != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt('soloMediumNumberTimer', value);
+    }
+  }
+
+  Future<int> getSoloMediumNumberTimer() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('soloMediumNumberTimer') ?? 0;
+  }
+
+  Future<void> setSoloHardNumberTimer(int? value) async {
+    if (value != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt('soloHardNumberTimer', value);
+    }
+  }
+
+  Future<int> getSoloHardNumberTimer() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('soloHardNumberTimer') ?? 0;
+  }
 }

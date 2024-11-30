@@ -7,6 +7,7 @@ import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_easy_level_screen.dart';
 import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_hard_level_screen.dart';
 import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_medium_level_screen.dart';
+import 'package:snake_game_app/view/memory_cards/screens/memory_card_single_player_easy_level_screen.dart';
 
 class MemoryCardChooseModeScreen extends StatefulWidget {
   final String difficultyLabel;
@@ -42,17 +43,20 @@ class _MemoryCardChooseModeScreenState
                     Navigator.push(
                         context,
                         AnimationPageRoute(
-                            widget: const MemoryCardGameEasyLevelScreen()));
+                            widget:
+                                const MemoryCardSinglePlayerEasyLevelScreen()));
                   } else if (widget.difficultyLabel == "Medium") {
                     Navigator.push(
                         context,
                         AnimationPageRoute(
-                            widget: const MemoryCardGameMediumLevelScreen()));
+                            widget:
+                                const MemoryCardSinglePlayerEasyLevelScreen()));
                   } else if (widget.difficultyLabel == "Hard") {
                     Navigator.push(
                         context,
                         AnimationPageRoute(
-                            widget: const MemoryCardGameHardLevelScreen()));
+                            widget:
+                                const MemoryCardSinglePlayerEasyLevelScreen()));
                   }
                 },
               ),

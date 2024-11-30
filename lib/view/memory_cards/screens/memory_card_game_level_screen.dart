@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:snake_game_app/utils/app_screen_container.dart';
 import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
+import 'package:snake_game_app/view/game_select_view.dart';
 import 'package:snake_game_app/view/memory_cards/screens/memory_card_choose_mode_screen.dart';
 
 class MemoryCardGameLevelScreen extends StatefulWidget {
@@ -17,51 +18,58 @@ class MemoryCardGameLevelScreen extends StatefulWidget {
 class _MemoryCardGameLevelScreenState extends State<MemoryCardGameLevelScreen> {
   @override
   Widget build(BuildContext context) {
-    return AppScreenContainer(
-        appBackGroundColor: AppColors.cardMatchingBgColor,
-        bodyWidget: Container(
-          padding: EdgeInsets.fromLTRB(20.r, 40.r, 20.r, 20.r),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              levelContainerCardWidget(
-                level: 'Easy',
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      AnimationPageRoute(
-                          widget: const MemoryCardChooseModeScreen(
-                        difficultyLabel: 'Easy',
-                      )));
-                },
-              ),
-              SizedBox(height: 20.h),
-              levelContainerCardWidget(
-                level: 'Medium',
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      AnimationPageRoute(
-                          widget: const MemoryCardChooseModeScreen(
-                        difficultyLabel: 'Medium',
-                      )));
-                },
-              ),
-              SizedBox(height: 20.h),
-              levelContainerCardWidget(
-                level: 'Hard',
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      AnimationPageRoute(
-                          widget: const MemoryCardChooseModeScreen(
-                        difficultyLabel: 'Hard',
-                      )));
-                },
-              ),
-            ],
-          ),
-        ));
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const GameSelectView()));
+        return false;
+      },
+      child: AppScreenContainer(
+          appBackGroundColor: AppColors.cardMatchingBgColor,
+          bodyWidget: Container(
+            padding: EdgeInsets.fromLTRB(20.r, 40.r, 20.r, 20.r),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                levelContainerCardWidget(
+                  level: 'Easy',
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        AnimationPageRoute(
+                            widget: const MemoryCardChooseModeScreen(
+                          difficultyLabel: 'Easy',
+                        )));
+                  },
+                ),
+                SizedBox(height: 20.h),
+                levelContainerCardWidget(
+                  level: 'Medium',
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        AnimationPageRoute(
+                            widget: const MemoryCardChooseModeScreen(
+                          difficultyLabel: 'Medium',
+                        )));
+                  },
+                ),
+                SizedBox(height: 20.h),
+                levelContainerCardWidget(
+                  level: 'Hard',
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        AnimationPageRoute(
+                            widget: const MemoryCardChooseModeScreen(
+                          difficultyLabel: 'Hard',
+                        )));
+                  },
+                ),
+              ],
+            ),
+          )),
+    );
   }
 
   /// level container card widget

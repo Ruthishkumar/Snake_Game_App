@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
           title: 'Arcade Game',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primarySwatch: Colors.blue),
-          home: const GameSplashScreen(),
+          home: GameSplashScreen(),
         );
       },
     );
