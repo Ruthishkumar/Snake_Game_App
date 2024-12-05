@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'view/number_guessing_game/screens/number_guessing_game_onboarding_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:snake_game_app/view/game_select_view.dart';
+import 'package:snake_game_app/view/number_guessing_game/number_screen_provider/number_screen_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => NumberScreenProvider()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +22,7 @@ class MyApp extends StatelessWidget {
           title: 'Arcade Game',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primarySwatch: Colors.blue),
-          home: NumberGuessingGameOnboardingScreen(),
+          home: const GameSelectView(),
         );
       },
     );

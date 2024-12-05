@@ -6,6 +6,7 @@ import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
 import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_level_screen.dart';
 import 'package:snake_game_app/view/minesweeper/screens/minesweeper_level_view_screen.dart';
+import 'package:snake_game_app/view/number_guessing_game/screens/number_guessing_game_onboarding_screen.dart';
 import 'package:snake_game_app/view/number_identify/screens/find_number_game_onboarding_screen.dart';
 import 'package:snake_game_app/view/sliding_puzzle/screens/sliding_puzzle_onboarding_screen.dart';
 import 'package:snake_game_app/view/snake_game/screens/game_onboarding_screen.dart';
@@ -47,122 +48,145 @@ class _GameSelectViewState extends State<GameSelectView> {
                 colors: [Color(0xff314755), Color(0xff26a0da)],
               ),
             ),
-            child: Container(
-              padding: EdgeInsets.fromLTRB(20.r, 40.r, 20.r, 60.r),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      gameCardWidget(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                AnimationPageRoute(
-                                    widget: const GameOnboardingScreen()));
-                          },
-                          image: SvgPicture.asset(
-                            'assets/images/app_logo.svg',
-                            fit: BoxFit.fill,
-                          ),
-                          gameName: 'Snake Game',
-                          gameMode: 'Action'),
-                      gameCardWidget(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                AnimationPageRoute(
-                                    widget: const EnterPlayerNameScreen()));
-                          },
-                          image: Image.asset(
-                            'assets/new_images/tic-tac-toe.png',
-                            fit: BoxFit.fill,
-                          ),
-                          gameName: 'Tic Tac Toe',
-                          gameMode: 'Puzzle'),
-                    ],
-                  ),
-                  SizedBox(height: 20.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      gameCardWidget(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                AnimationPageRoute(
-                                    widget:
-                                        const FindNumberGameOnboardingScreen()));
-                          },
-                          image: Image.asset(
-                            'assets/new_images/game_search.png',
-                            fit: BoxFit.contain,
-                          ),
-                          gameName: 'Find The Number',
-                          gameMode: 'Puzzle'),
-                      gameCardWidget(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                AnimationPageRoute(
-                                    widget: const MemoryCardGameLevelScreen()));
-                          },
-                          image: Image.asset(
-                            'assets/new_images/memory_card.png',
-                            fit: BoxFit.fill,
-                          ),
-                          gameName: 'Memory Cards',
-                          gameMode: 'Action'),
-                    ],
-                  ),
-                  SizedBox(height: 20.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      gameCardWidget(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                AnimationPageRoute(
-                                    widget:
-                                        const MinesweeperLevelViewScreen()));
-                          },
-                          image: Image.asset(
-                            'assets/new_images/mines.png',
-                            fit: BoxFit.contain,
-                          ),
-                          gameName: 'Mine Sweeper',
-                          gameMode: 'Puzzle'),
-                      gameCardWidget(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                AnimationPageRoute(
-                                    widget:
-                                        const SlidingPuzzleOnboardingScreen()));
-                          },
-                          image: Image.asset(
-                            'assets/new_images/number_puzzle.png',
-                            fit: BoxFit.contain,
-                          ),
-                          gameName: 'Sliding Puzzle',
-                          gameMode: 'Puzzle'),
-                      // gameCardWidget(
-                      //     onTap: () {
-                      //       Navigator.push(
-                      //           context,
-                      //           AnimationPageRoute(
-                      //               widget: const MemoryCardGameLevelScreen()));
-                      //     },
-                      //     image: Image.asset(
-                      //       'assets/new_images/memory_card.png',
-                      //       fit: BoxFit.fill,
-                      //     ),
-                      //     gameName: 'Memory Cards',
-                      //     gameMode: 'Action'),
-                    ],
-                  ),
-                ],
+            child: SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.fromLTRB(20.r, 40.r, 20.r, 60.r),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        gameCardWidget(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  AnimationPageRoute(
+                                      widget: const GameOnboardingScreen()));
+                            },
+                            image: SvgPicture.asset(
+                              'assets/images/app_logo.svg',
+                              fit: BoxFit.fill,
+                            ),
+                            gameName: 'Snake Game',
+                            gameMode: 'Action'),
+                        gameCardWidget(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  AnimationPageRoute(
+                                      widget: const EnterPlayerNameScreen()));
+                            },
+                            image: Image.asset(
+                              'assets/new_images/tic-tac-toe.png',
+                              fit: BoxFit.fill,
+                            ),
+                            gameName: 'Tic Tac Toe',
+                            gameMode: 'Puzzle'),
+                      ],
+                    ),
+                    SizedBox(height: 20.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        gameCardWidget(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  AnimationPageRoute(
+                                      widget:
+                                          const FindNumberGameOnboardingScreen()));
+                            },
+                            image: Image.asset(
+                              'assets/new_images/game_search.png',
+                              fit: BoxFit.contain,
+                            ),
+                            gameName: 'Find The Number',
+                            gameMode: 'Puzzle'),
+                        gameCardWidget(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  AnimationPageRoute(
+                                      widget:
+                                          const MemoryCardGameLevelScreen()));
+                            },
+                            image: Image.asset(
+                              'assets/new_images/memory_card.png',
+                              fit: BoxFit.fill,
+                            ),
+                            gameName: 'Memory Cards',
+                            gameMode: 'Action'),
+                      ],
+                    ),
+                    SizedBox(height: 20.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        gameCardWidget(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  AnimationPageRoute(
+                                      widget:
+                                          const MinesweeperLevelViewScreen()));
+                            },
+                            image: Image.asset(
+                              'assets/new_images/mines.png',
+                              fit: BoxFit.contain,
+                            ),
+                            gameName: 'Mine Sweeper',
+                            gameMode: 'Puzzle'),
+                        gameCardWidget(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  AnimationPageRoute(
+                                      widget:
+                                          const SlidingPuzzleOnboardingScreen()));
+                            },
+                            image: Image.asset(
+                              'assets/new_images/number_puzzle.png',
+                              fit: BoxFit.contain,
+                            ),
+                            gameName: 'Sliding Puzzle',
+                            gameMode: 'Puzzle'),
+                        // gameCardWidget(
+                        //     onTap: () {
+                        //       Navigator.push(
+                        //           context,
+                        //           AnimationPageRoute(
+                        //               widget: const MemoryCardGameLevelScreen()));
+                        //     },
+                        //     image: Image.asset(
+                        //       'assets/new_images/memory_card.png',
+                        //       fit: BoxFit.fill,
+                        //     ),
+                        //     gameName: 'Memory Cards',
+                        //     gameMode: 'Action'),
+                      ],
+                    ),
+                    SizedBox(height: 20.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        gameCardWidget(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  AnimationPageRoute(
+                                      widget:
+                                          const NumberGuessingGameOnboardingScreen()));
+                            },
+                            image: Image.asset(
+                              'assets/new_images/number_guess.png',
+                              fit: BoxFit.contain,
+                            ),
+                            gameName: 'Number Guess',
+                            gameMode: 'Puzzle'),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

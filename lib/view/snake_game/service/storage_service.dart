@@ -248,4 +248,40 @@ class StorageService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getInt('soloHardNumberTimer') ?? 0;
   }
+
+  Future<void> setNumberGuessEasy(int? value) async {
+    if (value != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt('numberGuessEasy', value);
+    }
+  }
+
+  Future<int> getNumberGuessEasy() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('numberGuessEasy') ?? 0;
+  }
+
+  Future<void> setNumberGuessMedium(int? value) async {
+    if (value != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt('numberGuessMedium', value);
+    }
+  }
+
+  Future<int> getNumberGuessMedium() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('numberGuessMedium') ?? 0;
+  }
+
+  Future<void> setNumberGuessHard(int? value) async {
+    if (value != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt('numberGuessHard', value);
+    }
+  }
+
+  Future<int> getNumberGuessHard() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('numberGuessHard') ?? 0;
+  }
 }
