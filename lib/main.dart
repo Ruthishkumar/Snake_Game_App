@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:snake_game_app/view/game_splash_screen.dart';
+
+import 'view/number_guessing_game/screens/number_guessing_game_onboarding_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
           title: 'Arcade Game',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primarySwatch: Colors.blue),
-          home: GameSplashScreen(),
+          home: NumberGuessingGameOnboardingScreen(),
         );
       },
     );

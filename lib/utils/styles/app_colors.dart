@@ -18,4 +18,6 @@ class AppColors {
   static const mineSweeperBgColor = Color(0xff798645);
 
   static const slidingPuzzleBgColor = Color(0xff003C43);
+
+  static const numberGuessingBgColor = Color(0xff740938);
 }
