@@ -356,6 +356,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "provider",
+      "rootUri": "file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/provider-6.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "segmented_button_slide",
       "rootUri": "file:///C:/Users/intel/AppData/Local/Pub/Cache/hosted/pub.dev/segmented_button_slide-2.0.0",
       "packageUri": "lib/",
@@ -554,7 +560,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2024-11-29T12:14:24.967610Z",
+  "generated": "2024-12-05T15:18:01.365303Z",
   "generator": "pub",
   "generatorVersion": "3.5.3",
   "flutterRoot": "file:///C:/Users/intel/fvm/versions/3.24.3",
