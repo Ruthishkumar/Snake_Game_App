@@ -20,4 +20,7 @@ class AppColors {
   static const slidingPuzzleBgColor = Color(0xff003C43);
 
   static const numberGuessingBgColor = Color(0xff740938);
+
+  static const tapWarsPrimaryColor = Color(0xff22177A);
+  static const tapWarsSecondaryColor = Color(0xff740938);
 }

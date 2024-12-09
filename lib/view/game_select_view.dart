@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:snake_game_app/utils/routes/app_routes.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
+import 'package:snake_game_app/view/finger_battle/screens/tap_wars_game_screen.dart';
 import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_level_screen.dart';
 import 'package:snake_game_app/view/minesweeper/screens/minesweeper_level_view_screen.dart';
 import 'package:snake_game_app/view/number_guessing_game/screens/number_guessing_game_onboarding_screen.dart';
@@ -150,24 +151,11 @@ class _GameSelectViewState extends State<GameSelectView> {
                             ),
                             gameName: 'Sliding Puzzle',
                             gameMode: 'Puzzle'),
-                        // gameCardWidget(
-                        //     onTap: () {
-                        //       Navigator.push(
-                        //           context,
-                        //           AnimationPageRoute(
-                        //               widget: const MemoryCardGameLevelScreen()));
-                        //     },
-                        //     image: Image.asset(
-                        //       'assets/new_images/memory_card.png',
-                        //       fit: BoxFit.fill,
-                        //     ),
-                        //     gameName: 'Memory Cards',
-                        //     gameMode: 'Action'),
                       ],
                     ),
                     SizedBox(height: 20.h),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         gameCardWidget(
                             onTap: () {
@@ -183,6 +171,19 @@ class _GameSelectViewState extends State<GameSelectView> {
                             ),
                             gameName: 'Number Guess',
                             gameMode: 'Puzzle'),
+                        gameCardWidget(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  AnimationPageRoute(
+                                      widget: const TapWarsGameScreen()));
+                            },
+                            image: Image.asset(
+                              'assets/new_images/fight.png',
+                              fit: BoxFit.contain,
+                            ),
+                            gameName: 'Tap Wars',
+                            gameMode: 'Action'),
                       ],
                     ),
                   ],

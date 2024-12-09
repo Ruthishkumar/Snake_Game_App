@@ -170,4 +170,15 @@ class AppStyles {
         fontStyle: FontStyle.normal,
         color: AppColors.primaryTextColor);
   }
+
+  TextStyle? tapWarsTextStyles(
+      {required double fontSize,
+      required FontWeight fontWeight,
+      required Color color}) {
+    return GoogleFonts.macondo(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontStyle: FontStyle.normal,
+        color: color);
+  }
 }
