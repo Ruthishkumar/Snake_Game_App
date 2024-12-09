@@ -797,6 +797,21 @@ class _SnakeGamePlayScreenState extends State<SnakeGamePlayScreen>
             ),
             SizedBox(height: 40.h),
             RestartFancyButton(
+              text: 'Home',
+              color: AppColors.appBackgroundColor,
+              onPressed: () {
+                Future.delayed(const Duration(milliseconds: 100), () {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              const GameOnboardingScreen()),
+                      (Route<dynamic> route) => false);
+                });
+              },
+            ),
+            SizedBox(height: 20.h),
+            RestartFancyButton(
               text: 'Restart',
               color: AppColors.appBackgroundColor,
               onPressed: () {

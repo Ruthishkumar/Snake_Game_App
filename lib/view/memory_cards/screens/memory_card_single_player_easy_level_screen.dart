@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:math';
 
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -37,6 +38,8 @@ class _MemoryCardSinglePlayerEasyLevelScreenState
   int timerRun = 0;
   bool isPaused = false;
   bool isTimerRunning = false;
+  List<GlobalKey<FlipCardState>> flipCardKeys = [];
+
   @override
   void initState() {
     super.initState();
@@ -87,6 +90,11 @@ class _MemoryCardSinglePlayerEasyLevelScreenState
     currentPlayer = 1;
     score = {1: 0};
     isProcessing = false;
+
+    flipCardKeys = List.generate(
+      shuffledIcons.length,
+      (index) => GlobalKey<FlipCardState>(),
+    );
     startTimer();
   }
 
@@ -194,40 +202,17 @@ class _MemoryCardSinglePlayerEasyLevelScreenState
                     final isRevealed = revealedCard.contains(index);
                     final isMatched = matchedCard.contains(index);
                     final randomAngle = Random().nextDouble() * 0.2 - 0.1;
-                    return GestureDetector(
-                      onTap: () async {
-                        selectedItem(index);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color: iconData == null
-                                  ? Colors.transparent
-                                  : AppColors.appWhiteTextColor,
-                              width: 1.5),
-                          color: iconData == null
-                              ? Colors.transparent
-                              : isRevealed
-                                  ? const Color(
-                                      0xff659287) // Revealed but unmatched icons
-                                  : const Color(
-                                      0xffFFE6A9), // Default state for hidden icons
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: isRevealed && iconData != null
-                            ? Center(
-                                child: FaIcon(
-                                  iconData,
-                                  size: 25,
-                                  color: const Color(0xff740938),
-                                  // color: isMatched
-                                  //     ? Colors.green // Matched icons in green
-                                  //     : Colors.blue.shade900,
-                                ),
-                              )
-                            : null,
-                      ),
-                    );
+                    return FlipCard(
+                        key: flipCardKeys[index],
+                        flipOnTouch: selectedCard.length < 2 &&
+                            !selectedCard.contains(index),
+                        onFlipDone: (isFront) {
+                          if (isFront) {
+                            selectedItem(index);
+                          }
+                        },
+                        front: flipCardBack(),
+                        back: flipCardFront(iconData, isRevealed));
                   },
                 ),
               ),
@@ -235,6 +220,48 @@ class _MemoryCardSinglePlayerEasyLevelScreenState
           ),
         ),
       ),
+    );
+  }
+
+  /// flip card back
+  flipCardBack() {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.appWhiteTextColor, width: 1.5),
+        color: const Color(0xffFFE6A9), // Default state for hidden icons
+        borderRadius: BorderRadius.circular(8),
+      ),
+    );
+  }
+
+  /// flip card front
+  flipCardFront(IconData? iconData, bool isRevealed) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+            color: iconData == null
+                ? Colors.transparent
+                : AppColors.appWhiteTextColor,
+            width: 1.5),
+        color: iconData == null
+            ? Colors.transparent
+            : isRevealed
+                ? const Color(0xff659287) // Revealed but unmatched icons
+                : Colors.transparent, // Default state for hidden icons
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: isRevealed && iconData != null
+          ? Center(
+              child: FaIcon(
+                iconData,
+                size: 25,
+                color: const Color(0xff740938),
+                // color: isMatched
+                //     ? Colors.green // Matched icons in green
+                //     : Colors.blue.shade900,
+              ),
+            )
+          : null,
     );
   }
 
@@ -300,6 +327,8 @@ class _MemoryCardSinglePlayerEasyLevelScreenState
           });
         } else {
           Future.delayed(const Duration(seconds: 1), () {
+            flipCardKeys[firstIndex].currentState?.toggleCard();
+            flipCardKeys[secondIndex].currentState?.toggleCard();
             setState(() {
               revealedCard.remove(firstIndex);
               revealedCard.remove(secondIndex);

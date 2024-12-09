@@ -24,6 +24,8 @@ dependencies:
   fluttertoast: ^8.2.8
   flutter_svg: ^2.0.14
   provider: ^6.1.2
+  flip_card: ^0.7.0
+
 
 
 
