@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:snake_game_app/view/game_select_view.dart';
+import 'package:snake_game_app/view/finger_battle/screens/game_tap_screen.dart';
 import 'package:snake_game_app/view/number_guessing_game/number_screen_provider/number_screen_provider.dart';
 
 void main() {
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           title: 'Arcade Game',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primarySwatch: Colors.blue),
-          home: const GameSelectView(),
+          home: const TapWarsGameScreen(),
         );
       },
     );
