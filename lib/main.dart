@@ -3,8 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:snake_game_app/view/game_select_view.dart';
 import 'package:snake_game_app/view/number_guessing_game/number_screen_provider/number_screen_provider.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  WakelockPlus.enable();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => NumberScreenProvider()),
   ], child: const MyApp()));

@@ -25,6 +25,8 @@ dependencies:
   flutter_svg: ^2.0.14
   provider: ^6.1.2
   flip_card: ^0.7.0
+  wakelock_plus: ^1.2.8
+
 
 
 
