@@ -23,4 +23,7 @@ class AppColors {
 
   static const tapWarsPrimaryColor = Color(0xff22177A);
   static const tapWarsSecondaryColor = Color(0xff740938);
+
+  static const mathGamePrimaryColor = Color(0xff161D6F);
+  static const mathGameSecondaryColor = Color(0xff4B5945);
 }

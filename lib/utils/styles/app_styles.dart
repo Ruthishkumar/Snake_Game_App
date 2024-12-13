@@ -181,4 +181,22 @@ class AppStyles {
         fontStyle: FontStyle.normal,
         color: color);
   }
+
+  TextStyle? gameFontStyleWithPoppinsWhite(
+      {required double fontSize, required FontWeight fontWeight}) {
+    return GoogleFonts.poppins(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontStyle: FontStyle.normal,
+        color: AppColors.appWhiteTextColor);
+  }
+
+  TextStyle? gameFontStyleWithPoppinsBlack(
+      {required double fontSize, required FontWeight fontWeight}) {
+    return GoogleFonts.poppins(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontStyle: FontStyle.normal,
+        color: AppColors.primaryTextColor);
+  }
 }

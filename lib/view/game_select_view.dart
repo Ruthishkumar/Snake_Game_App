@@ -9,6 +9,7 @@ import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_level_
 import 'package:snake_game_app/view/minesweeper/screens/minesweeper_level_view_screen.dart';
 import 'package:snake_game_app/view/number_guessing_game/screens/number_guessing_game_onboarding_screen.dart';
 import 'package:snake_game_app/view/number_identify/screens/find_number_game_onboarding_screen.dart';
+import 'package:snake_game_app/view/number_math/screens/number_math_game.dart';
 import 'package:snake_game_app/view/sliding_puzzle/screens/sliding_puzzle_onboarding_screen.dart';
 import 'package:snake_game_app/view/snake_game/screens/game_onboarding_screen.dart';
 import 'package:snake_game_app/view/tic_tac_toe/screens/enter_player_name_screen.dart';
@@ -186,6 +187,25 @@ class _GameSelectViewState extends State<GameSelectView> {
                             gameMode: 'Action'),
                       ],
                     ),
+                    SizedBox(height: 20.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        gameCardWidget(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  AnimationPageRoute(
+                                      widget: const NumberMathGame()));
+                            },
+                            image: Image.asset(
+                              'assets/new_images/math_quiz.png',
+                              fit: BoxFit.contain,
+                            ),
+                            gameName: 'Math Quiz',
+                            gameMode: 'Action'),
+                      ],
+                    )
                   ],
                 ),
               ),
