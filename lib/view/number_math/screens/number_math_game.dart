@@ -2,6 +2,7 @@ import 'dart:developer' as dev;
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:snake_game_app/utils/app_screen_container.dart';
@@ -238,6 +239,10 @@ class _NumberMathGameState extends State<NumberMathGame> {
                       ],
                     ),
                   ),
+                  SizedBox(height: 10.h),
+                  Text('Player Two',
+                      style: AppStyles.instance.gameFontStyleWithPoppinsWhite(
+                          fontWeight: FontWeight.bold, fontSize: 20.sp)),
                   Expanded(
                     child: Center(
                       child: Container(
@@ -269,9 +274,9 @@ class _NumberMathGameState extends State<NumberMathGame> {
                           child: Container(
                             width: 70,
                             height: 70,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              gradient: const LinearGradient(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
                                 colors: [Color(0xffe52d27), Color(0xff7AA1D2)],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
@@ -279,17 +284,20 @@ class _NumberMathGameState extends State<NumberMathGame> {
                             ),
                             child: Container(
                               margin: EdgeInsets.all(4.r),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
                                 color: Colors.white,
                               ),
                               child: Center(
-                                child: Text(
-                                  choice.elementAt(index).toString(),
-                                  style: AppStyles.instance
-                                      .gameFontStyleWithPoppinsBlack(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 25.sp,
+                                child: FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Text(
+                                    choice.elementAt(index).toString(),
+                                    style: AppStyles.instance
+                                        .gameFontStyleWithPoppinsBlack(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 25.sp,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -377,6 +385,10 @@ class _NumberMathGameState extends State<NumberMathGame> {
                     ],
                   ),
                 ),
+                SizedBox(height: 10.h),
+                Text('Player One',
+                    style: AppStyles.instance.gameFontStyleWithPoppinsWhite(
+                        fontWeight: FontWeight.bold, fontSize: 20.sp)),
                 Expanded(
                   child: Center(
                     child: Container(
@@ -408,8 +420,8 @@ class _NumberMathGameState extends State<NumberMathGame> {
                         child: Container(
                           width: 70,
                           height: 70,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
                             gradient: const LinearGradient(
                               colors: [Color(0xffe52d27), Color(0xff7AA1D2)],
                               begin: Alignment.topLeft,
@@ -418,17 +430,20 @@ class _NumberMathGameState extends State<NumberMathGame> {
                           ),
                           child: Container(
                             margin: EdgeInsets.all(4.r),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
                               color: Colors.white,
                             ),
                             child: Center(
-                              child: Text(
-                                choice.elementAt(index).toString(),
-                                style: AppStyles.instance
-                                    .gameFontStyleWithPoppinsBlack(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 25.sp,
+                              child: FittedBox(
+                                fit: BoxFit.contain,
+                                child: Text(
+                                  choice.elementAt(index).toString(),
+                                  style: AppStyles.instance
+                                      .gameFontStyleWithPoppinsBlack(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 25.sp,
+                                  ),
                                 ),
                               ),
                             ),
@@ -515,6 +530,9 @@ class _NumberMathGameState extends State<NumberMathGame> {
                         validator: (value) =>
                             value!.isEmpty ? 'please enter the round' : null,
                         textInputAction: TextInputAction.done,
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(2),
+                        ],
                         decoration: InputDecoration(
                           errorStyle: GoogleFonts.poppins(
                               fontWeight: FontWeight.w400,
