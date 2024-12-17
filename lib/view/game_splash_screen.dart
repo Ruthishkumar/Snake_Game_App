@@ -37,37 +37,45 @@ class _GameSplashScreenState extends State<GameSplashScreen> {
     return AppScreenContainer(
         appBackGroundColor: const Color(0xffFFF8DB),
         bodyWidget: Container(
-          padding: EdgeInsets.fromLTRB(20.r, 200.r, 20.r, 20.r),
+          padding: EdgeInsets.fromLTRB(20.r, 40.r, 20.r, 40.r),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Center(
-                  child: Image.asset('assets/new_images/no-wifi.png',
-                      height: 150.h)),
-              SizedBox(height: 30.h),
-              Text(
-                'No Wifi Games',
-                style: AppStyles.instance.gameFontStyleWithBungeeBlack(
-                    fontSize: 25.sp, fontWeight: FontWeight.w500),
-              ),
-              SizedBox(height: 10.h),
-              Container(
-                width: 230.w,
-                height: 5.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(12.r)),
-                  gradient: const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [Color(0xff12c2e9), Color(0xfff64f59)],
+              Container(),
+              // Image.asset('assets/new_images/built_flutter.png', height: 50),
+              Column(
+                children: [
+                  Center(
+                      child: Image.asset('assets/new_images/no-wifi.png',
+                          height: 150.h)),
+                  SizedBox(height: 30.h),
+                  Text(
+                    'No Wifi Games',
+                    style: AppStyles.instance.gameFontStyleWithBungeeBlack(
+                        fontSize: 25.sp, fontWeight: FontWeight.w500),
                   ),
-                ),
+                  SizedBox(height: 10.h),
+                  Container(
+                    width: 230.w,
+                    height: 5.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(12.r)),
+                      gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Color(0xff12c2e9), Color(0xfff64f59)],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10.h),
+                  Text(
+                    'Offline Games',
+                    style: AppStyles.instance.gameFontStyleWithBungeeBlack(
+                        fontSize: 25.sp, fontWeight: FontWeight.w500),
+                  ),
+                ],
               ),
-              SizedBox(height: 10.h),
-              Text(
-                'Offline Games',
-                style: AppStyles.instance.gameFontStyleWithBungeeBlack(
-                    fontSize: 25.sp, fontWeight: FontWeight.w500),
-              ),
+              Image.asset('assets/new_images/built_flutter.png', height: 45),
             ],
           ),
         ));
