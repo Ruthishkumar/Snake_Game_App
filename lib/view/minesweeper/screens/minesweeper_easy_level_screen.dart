@@ -9,8 +9,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:snake_game_app/utils/app_screen_container.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
+import 'package:snake_game_app/view/game_select_view.dart';
 import 'package:snake_game_app/view/minesweeper/model/cell_model.dart';
-import 'package:snake_game_app/view/minesweeper/screens/minesweeper_level_view_screen.dart';
 
 class MineSweeperEasyLevelScreen extends StatefulWidget {
   const MineSweeperEasyLevelScreen({super.key});
@@ -265,7 +265,7 @@ class _MineSweeperEasyLevelScreenState
                               context,
                               MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      const MinesweeperLevelViewScreen()),
+                                      const GameSelectView()),
                               (Route<dynamic> route) => false);
                         },
                         child: Container(

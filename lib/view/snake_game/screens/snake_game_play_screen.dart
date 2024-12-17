@@ -11,6 +11,7 @@ import 'package:snake_game_app/utils/styles/animated_fancy_button.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
 import 'package:snake_game_app/utils/styles/direction_enum.dart';
+import 'package:snake_game_app/view/game_select_view.dart';
 import 'package:snake_game_app/view/snake_game/screens/game_onboarding_screen.dart';
 import 'package:snake_game_app/view/snake_game/service/storage_service.dart';
 import 'package:vibration/vibration.dart';
@@ -805,7 +806,7 @@ class _SnakeGamePlayScreenState extends State<SnakeGamePlayScreen>
                       context,
                       MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              const GameOnboardingScreen()),
+                              const GameSelectView()),
                       (Route<dynamic> route) => false);
                 });
               },
@@ -859,7 +860,7 @@ class _SnakeGamePlayScreenState extends State<SnakeGamePlayScreen>
                           context,
                           MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  const GameOnboardingScreen()),
+                                  const GameSelectView()),
                           (Route<dynamic> route) => false);
                     });
                   },

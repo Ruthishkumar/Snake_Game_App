@@ -11,7 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:snake_game_app/utils/app_screen_container.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
-import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_level_screen.dart';
+import 'package:snake_game_app/view/game_select_view.dart';
 import 'package:snake_game_app/view/snake_game/service/storage_service.dart';
 
 class MemoryCardSinglePlayerHardLevelScreen extends StatefulWidget {
@@ -493,7 +493,7 @@ class _MemoryCardSinglePlayerHardLevelScreenState
                               context,
                               MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      const MemoryCardGameLevelScreen()),
+                                      const GameSelectView()),
                               (Route<dynamic> route) => false);
                         },
                         child: Container(

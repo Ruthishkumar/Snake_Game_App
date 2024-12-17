@@ -10,7 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:snake_game_app/utils/app_screen_container.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
-import 'package:snake_game_app/view/number_identify/screens/find_number_game_onboarding_screen.dart';
+import 'package:snake_game_app/view/game_select_view.dart';
 import 'package:snake_game_app/view/snake_game/service/storage_service.dart';
 
 class FindNumberGameHardLevelScreen extends StatefulWidget {
@@ -362,7 +362,7 @@ class _FindNumberGameHardLevelScreenState
                               context,
                               MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      const FindNumberGameOnboardingScreen()),
+                                      const GameSelectView()),
                               (Route<dynamic> route) => false);
                         },
                         child: Container(

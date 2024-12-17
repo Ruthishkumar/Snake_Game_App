@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:snake_game_app/utils/app_screen_container.dart';
 import 'package:snake_game_app/utils/styles/app_colors.dart';
 import 'package:snake_game_app/utils/styles/app_styles.dart';
-import 'package:snake_game_app/view/sliding_puzzle/screens/sliding_puzzle_onboarding_screen.dart';
+import 'package:snake_game_app/view/game_select_view.dart';
 
 class SlidingPuzzleGameScreen extends StatefulWidget {
   const SlidingPuzzleGameScreen({super.key});
@@ -374,7 +374,7 @@ class _SlidingPuzzleGameScreenState extends State<SlidingPuzzleGameScreen>
                                     context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            const SlidingPuzzleOnboardingScreen()),
+                                            const GameSelectView()),
                                     (Route<dynamic> route) => false);
                               },
                               child: Container(
@@ -448,7 +448,7 @@ class _SlidingPuzzleGameScreenState extends State<SlidingPuzzleGameScreen>
                                     context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            const SlidingPuzzleOnboardingScreen()),
+                                            const GameSelectView()),
                                     (Route<dynamic> route) => false);
                               },
                               child: Container(
