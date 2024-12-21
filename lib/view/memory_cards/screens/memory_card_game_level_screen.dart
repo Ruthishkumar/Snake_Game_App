@@ -1,11 +1,11 @@
+import 'package:arcade_game/utils/app_screen_container.dart';
+import 'package:arcade_game/utils/routes/app_routes.dart';
+import 'package:arcade_game/utils/styles/app_colors.dart';
+import 'package:arcade_game/view/game_select_view.dart';
+import 'package:arcade_game/view/memory_cards/screens/memory_card_choose_mode_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:snake_game_app/utils/app_screen_container.dart';
-import 'package:snake_game_app/utils/routes/app_routes.dart';
-import 'package:snake_game_app/utils/styles/app_colors.dart';
-import 'package:snake_game_app/view/game_select_view.dart';
-import 'package:snake_game_app/view/memory_cards/screens/memory_card_choose_mode_screen.dart';
 
 class MemoryCardGameLevelScreen extends StatefulWidget {
   const MemoryCardGameLevelScreen({super.key});

@@ -1,13 +1,13 @@
 import 'dart:math';
 
+import 'package:arcade_game/utils/app_screen_container.dart';
+import 'package:arcade_game/utils/styles/app_colors.dart';
+import 'package:arcade_game/utils/styles/app_styles.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:snake_game_app/utils/app_screen_container.dart';
-import 'package:snake_game_app/utils/styles/app_colors.dart';
-import 'package:snake_game_app/utils/styles/app_styles.dart';
 
 class MemoryCardGameHardLevelScreen extends StatefulWidget {
   const MemoryCardGameHardLevelScreen({super.key});

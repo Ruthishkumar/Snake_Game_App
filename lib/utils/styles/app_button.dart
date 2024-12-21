@@ -1,8 +1,8 @@
+import 'package:arcade_game/utils/styles/app_colors.dart';
+import 'package:arcade_game/utils/styles/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:snake_game_app/utils/styles/app_colors.dart';
-import 'package:snake_game_app/utils/styles/app_styles.dart';
 
 enum AppButtonType { primary, secondary }
 

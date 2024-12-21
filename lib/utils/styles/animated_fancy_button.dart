@@ -1,8 +1,8 @@
+import 'package:arcade_game/utils/styles/app_styles.dart';
+import 'package:arcade_game/utils/styles/fancy_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:snake_game_app/utils/styles/app_styles.dart';
-import 'package:snake_game_app/utils/styles/fancy_button.dart';
 
 class AnimatedFancyButton extends StatelessWidget {
   final IconData iconData;

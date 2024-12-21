@@ -1,6 +1,6 @@
+import 'package:arcade_game/utils/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:snake_game_app/utils/styles/app_colors.dart';
 
 class AppStyles {
   static final AppStyles _singleton = AppStyles._internal();

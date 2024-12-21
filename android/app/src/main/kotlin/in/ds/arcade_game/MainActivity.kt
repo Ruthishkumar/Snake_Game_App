@@ -1,4 +1,4 @@
-package com.example.snake_game_app
+package `in`.ds.arcade_game
 
 import io.flutter.embedding.android.FlutterActivity
 

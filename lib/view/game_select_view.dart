@@ -1,18 +1,18 @@
+import 'package:arcade_game/utils/routes/app_routes.dart';
+import 'package:arcade_game/utils/styles/app_styles.dart';
+import 'package:arcade_game/view/finger_battle/screens/tap_wars_game_screen.dart';
+import 'package:arcade_game/view/memory_cards/screens/memory_card_game_level_screen.dart';
+import 'package:arcade_game/view/minesweeper/screens/minesweeper_level_view_screen.dart';
+import 'package:arcade_game/view/number_guessing_game/screens/number_guessing_game_onboarding_screen.dart';
+import 'package:arcade_game/view/number_identify/screens/find_number_game_onboarding_screen.dart';
+import 'package:arcade_game/view/number_math/screens/number_math_game.dart';
+import 'package:arcade_game/view/sliding_puzzle/screens/sliding_puzzle_onboarding_screen.dart';
+import 'package:arcade_game/view/snake_game/screens/game_onboarding_screen.dart';
+import 'package:arcade_game/view/tic_tac_toe/screens/enter_player_name_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:snake_game_app/utils/routes/app_routes.dart';
-import 'package:snake_game_app/utils/styles/app_styles.dart';
-import 'package:snake_game_app/view/finger_battle/screens/tap_wars_game_screen.dart';
-import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_level_screen.dart';
-import 'package:snake_game_app/view/minesweeper/screens/minesweeper_level_view_screen.dart';
-import 'package:snake_game_app/view/number_guessing_game/screens/number_guessing_game_onboarding_screen.dart';
-import 'package:snake_game_app/view/number_identify/screens/find_number_game_onboarding_screen.dart';
-import 'package:snake_game_app/view/number_math/screens/number_math_game.dart';
-import 'package:snake_game_app/view/sliding_puzzle/screens/sliding_puzzle_onboarding_screen.dart';
-import 'package:snake_game_app/view/snake_game/screens/game_onboarding_screen.dart';
-import 'package:snake_game_app/view/tic_tac_toe/screens/enter_player_name_screen.dart';
 
 class GameSelectView extends StatefulWidget {
   const GameSelectView({super.key});

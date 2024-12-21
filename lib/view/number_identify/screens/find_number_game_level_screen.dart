@@ -1,17 +1,17 @@
 import 'dart:developer' as dev;
 import 'dart:math' as math;
 
+import 'package:arcade_game/utils/app_screen_container.dart';
+import 'package:arcade_game/utils/routes/app_routes.dart';
+import 'package:arcade_game/utils/styles/app_colors.dart';
+import 'package:arcade_game/utils/styles/app_styles.dart';
+import 'package:arcade_game/view/number_identify/screens/find_number_game_easy_level_screen.dart';
+import 'package:arcade_game/view/number_identify/screens/find_number_game_hard_level_screen.dart';
+import 'package:arcade_game/view/number_identify/screens/find_number_game_medium_level_screen.dart';
+import 'package:arcade_game/view/snake_game/service/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:snake_game_app/utils/app_screen_container.dart';
-import 'package:snake_game_app/utils/routes/app_routes.dart';
-import 'package:snake_game_app/utils/styles/app_colors.dart';
-import 'package:snake_game_app/utils/styles/app_styles.dart';
-import 'package:snake_game_app/view/number_identify/screens/find_number_game_easy_level_screen.dart';
-import 'package:snake_game_app/view/number_identify/screens/find_number_game_hard_level_screen.dart';
-import 'package:snake_game_app/view/number_identify/screens/find_number_game_medium_level_screen.dart';
-import 'package:snake_game_app/view/snake_game/service/storage_service.dart';
 
 class FindNumberGameLevelScreen extends StatefulWidget {
   const FindNumberGameLevelScreen({super.key});

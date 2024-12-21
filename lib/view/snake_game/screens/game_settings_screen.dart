@@ -1,12 +1,12 @@
 import 'dart:developer';
 
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:arcade_game/utils/styles/app_colors.dart';
+import 'package:arcade_game/utils/styles/app_styles.dart';
+import 'package:arcade_game/view/snake_game/service/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:segmented_button_slide/segmented_button_slide.dart';
-import 'package:snake_game_app/utils/styles/app_colors.dart';
-import 'package:snake_game_app/utils/styles/app_styles.dart';
-import 'package:snake_game_app/view/snake_game/service/storage_service.dart';
 
 class GameSettingScreen extends StatefulWidget {
   const GameSettingScreen({super.key});

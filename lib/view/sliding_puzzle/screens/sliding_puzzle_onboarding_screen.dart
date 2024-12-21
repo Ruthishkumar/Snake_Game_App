@@ -1,11 +1,11 @@
+import 'package:arcade_game/utils/app_screen_container.dart';
+import 'package:arcade_game/utils/routes/app_routes.dart';
+import 'package:arcade_game/utils/styles/app_colors.dart';
+import 'package:arcade_game/utils/styles/app_styles.dart';
+import 'package:arcade_game/view/game_select_view.dart';
+import 'package:arcade_game/view/sliding_puzzle/screens/sliding_puzzle_game_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:snake_game_app/utils/app_screen_container.dart';
-import 'package:snake_game_app/utils/routes/app_routes.dart';
-import 'package:snake_game_app/utils/styles/app_colors.dart';
-import 'package:snake_game_app/utils/styles/app_styles.dart';
-import 'package:snake_game_app/view/game_select_view.dart';
-import 'package:snake_game_app/view/sliding_puzzle/screens/sliding_puzzle_game_screen.dart';
 
 class SlidingPuzzleOnboardingScreen extends StatefulWidget {
   const SlidingPuzzleOnboardingScreen({super.key});

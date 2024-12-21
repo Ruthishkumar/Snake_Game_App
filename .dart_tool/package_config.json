@@ -680,13 +680,13 @@
       "languageVersion": "2.19"
     },
     {
-      "name": "snake_game_app",
+      "name": "arcade_game",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2024-12-17T09:31:56.576592Z",
+  "generated": "2024-12-21T09:38:23.650040Z",
   "generator": "pub",
   "generatorVersion": "3.5.3",
   "flutterRoot": "file:///C:/Users/intel/fvm/versions/3.24.3",

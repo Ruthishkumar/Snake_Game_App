@@ -1,14 +1,15 @@
+import 'package:arcade_game/utils/app_screen_container.dart';
+import 'package:arcade_game/utils/routes/app_routes.dart';
+import 'package:arcade_game/utils/styles/animated_fancy_button.dart';
+import 'package:arcade_game/utils/styles/app_colors.dart';
+import 'package:arcade_game/view/game_select_view.dart';
+import 'package:arcade_game/view/snake_game/screens/game_settings_screen.dart';
+import 'package:arcade_game/view/snake_game/service/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
-import 'package:snake_game_app/utils/app_screen_container.dart';
-import 'package:snake_game_app/utils/routes/app_routes.dart';
-import 'package:snake_game_app/utils/styles/animated_fancy_button.dart';
-import 'package:snake_game_app/utils/styles/app_colors.dart';
-import 'package:snake_game_app/view/game_select_view.dart';
-import 'package:snake_game_app/view/snake_game/screens/game_settings_screen.dart';
-import 'package:snake_game_app/view/snake_game/screens/snake_game_play_screen.dart';
-import 'package:snake_game_app/view/snake_game/service/storage_service.dart';
+
+import 'snake_game_play_screen.dart';
 
 class GameOnboardingScreen extends StatefulWidget {
   const GameOnboardingScreen({super.key});

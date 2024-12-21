@@ -1,8 +1,8 @@
+import 'package:arcade_game/view/game_splash_screen.dart';
+import 'package:arcade_game/view/number_guessing_game/number_screen_provider/number_screen_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:snake_game_app/view/game_splash_screen.dart';
-import 'package:snake_game_app/view/number_guessing_game/number_screen_provider/number_screen_provider.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 void main() {

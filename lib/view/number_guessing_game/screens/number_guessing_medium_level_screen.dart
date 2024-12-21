@@ -2,14 +2,14 @@ import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:math';
 
+import 'package:arcade_game/utils/app_screen_container.dart';
+import 'package:arcade_game/utils/styles/app_colors.dart';
+import 'package:arcade_game/view/number_guessing_game/number_screen_provider/number_screen_provider.dart';
+import 'package:arcade_game/view/snake_game/service/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:snake_game_app/utils/app_screen_container.dart';
-import 'package:snake_game_app/utils/styles/app_colors.dart';
-import 'package:snake_game_app/view/number_guessing_game/number_screen_provider/number_screen_provider.dart';
-import 'package:snake_game_app/view/snake_game/service/storage_service.dart';
 
 class NumberGuessingGameMediumLevelScreen extends StatefulWidget {
   const NumberGuessingGameMediumLevelScreen({super.key});

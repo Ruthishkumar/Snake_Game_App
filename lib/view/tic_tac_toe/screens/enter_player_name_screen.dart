@@ -1,10 +1,10 @@
+import 'package:arcade_game/utils/app_screen_container.dart';
+import 'package:arcade_game/utils/form_field/player_name_form_field.dart';
+import 'package:arcade_game/utils/styles/app_colors.dart';
+import 'package:arcade_game/utils/styles/app_styles.dart';
+import 'package:arcade_game/view/tic_tac_toe/screens/choose_side_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:snake_game_app/utils/app_screen_container.dart';
-import 'package:snake_game_app/utils/form_field/player_name_form_field.dart';
-import 'package:snake_game_app/utils/styles/app_colors.dart';
-import 'package:snake_game_app/utils/styles/app_styles.dart';
-import 'package:snake_game_app/view/tic_tac_toe/screens/choose_side_screen.dart';
 
 class EnterPlayerNameScreen extends StatefulWidget {
   const EnterPlayerNameScreen({super.key});

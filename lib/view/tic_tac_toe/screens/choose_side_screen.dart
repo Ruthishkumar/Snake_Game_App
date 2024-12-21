@@ -1,9 +1,9 @@
+import 'package:arcade_game/utils/app_screen_container.dart';
+import 'package:arcade_game/utils/styles/app_colors.dart';
+import 'package:arcade_game/utils/styles/app_styles.dart';
+import 'package:arcade_game/view/tic_tac_toe/screens/tic_tac_toe_game_play_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:snake_game_app/utils/app_screen_container.dart';
-import 'package:snake_game_app/utils/styles/app_colors.dart';
-import 'package:snake_game_app/utils/styles/app_styles.dart';
-import 'package:snake_game_app/view/tic_tac_toe/screens/tic_tac_toe_game_play_screen.dart';
 
 class ChooseSideScreen extends StatefulWidget {
   final String playerNameOne;

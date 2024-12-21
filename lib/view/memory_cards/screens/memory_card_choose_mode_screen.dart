@@ -1,15 +1,15 @@
+import 'package:arcade_game/utils/app_screen_container.dart';
+import 'package:arcade_game/utils/routes/app_routes.dart';
+import 'package:arcade_game/utils/styles/app_colors.dart';
+import 'package:arcade_game/view/memory_cards/screens/memory_card_game_easy_level_screen.dart';
+import 'package:arcade_game/view/memory_cards/screens/memory_card_game_hard_level_screen.dart';
+import 'package:arcade_game/view/memory_cards/screens/memory_card_game_medium_level_screen.dart';
+import 'package:arcade_game/view/memory_cards/screens/memory_card_single_player_easy_level_screen.dart';
+import 'package:arcade_game/view/memory_cards/screens/memory_card_single_player_hard_level_screen.dart';
+import 'package:arcade_game/view/memory_cards/screens/memory_card_single_player_medium_level_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:snake_game_app/utils/app_screen_container.dart';
-import 'package:snake_game_app/utils/routes/app_routes.dart';
-import 'package:snake_game_app/utils/styles/app_colors.dart';
-import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_easy_level_screen.dart';
-import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_hard_level_screen.dart';
-import 'package:snake_game_app/view/memory_cards/screens/memory_card_game_medium_level_screen.dart';
-import 'package:snake_game_app/view/memory_cards/screens/memory_card_single_player_easy_level_screen.dart';
-import 'package:snake_game_app/view/memory_cards/screens/memory_card_single_player_hard_level_screen.dart';
-import 'package:snake_game_app/view/memory_cards/screens/memory_card_single_player_medium_level_screen.dart';
 
 class MemoryCardChooseModeScreen extends StatefulWidget {
   final String difficultyLabel;

@@ -2,15 +2,15 @@ import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:math';
 
+import 'package:arcade_game/utils/app_screen_container.dart';
+import 'package:arcade_game/utils/styles/app_colors.dart';
+import 'package:arcade_game/utils/styles/app_styles.dart';
+import 'package:arcade_game/view/game_select_view.dart';
+import 'package:arcade_game/view/minesweeper/model/cell_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:snake_game_app/utils/app_screen_container.dart';
-import 'package:snake_game_app/utils/styles/app_colors.dart';
-import 'package:snake_game_app/utils/styles/app_styles.dart';
-import 'package:snake_game_app/view/game_select_view.dart';
-import 'package:snake_game_app/view/minesweeper/model/cell_model.dart';
 
 class MineSweeperHardLevelScreen extends StatefulWidget {
   const MineSweeperHardLevelScreen({super.key});
