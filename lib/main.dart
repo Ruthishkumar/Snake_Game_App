@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 805),
       builder: (context, child) {
         return MaterialApp(
-          title: 'Arcade Game',
+          title: 'Offline Arcade Game',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primarySwatch: Colors.blue),
           home: const GameSplashScreen(),
