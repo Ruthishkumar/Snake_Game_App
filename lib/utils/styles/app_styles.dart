@@ -199,4 +199,22 @@ class AppStyles {
         fontStyle: FontStyle.normal,
         color: AppColors.primaryTextColor);
   }
+
+  TextStyle? wordRiddleWhiteFontStyles(
+      {required double fontSize, required FontWeight fontWeight}) {
+    return GoogleFonts.aboreto(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontStyle: FontStyle.normal,
+        color: AppColors.appWhiteTextColor);
+  }
+
+  TextStyle? wordRiddleUbuntuFontStyles(
+      {required double fontSize, required FontWeight fontWeight}) {
+    return GoogleFonts.ubuntu(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontStyle: FontStyle.normal,
+        color: AppColors.wordRiddleBgColor);
+  }
 }
