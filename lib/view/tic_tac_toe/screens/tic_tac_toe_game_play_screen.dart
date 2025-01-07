@@ -199,7 +199,9 @@ class _TicTacToeGamePlayScreenState extends State<TicTacToeGamePlayScreen>
                   context: context, color: AppColors.appWhiteTextColor)
               : Container(),
           Container(
-            padding: EdgeInsets.fromLTRB(20.r, 0.r, 20.r, 20.r),
+            padding: Platform.isIOS
+                ? EdgeInsets.fromLTRB(20.r, 0.r, 20.r, 20.r)
+                : EdgeInsets.fromLTRB(20.r, 40.r, 20.r, 20.r),
             child: Column(
               children: [
                 playersNameWidget(),
