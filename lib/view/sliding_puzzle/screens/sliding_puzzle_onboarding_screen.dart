@@ -32,7 +32,7 @@ class _SlidingPuzzleOnboardingScreenState
           appBackGroundColor: AppColors.slidingPuzzleBgColor,
           bodyWidget: Column(
             children: [
-              Platform.isAndroid
+              Platform.isIOS
                   ? backButtonHeaderWidget(
                       context: context, color: AppColors.appWhiteTextColor)
                   : Container(),
