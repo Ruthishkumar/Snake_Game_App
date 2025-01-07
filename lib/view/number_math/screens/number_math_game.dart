@@ -1,4 +1,6 @@
 import 'dart:developer' as dev;
+import 'dart:io';
+import 'dart:math' as math;
 import 'dart:math';
 
 import 'package:arcade_game/utils/app_screen_container.dart';
@@ -307,7 +309,35 @@ class _NumberMathGameState extends State<NumberMathGame> {
                       }),
                     ),
                   ),
-                  SizedBox(height: 20.h)
+                  SizedBox(height: 20.h),
+                  Platform.isIOS
+                      ? Container(
+                          padding: EdgeInsets.fromLTRB(0.r, 2.r, 20.r, 10.r),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: AppColors.mathGamePrimaryColor,
+                              border: Border.all(
+                                  color: Colors.transparent, width: 0)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Transform(
+                                    alignment: Alignment.center,
+                                    transform: Matrix4.rotationY(math.pi),
+                                    child: Icon(
+                                      Icons.arrow_back_ios,
+                                      size: 20.r,
+                                      color: AppColors.appWhiteTextColor,
+                                    ),
+                                  )),
+                            ],
+                          ))
+                      : Container(),
                 ],
               ),
               Visibility(
