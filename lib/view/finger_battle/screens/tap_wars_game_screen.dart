@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:arcade_game/utils/app_screen_container.dart';
 import 'package:arcade_game/utils/mixins/app_mixins.dart';
 import 'package:arcade_game/utils/styles/app_colors.dart';
@@ -38,11 +40,34 @@ class _TapWarsGameScreenState extends State<TapWarsGameScreen> with AppMixins {
       appBackGroundColor: AppColors.appWhiteTextColor,
       bodyWidget: Stack(
         children: [
-          Column(
-            children: [
-              primaryHalfWidget(),
-              secondaryHalfWidget(),
-            ],
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                // Platform.isAndroid
+                //     ? Container(
+                //         padding: EdgeInsets.fromLTRB(20.r, 10.r, 0.r, 0.r),
+                //         width: double.infinity,
+                //         color: AppColors.appWhiteTextColor,
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.start,
+                //           children: [
+                //             GestureDetector(
+                //                 behavior: HitTestBehavior.opaque,
+                //                 onTap: () {
+                //                   Navigator.of(context).pop();
+                //                 },
+                //                 child: Icon(
+                //                   Icons.arrow_back_ios,
+                //                   size: 20.r,
+                //                   color: AppColors.primaryTextColor,
+                //                 )),
+                //           ],
+                //         ))
+                //     : Container(),
+                primaryHalfWidget(),
+                secondaryHalfWidget(),
+              ],
+            ),
           ),
           gameWinnerAlertDialog(),
           gameStartWidget(),
@@ -152,6 +177,34 @@ class _TapWarsGameScreenState extends State<TapWarsGameScreen> with AppMixins {
                         borderRadius: BorderRadius.all(Radius.circular(8.r))),
                     child: Text(
                       'Start'.toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.bungee(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w200,
+                          fontStyle: FontStyle.normal,
+                          color: AppColors.appWhiteTextColor),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20.h),
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                const GameSelectView()),
+                        (Route<dynamic> route) => false);
+                  },
+                  child: Container(
+                    width: 150.w,
+                    padding: EdgeInsets.all(15.r),
+                    decoration: BoxDecoration(
+                        color: const Color(0xff1A1A19),
+                        borderRadius: BorderRadius.all(Radius.circular(8.r))),
+                    child: Text(
+                      'Home'.toUpperCase(),
                       textAlign: TextAlign.center,
                       style: GoogleFonts.bungee(
                           fontSize: 20.sp,
