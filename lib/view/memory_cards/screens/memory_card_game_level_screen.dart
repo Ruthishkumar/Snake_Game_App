@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:arcade_game/utils/app_screen_container.dart';
+import 'package:arcade_game/utils/mixins/app_mixins.dart';
 import 'package:arcade_game/utils/routes/app_routes.dart';
 import 'package:arcade_game/utils/styles/app_colors.dart';
 import 'package:arcade_game/view/game_select_view.dart';
@@ -15,7 +18,8 @@ class MemoryCardGameLevelScreen extends StatefulWidget {
       _MemoryCardGameLevelScreenState();
 }
 
-class _MemoryCardGameLevelScreenState extends State<MemoryCardGameLevelScreen> {
+class _MemoryCardGameLevelScreenState extends State<MemoryCardGameLevelScreen>
+    with AppMixins {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -26,48 +30,58 @@ class _MemoryCardGameLevelScreenState extends State<MemoryCardGameLevelScreen> {
       },
       child: AppScreenContainer(
           appBackGroundColor: AppColors.cardMatchingBgColor,
-          bodyWidget: Container(
-            padding: EdgeInsets.fromLTRB(20.r, 40.r, 20.r, 20.r),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                levelContainerCardWidget(
-                  level: 'Easy',
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            widget: const MemoryCardChooseModeScreen(
-                          difficultyLabel: 'Easy',
-                        )));
-                  },
+          bodyWidget: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Platform.isIOS
+                  ? backButtonHeaderWidget(
+                      context: context, color: AppColors.appWhiteTextColor)
+                  : Container(),
+              Container(
+                padding: EdgeInsets.fromLTRB(20.r, 40.r, 20.r, 20.r),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    levelContainerCardWidget(
+                      level: 'Easy',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            AnimationPageRoute(
+                                widget: const MemoryCardChooseModeScreen(
+                              difficultyLabel: 'Easy',
+                            )));
+                      },
+                    ),
+                    SizedBox(height: 20.h),
+                    levelContainerCardWidget(
+                      level: 'Medium',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            AnimationPageRoute(
+                                widget: const MemoryCardChooseModeScreen(
+                              difficultyLabel: 'Medium',
+                            )));
+                      },
+                    ),
+                    SizedBox(height: 20.h),
+                    levelContainerCardWidget(
+                      level: 'Hard',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            AnimationPageRoute(
+                                widget: const MemoryCardChooseModeScreen(
+                              difficultyLabel: 'Hard',
+                            )));
+                      },
+                    ),
+                  ],
                 ),
-                SizedBox(height: 20.h),
-                levelContainerCardWidget(
-                  level: 'Medium',
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            widget: const MemoryCardChooseModeScreen(
-                          difficultyLabel: 'Medium',
-                        )));
-                  },
-                ),
-                SizedBox(height: 20.h),
-                levelContainerCardWidget(
-                  level: 'Hard',
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            widget: const MemoryCardChooseModeScreen(
-                          difficultyLabel: 'Hard',
-                        )));
-                  },
-                ),
-              ],
-            ),
+              ),
+              Container()
+            ],
           )),
     );
   }

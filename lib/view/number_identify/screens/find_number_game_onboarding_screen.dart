@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:arcade_game/utils/app_screen_container.dart';
+import 'package:arcade_game/utils/mixins/app_mixins.dart';
 import 'package:arcade_game/utils/routes/app_routes.dart';
 import 'package:arcade_game/utils/styles/app_colors.dart';
 import 'package:arcade_game/utils/styles/app_styles.dart';
@@ -18,7 +21,7 @@ class FindNumberGameOnboardingScreen extends StatefulWidget {
 }
 
 class _FindNumberGameOnboardingScreenState
-    extends State<FindNumberGameOnboardingScreen> {
+    extends State<FindNumberGameOnboardingScreen> with AppMixins {
   @override
   void initState() {
     setAudioForNumberGame();
@@ -48,44 +51,54 @@ class _FindNumberGameOnboardingScreenState
       },
       child: AppScreenContainer(
         appBackGroundColor: AppColors.numberFindBgColor,
-        bodyWidget: Container(
-          padding: EdgeInsets.fromLTRB(20.r, 0, 20.r, 0.r),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Stack(
-                alignment: Alignment.center,
+        bodyWidget: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Platform.isIOS
+                ? backButtonHeaderWidget(
+                    context: context, color: AppColors.appWhiteTextColor)
+                : Container(),
+            Container(
+              padding: EdgeInsets.fromLTRB(20.r, 0, 20.r, 0.r),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset('assets/new_images/game_search.png',
-                      height: 100.h),
-                  Center(
-                    child: Text(
-                      'Find the number'.toUpperCase(),
-                      style: AppStyles.instance.gameFontStyleWithRusso(
-                          fontSize: 30.sp, fontWeight: FontWeight.w500),
-                    ),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Image.asset('assets/new_images/game_search.png',
+                          height: 100.h),
+                      Center(
+                        child: Text(
+                          'Find the number'.toUpperCase(),
+                          style: AppStyles.instance.gameFontStyleWithRusso(
+                              fontSize: 30.sp, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ],
                   ),
+                  SizedBox(height: 30.h),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            AnimationPageRoute(
+                                widget: const FindNumberGameLevelScreen()));
+                      },
+                      child: Lottie.asset('assets/lottie_images/play.json',
+                          height: 100)),
+                  // GestureDetector(
+                  //     onTap: () async {
+                  //       SharedPreferences prefs =
+                  //           await SharedPreferences.getInstance();
+                  //       prefs.clear();
+                  //     },
+                  //     child: Text('Clear'))
                 ],
               ),
-              SizedBox(height: 30.h),
-              GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            widget: const FindNumberGameLevelScreen()));
-                  },
-                  child: Lottie.asset('assets/lottie_images/play.json',
-                      height: 100)),
-              // GestureDetector(
-              //     onTap: () async {
-              //       SharedPreferences prefs =
-              //           await SharedPreferences.getInstance();
-              //       prefs.clear();
-              //     },
-              //     child: Text('Clear'))
-            ],
-          ),
+            ),
+            Container()
+          ],
         ),
       ),
     );

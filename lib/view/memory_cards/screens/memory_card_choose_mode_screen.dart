@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:arcade_game/utils/app_screen_container.dart';
+import 'package:arcade_game/utils/mixins/app_mixins.dart';
 import 'package:arcade_game/utils/routes/app_routes.dart';
 import 'package:arcade_game/utils/styles/app_colors.dart';
 import 'package:arcade_game/view/memory_cards/screens/memory_card_game_easy_level_screen.dart';
@@ -20,72 +23,83 @@ class MemoryCardChooseModeScreen extends StatefulWidget {
       _MemoryCardChooseModeScreenState();
 }
 
-class _MemoryCardChooseModeScreenState
-    extends State<MemoryCardChooseModeScreen> {
+class _MemoryCardChooseModeScreenState extends State<MemoryCardChooseModeScreen>
+    with AppMixins {
   @override
   Widget build(BuildContext context) {
     return AppScreenContainer(
         appBackGroundColor: AppColors.cardMatchingBgColor,
-        bodyWidget: Container(
-          padding: EdgeInsets.fromLTRB(20.r, 40.r, 20.r, 20.r),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Choose Mode',
-                  style: GoogleFonts.russoOne(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w500,
-                      fontStyle: FontStyle.normal,
-                      color: Colors.black)),
-              SizedBox(height: 50.h),
-              modeContainerCard(
-                level: 'Single Player',
-                onTap: () {
-                  if (widget.difficultyLabel == "Easy") {
-                    Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            widget:
-                                const MemoryCardSinglePlayerEasyLevelScreen()));
-                  } else if (widget.difficultyLabel == "Medium") {
-                    Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            widget:
-                                const MemoryCardSinglePlayerMediumLevelScreen()));
-                  } else if (widget.difficultyLabel == "Hard") {
-                    Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            widget:
-                                const MemoryCardSinglePlayerHardLevelScreen()));
-                  }
-                },
+        bodyWidget: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Platform.isIOS
+                ? backButtonHeaderWidget(
+                    context: context, color: AppColors.appWhiteTextColor)
+                : Container(),
+            Container(
+              padding: EdgeInsets.fromLTRB(20.r, 40.r, 20.r, 20.r),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Choose Mode',
+                      style: GoogleFonts.russoOne(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w500,
+                          fontStyle: FontStyle.normal,
+                          color: Colors.black)),
+                  SizedBox(height: 50.h),
+                  modeContainerCard(
+                    level: 'Single Player',
+                    onTap: () {
+                      if (widget.difficultyLabel == "Easy") {
+                        Navigator.push(
+                            context,
+                            AnimationPageRoute(
+                                widget:
+                                    const MemoryCardSinglePlayerEasyLevelScreen()));
+                      } else if (widget.difficultyLabel == "Medium") {
+                        Navigator.push(
+                            context,
+                            AnimationPageRoute(
+                                widget:
+                                    const MemoryCardSinglePlayerMediumLevelScreen()));
+                      } else if (widget.difficultyLabel == "Hard") {
+                        Navigator.push(
+                            context,
+                            AnimationPageRoute(
+                                widget:
+                                    const MemoryCardSinglePlayerHardLevelScreen()));
+                      }
+                    },
+                  ),
+                  SizedBox(height: 20.h),
+                  modeContainerCard(
+                    level: 'Multi Player',
+                    onTap: () {
+                      if (widget.difficultyLabel == "Easy") {
+                        Navigator.push(
+                            context,
+                            AnimationPageRoute(
+                                widget: const MemoryCardGameEasyLevelScreen()));
+                      } else if (widget.difficultyLabel == "Medium") {
+                        Navigator.push(
+                            context,
+                            AnimationPageRoute(
+                                widget:
+                                    const MemoryCardGameMediumLevelScreen()));
+                      } else if (widget.difficultyLabel == "Hard") {
+                        Navigator.push(
+                            context,
+                            AnimationPageRoute(
+                                widget: const MemoryCardGameHardLevelScreen()));
+                      }
+                    },
+                  ),
+                ],
               ),
-              SizedBox(height: 20.h),
-              modeContainerCard(
-                level: 'Multi Player',
-                onTap: () {
-                  if (widget.difficultyLabel == "Easy") {
-                    Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            widget: const MemoryCardGameEasyLevelScreen()));
-                  } else if (widget.difficultyLabel == "Medium") {
-                    Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            widget: const MemoryCardGameMediumLevelScreen()));
-                  } else if (widget.difficultyLabel == "Hard") {
-                    Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            widget: const MemoryCardGameHardLevelScreen()));
-                  }
-                },
-              ),
-            ],
-          ),
+            ),
+            Container()
+          ],
         ));
   }
 

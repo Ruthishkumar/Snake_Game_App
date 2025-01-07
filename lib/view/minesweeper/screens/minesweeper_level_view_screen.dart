@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:arcade_game/utils/app_screen_container.dart';
+import 'package:arcade_game/utils/mixins/app_mixins.dart';
 import 'package:arcade_game/utils/routes/app_routes.dart';
 import 'package:arcade_game/utils/styles/app_colors.dart';
 import 'package:arcade_game/view/game_select_view.dart';
@@ -17,8 +20,8 @@ class MinesweeperLevelViewScreen extends StatefulWidget {
       _MinesweeperLevelViewScreenState();
 }
 
-class _MinesweeperLevelViewScreenState
-    extends State<MinesweeperLevelViewScreen> {
+class _MinesweeperLevelViewScreenState extends State<MinesweeperLevelViewScreen>
+    with AppMixins {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -29,42 +32,52 @@ class _MinesweeperLevelViewScreenState
       },
       child: AppScreenContainer(
           appBackGroundColor: AppColors.mineSweeperBgColor,
-          bodyWidget: Container(
-            padding: EdgeInsets.fromLTRB(20.r, 20.r, 20.r, 20.r),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                levelContainerCardWidget(
-                  level: 'Easy',
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            widget: const MineSweeperEasyLevelScreen()));
-                  },
+          bodyWidget: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Platform.isIOS
+                  ? backButtonHeaderWidget(
+                      context: context, color: AppColors.appWhiteTextColor)
+                  : Container(),
+              Container(
+                padding: EdgeInsets.fromLTRB(20.r, 20.r, 20.r, 20.r),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    levelContainerCardWidget(
+                      level: 'Easy',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            AnimationPageRoute(
+                                widget: const MineSweeperEasyLevelScreen()));
+                      },
+                    ),
+                    SizedBox(height: 20.h),
+                    levelContainerCardWidget(
+                      level: 'Medium',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            AnimationPageRoute(
+                                widget: const MineSweeperMediumLevelScreen()));
+                      },
+                    ),
+                    SizedBox(height: 20.h),
+                    levelContainerCardWidget(
+                      level: 'Hard',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            AnimationPageRoute(
+                                widget: const MineSweeperHardLevelScreen()));
+                      },
+                    ),
+                  ],
                 ),
-                SizedBox(height: 20.h),
-                levelContainerCardWidget(
-                  level: 'Medium',
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            widget: const MineSweeperMediumLevelScreen()));
-                  },
-                ),
-                SizedBox(height: 20.h),
-                levelContainerCardWidget(
-                  level: 'Hard',
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            widget: const MineSweeperHardLevelScreen()));
-                  },
-                ),
-              ],
-            ),
+              ),
+              Container()
+            ],
           )),
     );
   }

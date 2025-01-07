@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:developer' as dev;
+import 'dart:io';
+import 'dart:math' as math;
 import 'dart:math';
 
 import 'package:arcade_game/utils/app_screen_container.dart';
@@ -133,37 +135,69 @@ class _NumberGuessingGameMediumLevelScreenState
                       ],
                     ),
               Container(),
-              if (gameOver)
-                GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    restartGame();
-                  },
-                  child: Center(
-                    child: Container(
-                      width: 250,
-                      padding: EdgeInsets.all(15.r),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: AppColors.appWhiteTextColor, width: 1),
-                          color: const Color(0xffDE7C7D),
-                          borderRadius: BorderRadius.all(Radius.circular(8.r))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            gameDone == true ? 'Play Again' : 'Restart Game',
-                            style: GoogleFonts.gamjaFlower(
-                                fontSize: 25.sp,
-                                fontWeight: FontWeight.w700,
-                                fontStyle: FontStyle.normal,
-                                color: AppColors.appWhiteTextColor),
+              Row(
+                children: [
+                  Platform.isIOS
+                      ? GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(12.r),
+                            decoration: BoxDecoration(
+                                color: AppColors.appWhiteTextColor,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(6.r))),
+                            child: Transform(
+                              alignment: Alignment.center,
+                              transform: Matrix4.rotationY(math.pi),
+                              child: Image.asset(
+                                'assets/new_images/back.png',
+                                height: 30.h,
+                                color: AppColors.primaryTextColor,
+                              ),
+                            ),
                           ),
-                        ],
+                        )
+                      : Container(),
+                  if (gameOver)
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        restartGame();
+                      },
+                      child: Center(
+                        child: Container(
+                          width: 250,
+                          padding: EdgeInsets.all(15.r),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: AppColors.appWhiteTextColor, width: 1),
+                              color: const Color(0xffDE7C7D),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8.r))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                gameDone == true
+                                    ? 'Play Again'
+                                    : 'Restart Game',
+                                style: GoogleFonts.gamjaFlower(
+                                    fontSize: 25.sp,
+                                    fontWeight: FontWeight.w700,
+                                    fontStyle: FontStyle.normal,
+                                    color: AppColors.appWhiteTextColor),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
+                  Container()
+                ],
+              ),
             ],
           ),
         ),

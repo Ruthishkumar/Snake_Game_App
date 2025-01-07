@@ -1,4 +1,5 @@
 import 'package:arcade_game/utils/app_screen_container.dart';
+import 'package:arcade_game/utils/mixins/app_mixins.dart';
 import 'package:arcade_game/utils/styles/app_colors.dart';
 import 'package:arcade_game/utils/styles/app_styles.dart';
 import 'package:arcade_game/view/game_select_view.dart';
@@ -13,7 +14,7 @@ class TapWarsGameScreen extends StatefulWidget {
   State<TapWarsGameScreen> createState() => _TapWarsGameScreenState();
 }
 
-class _TapWarsGameScreenState extends State<TapWarsGameScreen> {
+class _TapWarsGameScreenState extends State<TapWarsGameScreen> with AppMixins {
   double blue = 0.0;
   double red = 0.0;
   String? winner = "";

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:arcade_game/utils/app_screen_container.dart';
+import 'package:arcade_game/utils/mixins/app_mixins.dart';
 import 'package:arcade_game/utils/routes/app_routes.dart';
 import 'package:arcade_game/utils/styles/app_colors.dart';
 import 'package:arcade_game/view/number_guessing_game/screens/number_guessing_game_easy_level_screen.dart';
@@ -17,48 +20,60 @@ class NumberGuessingGameOnboardingScreen extends StatefulWidget {
 }
 
 class _NumberGuessingGameOnboardingScreenState
-    extends State<NumberGuessingGameOnboardingScreen> {
+    extends State<NumberGuessingGameOnboardingScreen> with AppMixins {
   @override
   Widget build(BuildContext context) {
     return AppScreenContainer(
         appBackGroundColor: AppColors.numberGuessingBgColor,
-        bodyWidget: Container(
-          padding: EdgeInsets.fromLTRB(20.r, 40.r, 20.r, 20.r),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              modeContainerCard(
-                  level: 'Easy',
-                  subHeader: 'Find the number 1 to 11',
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            widget: const NumberGuessingGameEasyLevelScreen()));
-                  }),
-              SizedBox(height: 30.h),
-              modeContainerCard(
-                  level: 'Medium',
-                  subHeader: 'Find the number 1 to 16',
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            widget:
-                                const NumberGuessingGameMediumLevelScreen()));
-                  }),
-              SizedBox(height: 30.h),
-              modeContainerCard(
-                  level: 'Hard',
-                  subHeader: 'Find the number 1 to 21',
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            widget: const NumberGuessingGameHardLevelScreen()));
-                  }),
-            ],
-          ),
+        bodyWidget: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Platform.isIOS
+                ? backButtonHeaderWidget(
+                    context: context, color: AppColors.appWhiteTextColor)
+                : Container(),
+            Container(
+              padding: EdgeInsets.fromLTRB(20.r, 40.r, 20.r, 20.r),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  modeContainerCard(
+                      level: 'Easy',
+                      subHeader: 'Find the number 1 to 11',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            AnimationPageRoute(
+                                widget:
+                                    const NumberGuessingGameEasyLevelScreen()));
+                      }),
+                  SizedBox(height: 30.h),
+                  modeContainerCard(
+                      level: 'Medium',
+                      subHeader: 'Find the number 1 to 16',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            AnimationPageRoute(
+                                widget:
+                                    const NumberGuessingGameMediumLevelScreen()));
+                      }),
+                  SizedBox(height: 30.h),
+                  modeContainerCard(
+                      level: 'Hard',
+                      subHeader: 'Find the number 1 to 21',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            AnimationPageRoute(
+                                widget:
+                                    const NumberGuessingGameHardLevelScreen()));
+                      }),
+                ],
+              ),
+            ),
+            Container()
+          ],
         ));
   }
 
