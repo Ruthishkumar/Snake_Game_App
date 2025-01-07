@@ -1,0 +1,1 @@
+ C:\\Users\\intel\\StudioProjects\\work\\snake_game_app\\.dart_tool\\flutter_build\\6117c0471d9ec3b3bc166bbdeba03210\\native_assets.yaml: 
