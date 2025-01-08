@@ -43,27 +43,41 @@ class _TapWarsGameScreenState extends State<TapWarsGameScreen> with AppMixins {
           SingleChildScrollView(
             child: Column(
               children: [
-                // Platform.isAndroid
-                //     ? Container(
-                //         padding: EdgeInsets.fromLTRB(20.r, 10.r, 0.r, 0.r),
-                //         width: double.infinity,
-                //         color: AppColors.appWhiteTextColor,
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.start,
-                //           children: [
-                //             GestureDetector(
-                //                 behavior: HitTestBehavior.opaque,
-                //                 onTap: () {
-                //                   Navigator.of(context).pop();
-                //                 },
-                //                 child: Icon(
-                //                   Icons.arrow_back_ios,
-                //                   size: 20.r,
-                //                   color: AppColors.primaryTextColor,
-                //                 )),
-                //           ],
-                //         ))
-                //     : Container(),
+                Platform.isIOS
+                    ? GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            blue += 10;
+                            if (red - 10 > 0) {
+                              red -= 10;
+                            } else {
+                              red = 0;
+                              blue = halfScreen * 2;
+                              winner = "blue";
+                            }
+                          });
+                        },
+                        child: Container(
+                            padding: EdgeInsets.fromLTRB(20.r, 20.r, 0.r, 0.r),
+                            width: double.infinity,
+                            color: AppColors.tapWarsPrimaryColor,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                    behavior: HitTestBehavior.opaque,
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Icon(
+                                      Icons.arrow_back_ios,
+                                      size: 30.r,
+                                      color: AppColors.appWhiteTextColor,
+                                    )),
+                              ],
+                            )),
+                      )
+                    : Container(),
                 primaryHalfWidget(),
                 secondaryHalfWidget(),
               ],
