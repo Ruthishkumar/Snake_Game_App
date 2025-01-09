@@ -125,12 +125,43 @@ class _GameKeyBoardWidgetState extends State<GameKeyBoardWidget> {
                                 .join() !=
                             WordGameModel.gameGuess &&
                         widget.game.rowId == 4) {
-                      dev.log('Game Loss');
+                      String guess = widget.game.wordBoard[widget.game.rowId]
+                          .map((e) => e.letter)
+                          .join();
+                      int listLength = guess.length;
+                      for (int i = 0; i < listLength; i++) {
+                        setState(() {
+                          widget.game.wordBoard[widget.game.rowId][i].code = 0;
+                        });
+                      }
+                      // dev.log('Game Loss');
                       setState(() {
-                        String daa = widget.game.wordBoard[widget.game.rowId]
+                        String daa = widget.game.wordBoard[0]
                             .map((e) => e.letter = '')
                             .join();
+                        widget.game.wordBoard[widget.game.rowId][0].code = 0;
+                        String daas = widget.game.wordBoard[1]
+                            .map((e) => e.letter = '')
+                            .join();
+                        widget.game.wordBoard[widget.game.rowId][1].code = 0;
+                        String daasd = widget.game.wordBoard[2]
+                            .map((e) => e.letter = '')
+                            .join();
+                        widget.game.wordBoard[widget.game.rowId][2].code = 0;
+                        String daads = widget.game.wordBoard[3]
+                            .map((e) => e.letter = '')
+                            .join();
+                        widget.game.wordBoard[widget.game.rowId][3].code = 0;
+                        String daadsds = widget.game.wordBoard[4]
+                            .map((e) => e.letter = '')
+                            .join();
+                        widget.game.wordBoard[widget.game.rowId][4].code = 0;
                         dev.log(daa);
+                        WordGameModel.gameMessage = "You Lost";
+                      });
+                      setState(() {
+                        widget.game.rowId = 0;
+                        widget.game.letterId = 0;
                       });
                     }
                     if (widget.game.letterId >= 5) {
