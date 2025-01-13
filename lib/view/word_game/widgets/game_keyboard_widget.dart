@@ -1,11 +1,13 @@
 import 'dart:developer' as dev;
 
+import 'package:arcade_game/utils/styles/app_colors.dart';
 import 'package:arcade_game/utils/styles/app_styles.dart';
 import 'package:arcade_game/view/word_game/model/word_game_model.dart';
 import 'package:arcade_game/view/word_game/model/word_letter_model.dart';
 import 'package:arcade_game/view/word_game/widgets/game_board_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class GameKeyBoardWidget extends StatefulWidget {
   final WordGameModel game;
@@ -35,6 +37,17 @@ class _GameKeyBoardWidgetState extends State<GameKeyBoardWidget> {
             : Container(),
         WordGameModel.gameMessage != '' ? SizedBox(height: 20.h) : Container(),
         GameBoardWidget(widget.game),
+        GestureDetector(
+          onTap: () {
+            gameWinAlertDialog();
+          },
+          child: Text(
+            'Reset',
+            style: GoogleFonts.poppins(
+              color: Colors.white,
+            ),
+          ),
+        ),
         SizedBox(height: 40.h),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 10.r),
@@ -126,33 +139,8 @@ class _GameKeyBoardWidgetState extends State<GameKeyBoardWidget> {
                             WordGameModel.gameGuess &&
                         widget.game.rowId == 4 &&
                         widget.game.letterId >= 5) {
-                      setState(() {
-                        widget.game.wordBoard[0].map((e) => e.code = 0).join();
-                        widget.game.wordBoard[1].map((e) => e.code = 0).join();
-                        widget.game.wordBoard[2].map((e) => e.code = 0).join();
-                        widget.game.wordBoard[3].map((e) => e.code = 0).join();
-                        widget.game.wordBoard[4].map((e) => e.code = 0).join();
-                        widget.game.wordBoard[0]
-                            .map((e) => e.letter = '')
-                            .join();
-                        widget.game.wordBoard[1]
-                            .map((e) => e.letter = '')
-                            .join();
-                        widget.game.wordBoard[2]
-                            .map((e) => e.letter = '')
-                            .join();
-                        widget.game.wordBoard[3]
-                            .map((e) => e.letter = '')
-                            .join();
-                        widget.game.wordBoard[4]
-                            .map((e) => e.letter = '')
-                            .join();
-                        WordGameModel.gameMessage = "You Lost";
-                      });
-                      setState(() {
-                        widget.game.rowId = 0;
-                        widget.game.letterId = 0;
-                      });
+                      /// game over alert dialog
+                      showGameOverAlertDialog();
                     }
                     if (widget.game.letterId >= 5) {
                       String guess = widget.game.wordBoard[widget.game.rowId]
@@ -169,6 +157,9 @@ class _GameKeyBoardWidgetState extends State<GameKeyBoardWidget> {
                                 .forEach((element) {
                               element.code = 1;
                             });
+                          });
+                          Future.delayed(const Duration(seconds: 3), () {
+                            gameWinAlertDialog();
                           });
                         } else {
                           int listLength = guess.length;
@@ -231,5 +222,129 @@ class _GameKeyBoardWidgetState extends State<GameKeyBoardWidget> {
         ),
       ],
     );
+  }
+
+  /// winner alert dialog
+  gameWinAlertDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        barrierColor: Colors.black87,
+        builder: (context) {
+          return AlertDialog(
+              backgroundColor: AppColors.appWhiteTextColor,
+              title: Column(children: [
+                SizedBox(height: 5.h),
+                // Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                //   Text('Congratulations',
+                //       style: AppStyles.instance.wordRiddleBlackFontStyles(
+                //           fontSize: 25.sp, fontWeight: FontWeight.w700)),
+                // ]),
+                SizedBox(height: 20.h),
+                Text('You Won',
+                    style: AppStyles.instance.wordRiddleBlackFontStyles(
+                        fontSize: 25.sp, fontWeight: FontWeight.w700)),
+                SizedBox(height: 20.h),
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    setState(() {
+                      widget.game.wordBoard[0].map((e) => e.code = 0).join();
+                      widget.game.wordBoard[1].map((e) => e.code = 0).join();
+                      widget.game.wordBoard[2].map((e) => e.code = 0).join();
+                      widget.game.wordBoard[3].map((e) => e.code = 0).join();
+                      widget.game.wordBoard[4].map((e) => e.code = 0).join();
+                      widget.game.wordBoard[0].map((e) => e.letter = '').join();
+                      widget.game.wordBoard[1].map((e) => e.letter = '').join();
+                      widget.game.wordBoard[2].map((e) => e.letter = '').join();
+                      widget.game.wordBoard[3].map((e) => e.letter = '').join();
+                      widget.game.wordBoard[4].map((e) => e.letter = '').join();
+                      WordGameModel.gameMessage = "";
+                    });
+                    setState(() {
+                      widget.game.rowId = 0;
+                      widget.game.letterId = 0;
+                    });
+                  },
+                  child: Container(
+                    width: 180,
+                    padding: EdgeInsets.all(12.sp),
+                    decoration: BoxDecoration(
+                        color: AppColors.primaryTextColor,
+                        borderRadius: BorderRadius.all(Radius.circular(8.r))),
+                    child: Center(
+                      child: Text(
+                        'Play Again',
+                        style: AppStyles.instance.gameFontStylesWithWhiteOutfit(
+                            fontWeight: FontWeight.w500, fontSize: 20.sp),
+                      ),
+                    ),
+                  ),
+                ),
+              ]));
+        });
+  }
+
+  /// show game over alert dialog
+  showGameOverAlertDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        barrierColor: Colors.black87,
+        builder: (context) {
+          return AlertDialog(
+              backgroundColor: AppColors.appWhiteTextColor,
+              title: Column(children: [
+                SizedBox(height: 5.h),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text('Game Over',
+                      style: AppStyles.instance.wordRiddleBlackFontStyles(
+                          fontSize: 30.sp, fontWeight: FontWeight.w700)),
+                ]),
+                SizedBox(height: 20.h),
+                Text('You Lost',
+                    style: AppStyles.instance.wordRiddleBlackFontStyles(
+                        fontSize: 30.sp, fontWeight: FontWeight.w700)),
+                SizedBox(height: 20.h),
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    setState(() {
+                      widget.game.wordBoard[0].map((e) => e.code = 0).join();
+                      widget.game.wordBoard[1].map((e) => e.code = 0).join();
+                      widget.game.wordBoard[2].map((e) => e.code = 0).join();
+                      widget.game.wordBoard[3].map((e) => e.code = 0).join();
+                      widget.game.wordBoard[4].map((e) => e.code = 0).join();
+                      widget.game.wordBoard[0].map((e) => e.letter = '').join();
+                      widget.game.wordBoard[1].map((e) => e.letter = '').join();
+                      widget.game.wordBoard[2].map((e) => e.letter = '').join();
+                      widget.game.wordBoard[3].map((e) => e.letter = '').join();
+                      widget.game.wordBoard[4].map((e) => e.letter = '').join();
+                      // WordGameModel.gameMessage = "You Lost";
+                    });
+                    setState(() {
+                      widget.game.rowId = 0;
+                      widget.game.letterId = 0;
+                    });
+                  },
+                  child: Container(
+                    width: 180,
+                    padding: EdgeInsets.all(12.sp),
+                    decoration: BoxDecoration(
+                        color: AppColors.primaryTextColor,
+                        borderRadius: BorderRadius.all(Radius.circular(8.r))),
+                    child: Center(
+                      child: Text(
+                        'Play Again',
+                        style: AppStyles.instance.gameFontStylesWithWhiteOutfit(
+                            fontWeight: FontWeight.w500, fontSize: 20.sp),
+                      ),
+                    ),
+                  ),
+                ),
+              ]));
+        });
   }
 }

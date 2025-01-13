@@ -209,6 +209,15 @@ class AppStyles {
         color: AppColors.appWhiteTextColor);
   }
 
+  TextStyle? wordRiddleBlackFontStyles(
+      {required double fontSize, required FontWeight fontWeight}) {
+    return GoogleFonts.aboreto(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontStyle: FontStyle.normal,
+        color: AppColors.primaryTextColor);
+  }
+
   TextStyle? wordRiddleUbuntuFontStyles(
       {required double fontSize, required FontWeight fontWeight}) {
     return GoogleFonts.ubuntu(
