@@ -10,14 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class GameScreen extends StatefulWidget {
-  const GameScreen({Key? key}) : super(key: key);
+class WordGamePlayScreen extends StatefulWidget {
+  const WordGamePlayScreen({Key? key}) : super(key: key);
 
   @override
-  State<GameScreen> createState() => _GameScreenState();
+  State<WordGamePlayScreen> createState() => _WordGamePlayScreenState();
 }
 
-class _GameScreenState extends State<GameScreen> {
+class _WordGamePlayScreenState extends State<WordGamePlayScreen> {
   WordGameModel wordGameModel = WordGameModel();
   String word = "";
 

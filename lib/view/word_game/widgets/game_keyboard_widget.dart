@@ -7,7 +7,6 @@ import 'package:arcade_game/view/word_game/model/word_letter_model.dart';
 import 'package:arcade_game/view/word_game/widgets/game_board_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class GameKeyBoardWidget extends StatefulWidget {
   final WordGameModel game;
@@ -37,17 +36,6 @@ class _GameKeyBoardWidgetState extends State<GameKeyBoardWidget> {
             : Container(),
         WordGameModel.gameMessage != '' ? SizedBox(height: 20.h) : Container(),
         GameBoardWidget(widget.game),
-        GestureDetector(
-          onTap: () {
-            gameWinAlertDialog();
-          },
-          child: Text(
-            'Reset',
-            style: GoogleFonts.poppins(
-              color: Colors.white,
-            ),
-          ),
-        ),
         SizedBox(height: 40.h),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 10.r),

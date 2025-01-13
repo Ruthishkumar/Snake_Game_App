@@ -1,6 +1,6 @@
+import 'package:arcade_game/view/game_select_view.dart';
 import 'package:arcade_game/view/number_guessing_game/number_screen_provider/number_screen_provider.dart';
 import 'package:arcade_game/view/word_game/provider/word_game_provider.dart';
-import 'package:arcade_game/view/word_game/screens/word_game_play_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           title: 'Offline Arcade Game',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primarySwatch: Colors.blue),
-          home: const GameScreen(),
+          home: const GameSelectView(),
         );
       },
     );
