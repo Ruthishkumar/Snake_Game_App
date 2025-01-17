@@ -26,4 +26,6 @@ class AppColors {
 
   static const mathGamePrimaryColor = Color(0xff161D6F);
   static const mathGameSecondaryColor = Color(0xff4B5945);
+
+  static const wordRiddleBgColor = Color(0xff1A1A19);
 }

@@ -9,6 +9,7 @@ import 'package:arcade_game/view/number_math/screens/number_math_game.dart';
 import 'package:arcade_game/view/sliding_puzzle/screens/sliding_puzzle_onboarding_screen.dart';
 import 'package:arcade_game/view/snake_game/screens/game_onboarding_screen.dart';
 import 'package:arcade_game/view/tic_tac_toe/screens/enter_player_name_screen.dart';
+import 'package:arcade_game/view/word_game/screens/word_game_play_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -189,7 +190,7 @@ class _GameSelectViewState extends State<GameSelectView> {
                     ),
                     SizedBox(height: 20.h),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         gameCardWidget(
                             onTap: () {
@@ -204,6 +205,19 @@ class _GameSelectViewState extends State<GameSelectView> {
                             ),
                             gameName: 'Math Quiz',
                             gameMode: 'Action'),
+                        gameCardWidget(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  AnimationPageRoute(
+                                      widget: const WordGamePlayScreen()));
+                            },
+                            image: Image.asset(
+                              'assets/new_images/word_game.png',
+                              fit: BoxFit.contain,
+                            ),
+                            gameName: 'Word Riddle',
+                            gameMode: 'Puzzle'),
                       ],
                     )
                   ],
